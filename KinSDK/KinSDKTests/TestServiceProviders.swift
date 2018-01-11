@@ -17,10 +17,8 @@ struct NodeProvider: ServiceProvider {
         switch networkId {
         case .mainNet:
             self.url = URL(string: "https://mainnet.infura.io/ciS27F9JQYk8MaJd8Fbu")!
-        case .ropsten:
-            self.url = URL(string: "https://ropsten.infura.io/ciS27F9JQYk8MaJd8Fbu")!
-        case .truffle:
-            self.url = URL(string: "http://localhost:8545")!
+        case .testNet:
+            self.url = URL(string: "https://horizon-testnet.stellar.org")!
         default:
             fatalError("Unsupported network")
         }

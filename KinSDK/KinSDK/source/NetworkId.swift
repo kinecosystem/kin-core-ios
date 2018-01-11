@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- `NetworkId` represents the Ethereum network to which `KinClient` will connect.
+ `NetworkId` represents the block chain network to which `KinClient` will connect.
  */
 public enum NetworkId {
     /**
@@ -18,32 +18,25 @@ public enum NetworkId {
     case mainNet
 
     /**
-     The ropsten test net.
+    The Stellar test net.
      */
-    case ropsten
-
-    /**
-     A local network setup by truffle (used by tests).
-     */
-    case truffle
+    case testNet
 
     /**
      A network with a custom ID. **Currently unsupported**
      */
-    case custom(value: UInt64, contractAddress: String)
+    case custom(issuer: String)
 }
 
 extension NetworkId {
-    func asInteger() -> UInt64 {
+    public var issuer: String {
         switch self {
         case .mainNet:
-            return 1
-        case .ropsten:
-            return 3
-        case .truffle:
-            return 9
-        case .custom(let value, _):
-            return value
+            return ""
+        case .testNet:
+            return "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH"
+        case .custom (let issuer):
+            return issuer
         }
     }
 }
@@ -54,10 +47,8 @@ extension NetworkId: CustomStringConvertible {
         switch self {
         case .mainNet:
             return "main"
-        case .ropsten:
-            return "ropsten"
-        case .truffle:
-            return "truffle"
+        case .testNet:
+            return "test"
         default:
             return "custom network"
         }
@@ -65,8 +56,24 @@ extension NetworkId: CustomStringConvertible {
 }
 
 extension NetworkId: Equatable {
-    /// :nodoc:
-    public static func == (lhs: NetworkId, rhs: NetworkId) -> Bool {
-        return lhs.asInteger() == rhs.asInteger()
+    public static func ==(lhs: NetworkId, rhs: NetworkId) -> Bool {
+        switch lhs {
+        case .mainNet:
+            switch rhs {
+            case .mainNet:
+                return true
+            default:
+                return false
+            }
+        case .testNet:
+            switch rhs {
+            case .testNet:
+                return true
+            default:
+                return false
+            }
+        default:
+            return false
+        }
     }
 }
