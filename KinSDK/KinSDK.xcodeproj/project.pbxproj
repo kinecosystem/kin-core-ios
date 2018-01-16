@@ -10,10 +10,11 @@
 		82140EBA1FA88E5B00FAF19B /* KinSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 82140EAC1FA88E5B00FAF19B /* KinSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82140EC41FA88EAF00FAF19B /* KinTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC31FA88EAF00FAF19B /* KinTypes.swift */; };
 		822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822107A31FD66DC80007D63F /* KinAccounts.swift */; };
+		824063CB20148B290055D70A /* StellarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824063BF201488460055D70A /* StellarKit.framework */; };
 		824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824539421FAB0102009117B4 /* KinAccountTests.swift */; };
-		824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824CBAA21FB9932700B736AA /* Decimal+extensions.swift */; };
-		825BD918200BB96F00AF981A /* StellarKinKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 825BD913200BB96200AF981A /* StellarKinKit.framework */; };
+		8268D8F22014431D005CF79E /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8268D8EE2014431D005CF79E /* KeyStore.swift */; };
+		8268D8F420144339005CF79E /* KeyStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8268D8F320144339005CF79E /* KeyStoreTests.swift */; };
 		827835311FA9B5F20006C3DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835301FA9B5F20006C3DF /* AppDelegate.swift */; };
 		827835331FA9B5F20006C3DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835321FA9B5F20006C3DF /* ViewController.swift */; };
 		827835361FA9B5F20006C3DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 827835341FA9B5F20006C3DF /* Main.storyboard */; };
@@ -32,26 +33,33 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		825BD912200BB96200AF981A /* PBXContainerItemProxy */ = {
+		824063BE201488460055D70A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 825BD909200BB96200AF981A /* StellarKinKit.xcodeproj */;
+			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 82340B9C1FFDF2DA0034204F;
 			remoteInfo = StellarKinKit;
 		};
-		825BD914200BB96200AF981A /* PBXContainerItemProxy */ = {
+		824063C0201488460055D70A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 825BD909200BB96200AF981A /* StellarKinKit.xcodeproj */;
+			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 82340BA51FFDF2DA0034204F;
 			remoteInfo = StellarKinKitTests;
 		};
-		825BD916200BB96200AF981A /* PBXContainerItemProxy */ = {
+		824063C2201488460055D70A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 825BD909200BB96200AF981A /* StellarKinKit.xcodeproj */;
+			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 82340BC11FFDF3F30034204F;
 			remoteInfo = StellarKinKitHost;
+		};
+		824063C620148B210055D70A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 82340B9B1FFDF2DA0034204F;
+			remoteInfo = StellarKit;
 		};
 		827835421FA9B5F20006C3DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -89,9 +97,10 @@
 		82140EAD1FA88E5B00FAF19B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82140EC31FA88EAF00FAF19B /* KinTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinTypes.swift; sourceTree = "<group>"; };
 		822107A31FD66DC80007D63F /* KinAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccounts.swift; sourceTree = "<group>"; };
+		824063B8201488460055D70A /* StellarKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = StellarKit.xcodeproj; path = StellarKit/StellarKit.xcodeproj; sourceTree = "<group>"; };
 		824539421FAB0102009117B4 /* KinAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountTests.swift; sourceTree = "<group>"; };
-		824CBAA21FB9932700B736AA /* Decimal+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decimal+extensions.swift"; sourceTree = "<group>"; };
-		825BD909200BB96200AF981A /* StellarKinKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = StellarKinKit.xcodeproj; path = StellarKinKit/StellarKinKit.xcodeproj; sourceTree = "<group>"; };
+		8268D8EE2014431D005CF79E /* KeyStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
+		8268D8F320144339005CF79E /* KeyStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreTests.swift; sourceTree = "<group>"; };
 		8278352E1FA9B5F20006C3DF /* KinTestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KinTestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		827835301FA9B5F20006C3DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		827835321FA9B5F20006C3DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,7 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				825BD918200BB96F00AF981A /* StellarKinKit.framework in Frameworks */,
+				824063CB20148B290055D70A /* StellarKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +151,7 @@
 		82140E9F1FA88E5B00FAF19B = {
 			isa = PBXGroup;
 			children = (
-				825BD909200BB96200AF981A /* StellarKinKit.xcodeproj */,
+				824063B8201488460055D70A /* StellarKit.xcodeproj */,
 				82140EAB1FA88E5B00FAF19B /* KinSDK */,
 				8278352F1FA9B5F20006C3DF /* KinTestHost */,
 				827835441FA9B5F20006C3DF /* KinSDKTests */,
@@ -179,15 +188,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		824063B9201488460055D70A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				824063BF201488460055D70A /* StellarKit.framework */,
+				824063C1201488460055D70A /* StellarKitTests.xctest */,
+				824063C3201488460055D70A /* StellarKitHost.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8246E7231FC836F30087140A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				8268D8EE2014431D005CF79E /* KeyStore.swift */,
 				91D4395D1FC410860006FEB5 /* KinAccount.swift */,
+				822107A31FD66DC80007D63F /* KinAccounts.swift */,
 				91D4395B1FC410630006FEB5 /* KinClient.swift */,
 				91DDFDFB1FC6ED99004B0903 /* KinError.swift */,
 				82140EC31FA88EAF00FAF19B /* KinTypes.swift */,
 				9148CE4F1FCACF9C0005D603 /* NetworkId.swift */,
-				822107A31FD66DC80007D63F /* KinAccounts.swift */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -196,20 +216,9 @@
 			isa = PBXGroup;
 			children = (
 				E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */,
-				824CBAA21FB9932700B736AA /* Decimal+extensions.swift */,
 				E9816BCB1FBC736300C84F1C /* String+extensions.swift */,
 			);
 			path = extensions;
-			sourceTree = "<group>";
-		};
-		825BD90A200BB96200AF981A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				825BD913200BB96200AF981A /* StellarKinKit.framework */,
-				825BD915200BB96200AF981A /* StellarKinKitTests.xctest */,
-				825BD917200BB96200AF981A /* StellarKinKitHost.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		8278352F1FA9B5F20006C3DF /* KinTestHost */ = {
@@ -228,9 +237,10 @@
 		827835441FA9B5F20006C3DF /* KinSDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				827835451FA9B5F20006C3DF /* KinClientTests.swift */,
-				824539421FAB0102009117B4 /* KinAccountTests.swift */,
 				827835471FA9B5F20006C3DF /* Info.plist */,
+				8268D8F320144339005CF79E /* KeyStoreTests.swift */,
+				824539421FAB0102009117B4 /* KinAccountTests.swift */,
+				827835451FA9B5F20006C3DF /* KinClientTests.swift */,
 				E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */,
 			);
 			path = KinSDKTests;
@@ -263,6 +273,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				824063C720148B210055D70A /* PBXTargetDependency */,
 			);
 			name = KinSDK;
 			productName = KinSDK;
@@ -345,8 +356,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 825BD90A200BB96200AF981A /* Products */;
-					ProjectRef = 825BD909200BB96200AF981A /* StellarKinKit.xcodeproj */;
+					ProductGroup = 824063B9201488460055D70A /* Products */;
+					ProjectRef = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -359,25 +370,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		825BD913200BB96200AF981A /* StellarKinKit.framework */ = {
+		824063BF201488460055D70A /* StellarKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = StellarKinKit.framework;
-			remoteRef = 825BD912200BB96200AF981A /* PBXContainerItemProxy */;
+			path = StellarKit.framework;
+			remoteRef = 824063BE201488460055D70A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		825BD915200BB96200AF981A /* StellarKinKitTests.xctest */ = {
+		824063C1201488460055D70A /* StellarKitTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = StellarKinKitTests.xctest;
-			remoteRef = 825BD914200BB96200AF981A /* PBXContainerItemProxy */;
+			path = StellarKitTests.xctest;
+			remoteRef = 824063C0201488460055D70A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		825BD917200BB96200AF981A /* StellarKinKitHost.app */ = {
+		824063C3201488460055D70A /* StellarKitHost.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = StellarKinKitHost.app;
-			remoteRef = 825BD916200BB96200AF981A /* PBXContainerItemProxy */;
+			path = StellarKitHost.app;
+			remoteRef = 824063C2201488460055D70A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -431,7 +442,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */,
 				9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */,
 				E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */,
 				91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */,
@@ -441,6 +451,7 @@
 				E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */,
 				E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */,
 				822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */,
+				8268D8F22014431D005CF79E /* KeyStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */,
+				8268D8F420144339005CF79E /* KeyStoreTests.swift in Sources */,
 				824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +477,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		824063C720148B210055D70A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = StellarKit;
+			targetProxy = 824063C620148B210055D70A /* PBXContainerItemProxy */;
+		};
 		827835431FA9B5F20006C3DF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8278352D1FA9B5F20006C3DF /* KinTestHost */;

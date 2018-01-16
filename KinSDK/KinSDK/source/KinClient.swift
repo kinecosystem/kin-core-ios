@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StellarKinKit
+import StellarKit
 
 /**
  `KinClient` is a factory class for managing an instance of `KinAccount`.
@@ -30,7 +30,9 @@ public final class KinClient {
      */
     public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
         self.stellar = Stellar(baseURL: nodeProviderUrl,
-                               kinIssuer: networkId.issuer)
+                               asset: Asset(assetCode: "KIN", issuer: networkId.issuer),
+                               networkId: networkId.stellarNetworkId)
+
         self.accounts = KinAccounts(stellar: stellar)
 
         self.networkId = networkId

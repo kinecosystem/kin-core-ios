@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import KinSDK
-@testable import StellarKinKit
+@testable import StellarKit
 
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
@@ -29,7 +29,7 @@ class KinClientTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
 
-        try? kinClient.deleteKeystore()
+        kinClient.deleteKeystore()
     }
 
     func test_account_creation() {

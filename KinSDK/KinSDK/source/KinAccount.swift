@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StellarKinKit
+import StellarKit
 
 /**
  `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
@@ -33,7 +33,7 @@ public protocol KinAccount {
      - parameter passphrase: The passphrase used to generate the `KinAccount`
      */
     func sendTransaction(to recipient: String,
-                         kin: UInt64,
+                         kin: Decimal,
                          passphrase: String,
                          completion: @escaping TransactionCompletion)
 
@@ -53,7 +53,7 @@ public protocol KinAccount {
 
      - returns: The `TransactionId` in case of success.
      */
-    func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId
+    func sendTransaction(to recipient: String, kin: Decimal, passphrase: String) throws -> TransactionId
 
     /**
      **Asynchronously** gets the current Kin balance. **Does not** take into account
@@ -77,23 +77,16 @@ public protocol KinAccount {
     func balance() throws -> Balance
 
     /**
-     **Synchronously** gets the current **pending** Kin balance.
-
-     Please note that this is not the sum of pending transactions, but the **current balance plus
-     the sum of pending transactions.**
-
-     The completion block **is not dispatched on the main thread**.
+     **Deprecated**: this method returns the result of `balance(completion:)`.
 
      - parameter completion: A callback block to be invoked once the pending balance is fetched, or
      fails to be fetched.
      */
+    @available(*, deprecated)
     func pendingBalance(completion: @escaping BalanceCompletion)
 
     /**
-     **Synchronously** gets the current **pending** Kin balance.
-
-     Please note that this is not the sum of pending transactions, but the **current balance plus
-     the sum of pending transactions.**
+     **Deprecated**: this method returns the result of `balance()`.
 
      **Do not** call this from the main thread.
 
@@ -101,6 +94,7 @@ public protocol KinAccount {
 
      - returns: The pending balance of the account.
      */
+    @available(*, deprecated)
     func pendingBalance() throws -> Balance
 
     /**
@@ -113,7 +107,7 @@ public protocol KinAccount {
 
      - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
      */
-    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
+//    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
 
     /**
      :nodoc
@@ -126,11 +120,11 @@ public protocol KinAccount {
     func trustKIN(passphrase: String, completion: @escaping (String?, Error?) -> Void)
 }
 
+let KinMultiplier: UInt64 = 10000000
+
 final class KinStellarAccount: KinAccount {
     internal let stellarAccount: StellarAccount
     fileprivate weak var stellar: Stellar?
-
-    let KinMultiplier: UInt64 = 10000000
 
     var deleted = false
 
@@ -143,7 +137,10 @@ final class KinStellarAccount: KinAccount {
         self.stellar = stellar
     }
 
-    func sendTransaction(to recipient: String, kin: UInt64, passphrase: String, completion: @escaping TransactionCompletion) {
+    func sendTransaction(to recipient: String,
+                         kin: Decimal,
+                         passphrase: String,
+                         completion: @escaping TransactionCompletion) {
         guard let stellar = stellar else {
             completion(nil, KinError.internalInconsistency)
 
@@ -156,7 +153,9 @@ final class KinStellarAccount: KinAccount {
             return
         }
 
-        guard kin > 0 else {
+        let intKin = ((kin * Decimal(KinMultiplier)) as NSDecimalNumber).int64Value
+
+        guard intKin > 0 else {
             completion(nil, KinError.invalidAmount)
 
             return
@@ -164,13 +163,13 @@ final class KinStellarAccount: KinAccount {
 
         stellar.payment(source: stellarAccount,
                         destination: recipient,
-                        amount: Int64(kin * KinMultiplier),
+                        amount: intKin,
                         passphrase: passphrase) { (txHash, error) in
                             completion(txHash, error)
         }
     }
 
-    func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
+    func sendTransaction(to recipient: String, kin: Decimal, passphrase: String) throws -> TransactionId {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
 
@@ -240,15 +239,18 @@ final class KinStellarAccount: KinAccount {
         return balance
     }
 
+    @available(*, deprecated)
     func pendingBalance(completion: @escaping BalanceCompletion) {
         balance(completion: completion)
     }
 
+    @available(*, deprecated)
     func pendingBalance() throws -> Balance {
         return try balance()
     }
 
-    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
+    @available(*, unavailable)
+    private func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
         let accountData = KeyStore.exportAccount(account: stellarAccount, passphrase: passphrase, newPassphrase: exportPassphrase)
 
         guard let store = accountData else {
@@ -285,6 +287,9 @@ extension KinStellarAccount {
             return
         }
 
-        stellar.trustKIN(account: stellarAccount, passphrase: passphrase, completion: completion)
+        stellar.trust(asset: stellar.asset,
+                      account: stellarAccount,
+                      passphrase: passphrase,
+                      completion: completion)
     }
 }
