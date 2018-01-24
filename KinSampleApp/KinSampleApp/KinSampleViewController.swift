@@ -73,7 +73,7 @@ extension KinSampleViewController: KinClientCellDelegate {
         let alertController = UIAlertController(title: "Delete Wallet?",
                                                 message: "Deleting a wallet when it hasn't been backed up will cause funds to be lost",
                                                 preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "I've backed it up, delete wallet", style: .destructive) { _ in
+        let deleteAction = UIAlertAction(title: "OK", style: .destructive) { _ in
             try? self.kinClient.deleteAccount(at: 0, with: KinAccountPassphrase)
             self.navigationController?.popViewController(animated: true)
         }
@@ -131,7 +131,9 @@ extension KinSampleViewController: KinClientCellDelegate {
                     }
                 }
 
-                let stellar = Stellar(baseURL: aSelf.kinClient.url)
+                let stellar = Stellar(baseURL: aSelf.kinClient.url,
+                                      asset: Asset(assetCode: "KIN",
+                                                   issuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH"))
                 let issuer = try! KeyStore.importSecretSeed("SCML43HASLG5IIN34KCJLDQ6LPWYQ3HIROP5CRBHVC46YRMJ6QLOYQJS",
                                                             passphrase: KinAccountPassphrase)
                 stellar.payment(source: issuer,

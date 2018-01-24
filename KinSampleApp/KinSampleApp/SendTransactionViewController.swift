@@ -8,6 +8,7 @@
 
 import UIKit
 import KinSDK
+import StellarKit
 
 class SendTransactionViewController: UIViewController {
     var kinAccount: KinAccount!
@@ -43,7 +44,7 @@ class SendTransactionViewController: UIViewController {
 
                                         guard error == nil,
                                             let transactionId = transactionId else {
-                                                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription ?? "No transaction ID", preferredStyle: .alert)
+                                                let alertController = UIAlertController(title: "Error", message: aSelf.stringForError(error), preferredStyle: .alert)
                                                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                                                 aSelf.present(alertController, animated: true, completion: nil)
                                                 return
@@ -62,6 +63,48 @@ class SendTransactionViewController: UIViewController {
 
     @IBAction func pasteTapped(_ sender: Any) {
         addressTextField.text = UIPasteboard.general.string
+    }
+
+    func stringForError(_ error: Error?) -> String {
+        guard let error = error else {
+            return "No transaction ID"
+        }
+
+        if let sError = error as? StellarError {
+            switch sError {
+            case .missingPublicKey:
+                return "Misisng public key"
+            case .missingHash:
+                return "Transaction hash not found"
+            case .missingSequence:
+                return "Unable to retrieve sequence"
+            case .missingBalance:
+                return "Balance for asset not found"
+            case .urlEncodingFailed:
+                return "Unable to encode data for URL request"
+            case .dataEncodingFailed:
+                return "Unable to code string as Data"
+            case .signingFailed:
+                return "Signing failed"
+            case .destinationNotReadyForAsset:
+                return "No KIN trustline"
+            case .parseError:
+                return "Unable to parse server response"
+            case .unknownError:
+                return "Unknown error"
+            }
+        }
+
+        if let pError = error as? PaymentError {
+            switch pError {
+            case .PAYMENT_UNDERFUNDED:
+                return "Insufficient funds"
+            default:
+                return error.localizedDescription
+            }
+        }
+
+        return error.localizedDescription
     }
 }
 
