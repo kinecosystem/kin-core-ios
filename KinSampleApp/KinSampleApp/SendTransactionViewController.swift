@@ -86,12 +86,23 @@ class SendTransactionViewController: UIViewController {
                 return "Unable to code string as Data"
             case .signingFailed:
                 return "Signing failed"
-            case .destinationNotReadyForAsset:
-                return "No KIN trustline"
+            case .destinationNotReadyForAsset (let e, _):
+                if let e = e as? StellarError {
+                    switch e {
+                    case .missingAccount:
+                        return "Account not found"
+                    case .missingBalance:
+                        return "No KIN trustline"
+                    default:
+                        break
+                    }
+                }
             case .parseError:
                 return "Unable to parse server response"
             case .unknownError:
                 return "Unknown error"
+            default:
+                break
             }
         }
 

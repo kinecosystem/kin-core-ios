@@ -153,14 +153,14 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y1V-R0-iIj">
                                                             <rect key="frame" x="0.0" y="82" width="350" height="27.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Backup your wallet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-2K-4zh">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="350" height="27.5"/>
+                                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Backup your wallet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-2K-4zh">
+                                                                    <rect key="frame" x="-15" y="-92" width="0.0" height="30"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="1" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7YB-3P-dyE">
-                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="27.5"/>
+                                                                    <rect key="frame" x="-15" y="-92" width="0.0" height="30"/>
                                                                     <state key="normal" title="Export"/>
                                                                     <connections>
                                                                         <action selector="revealKeyStore:" destination="Cvs-du-e5J" eventType="touchUpInside" id="uru-ee-S8E"/>

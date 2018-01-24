@@ -71,7 +71,7 @@ extension KinSampleViewController: KinClientCellDelegate {
 
     func deleteAccountTapped() {
         let alertController = UIAlertController(title: "Delete Wallet?",
-                                                message: "Deleting a wallet when it hasn't been backed up will cause funds to be lost",
+                                                message: "Deleting a wallet will cause funds to be lost",
                                                 preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "OK", style: .destructive) { _ in
             try? self.kinClient.deleteAccount(at: 0, with: KinAccountPassphrase)
