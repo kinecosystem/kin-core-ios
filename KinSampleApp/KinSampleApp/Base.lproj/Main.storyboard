@@ -28,10 +28,16 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="SelectNetworkText"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjV-z7-SWe">
                                         <rect key="frame" x="0.0" y="391" width="343" height="44"/>
                                         <state key="normal" title="Test Net"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="TestNetButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="networkSelected:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MG8-zq-wIX"/>
                                         </connections>
@@ -42,6 +48,9 @@
                                             <constraint firstAttribute="height" constant="44" id="aB3-3v-hdA"/>
                                         </constraints>
                                         <state key="normal" title="Main Net"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="MainNetButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="networkSelected:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1YX-sC-PG4"/>
                                         </connections>
@@ -71,6 +80,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="9So-Vy-wku"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="GithubLink"/>
+                                        </userDefinedRuntimeAttributes>
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -130,10 +142,16 @@
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AddressHeader"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="1" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rWi-SS-Ebk">
                                                                     <rect key="frame" x="314" y="0.0" width="36" height="27.5"/>
                                                                     <state key="normal" title="Copy"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="CopyButton"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                     <connections>
                                                                         <action selector="copyAddress:" destination="Cvs-du-e5J" eventType="touchUpInside" id="cWP-yj-Vi5"/>
                                                                     </connections>
@@ -145,6 +163,9 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AddressLable"/>
+                                                            </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eON-qs-1F5">
                                                             <rect key="frame" x="0.0" y="55" width="350" height="27"/>
@@ -202,6 +223,9 @@
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="BalanceHeader"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DW1-fw-Qup">
                                                                     <rect key="frame" x="86" y="0.0" width="20" height="16.5"/>
@@ -213,6 +237,9 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="BalanceLable"/>
+                                                            </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Eu6-uS-hFe">
                                                             <rect key="frame" x="0.0" y="49.5" width="50" height="0.0"/>
@@ -255,6 +282,9 @@
                                                         <constraint firstAttribute="height" constant="44" id="kTx-tb-H7b"/>
                                                     </constraints>
                                                     <state key="normal" title="sendTransaction"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="SendButton"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="sendButtonTapped:" destination="4sV-Bo-oln" eventType="touchUpInside" id="f3I-CR-WEa"/>
                                                     </connections>
@@ -283,6 +313,9 @@
                                                         <constraint firstAttribute="height" constant="44" id="X3x-81-hMW"/>
                                                     </constraints>
                                                     <state key="normal" title="Delete Wallet"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="DeleteButton"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="deleteAccountTapped:" destination="kZg-yc-CSG" eventType="touchUpInside" id="C0x-km-taZ"/>
                                                     </connections>
@@ -311,6 +344,9 @@
                                                         <constraint firstAttribute="height" constant="44" id="5Uz-IP-BdG"/>
                                                     </constraints>
                                                     <state key="normal" title="Get Kin (Only in testnet, not part of the SDK)"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="GetKinButton"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="getKinTapped:" destination="loM-fb-yst" eventType="touchUpInside" id="DYn-JO-o04"/>
                                                     </connections>
@@ -358,10 +394,16 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AddressHeader"/>
+                                                </userDefinedRuntimeAttributes>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="1" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzH-rU-6Qj">
                                                 <rect key="frame" x="296" y="0.0" width="39" height="30"/>
                                                 <state key="normal" title="Paste"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="PasteButton"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="pasteTapped:" destination="MOY-BH-6ck" eventType="touchUpInside" id="6yM-PK-qoH"/>
                                                 </connections>
@@ -373,6 +415,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AddressField"/>
+                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o4y-0h-OgO">
                                         <rect key="frame" x="0.0" y="76" width="335" height="20"/>
@@ -386,12 +431,18 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AmountHeader"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bkQ-bq-Su2">
                                         <rect key="frame" x="0.0" y="132.5" width="335" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AmountField"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="MOY-BH-6ck" id="nfU-cd-l8H"/>
                                         </connections>
@@ -409,6 +460,9 @@
                                             <constraint firstAttribute="height" constant="44" id="dl8-Sd-Lho"/>
                                         </constraints>
                                         <state key="normal" title="Send"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="SendButton"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="sendTapped:" destination="MOY-BH-6ck" eventType="touchUpInside" id="glw-cS-dZb"/>
                                         </connections>
@@ -454,6 +508,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xg3-T9-jBu">
                                         <rect key="frame" x="0.0" y="20.5" width="343" height="31"/>
