@@ -46,8 +46,8 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Unable to import issuer account!")
         }
 
-        try! obtain_kin_and_lumens(for: (account0 as! KinStellarAccount).stellarAccount)
-        try! obtain_kin_and_lumens(for: (account1 as! KinStellarAccount).stellarAccount)
+        try! obtain_kin_and_lumens(for: (account0 as! KinStellarAccount))
+        try! obtain_kin_and_lumens(for: (account1 as! KinStellarAccount))
     }
 
     override func tearDown() {
@@ -56,7 +56,7 @@ class KinAccountTests: XCTestCase {
         kinClient.deleteKeystore()
     }
 
-    func obtain_kin_and_lumens(for account: StellarAccount) throws {
+    func obtain_kin_and_lumens(for account: KinStellarAccount) throws {
         let group = DispatchGroup()
         group.enter()
 
@@ -70,7 +70,7 @@ class KinAccountTests: XCTestCase {
                 throw KinError.unknown
         }
 
-        stellar.fund(account: account.publicKey!) { success in
+        stellar.fund(account: account.stellarAccount.publicKey!) { success in
             if !success {
                 e = KinError.unknown
 
@@ -79,29 +79,26 @@ class KinAccountTests: XCTestCase {
                 return
             }
 
-            stellar
-                .trust(asset: stellar.asset,
-                       account: account,
-                       passphrase: self.passphrase) { txHash, error in
-                        if let error = error {
-                            e = error
+            account.activate(passphrase: self.passphrase) { txHash, error in
+                if let error = error {
+                    e = error
 
-                            group.leave()
+                    group.leave()
 
-                            return
-                        }
+                    return
+                }
 
-                        stellar
-                            .payment(source: issuer,
-                                     destination: account.publicKey!,
-                                     amount: 100 * 10000000,
-                                     passphrase: self.passphrase) { txHash, error in
-                                        defer {
-                                            group.leave()
-                                        }
+                stellar
+                    .payment(source: issuer,
+                             destination: account.stellarAccount.publicKey!,
+                             amount: 100 * 10000000,
+                             passphrase: self.passphrase) { txHash, error in
+                                defer {
+                                    group.leave()
+                                }
 
-                                        e = error
-                        }
+                                e = error
+                }
             }
         }
 

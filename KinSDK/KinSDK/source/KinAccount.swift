@@ -21,6 +21,14 @@ public protocol KinAccount {
     var publicAddress: String { get }
 
     /**
+     Allow an account to receive KIN.
+
+     - parameter passphrase: The passphrase used to generate the `KinAccount`
+     - parameter completion: A block which receives the results of the activation
+     */
+    func activate(passphrase: String, completion: @escaping (String?, Error?) -> Void)
+
+    /**
      **Asynchronously** posts a Kin transfer to a specific address.
 
      The completion block is called after the transaction is posted on the network, which is prior
@@ -113,11 +121,6 @@ public protocol KinAccount {
      :nodoc
      */
     func fund(completion: @escaping (Bool) -> Void)
-
-    /**
-     :nodoc
-     */
-    func trustKIN(passphrase: String, completion: @escaping (String?, Error?) -> Void)
 }
 
 let KinMultiplier: UInt64 = 10000000
@@ -135,6 +138,19 @@ final class KinStellarAccount: KinAccount {
     init(stellarAccount: StellarAccount, stellar: Stellar) {
         self.stellarAccount = stellarAccount
         self.stellar = stellar
+    }
+
+    public func activate(passphrase: String, completion: @escaping (String?, Error?) -> Void) {
+        guard let stellar = stellar else {
+            completion(nil, KinError.internalInconsistency)
+
+            return
+        }
+
+        stellar.trust(asset: stellar.asset,
+                      account: stellarAccount,
+                      passphrase: passphrase,
+                      completion: completion)
     }
 
     func sendTransaction(to recipient: String,
@@ -278,18 +294,5 @@ extension KinStellarAccount {
         }
 
         stellar.fund(account: stellarAccount.publicKey!, completion: completion)
-    }
-
-    public func trustKIN(passphrase: String, completion: @escaping (String?, Error?) -> Void) {
-        guard let stellar = stellar else {
-            completion(nil, KinError.internalInconsistency)
-
-            return
-        }
-
-        stellar.trust(asset: stellar.asset,
-                      account: stellarAccount,
-                      passphrase: passphrase,
-                      completion: completion)
     }
 }
