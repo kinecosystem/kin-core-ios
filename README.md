@@ -17,34 +17,44 @@ In the meantime, we don't support yet CocoaPods or Carthage. The recommended set
 2. Drag `KinSDK.xcodeproj` as a subproject;
 3. In your main `.xcodeproj` file, select the desired target(s);
 4. Go to **Build Phases**, expand Target Dependencies, and add `KinSDK`;
-5. In Swift, `import KinSDK` and you are good to go! (We haven't tested yet Obj-C)
+5. In Swift, `import KinSDK` and you are good to go! (We haven't yet tested Obj-C)
 
 This is how we did the Sample App - you might look at the setup for a concrete example.
 
 ## API Usage
 
 ### `KinClient`
-`KinClient` is where you start from. In order to initialize it, a `ServiceProvider` must be passed. We recommend using `InfuraTestProvider` (please go to [infura.io][infura] and generate an API token) for the test environment:
+`KinClient` is where you start from. In order to initialize it, you'll need a Horizon end-point on the network of your choice.
 
 ```swift
-let kinClient = try? KinClient(provider: InfuraTestProvider(apiKey: "YourApiToken"))
+let kinClient = try? KinClient(with: URL, networkId: NetworkId)
 ```
 
-No activity can take place until an account is created. To do so, call `createAccountIfNeeded(with passphrase: String)`. To check if an account already exists, you can inspect the `account` property. The passphrase used to encrypt the account is the same one used to get the key store and send transactions.
+No activity can take place until an account is created and activated (see below). To do so, call `createAccountIfNeeded(with passphrase: String)`. To check if an account already exists, you can inspect the `account` property. The passphrase used to encrypt the account is the same one used to get the key store and send transactions.
 
 ### `KinAccount`
 
+#### Activation
+
+Before an account can receive KIN, it must be activated.
+
+```swift
+account.activate(passphrase: "pass phrase", completion: { txHash, error in
+    if error == nil {
+        // report success
+    }
+})
+```
+
 #### Public Address and Private Key
 
-- `var publicAddress: String`: returns the hex string of the account's public address.
-- `func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?`: returns the account's keystore file as JSON. The first parameter - `passphrase` - is the passphrase of the account, used in the other methods; and second parameter - `exportPassphrase` - is the password that the user should input to encrypt his account before exporting it as JSON. Throws an error in case the passphrase is wrong.
+- `var publicAddress: String`: returns a text representation of the account's public key.
 
 **Note** For the methods below, a sync and an async version are both available. The sync versions will block the current thread until a value is returned (so you should call them from the main thread). The async versions will call the completion block once finished, but **it is the developer's responsibility to dispatch to desired queue.**
 
 #### Checking Balance
 
 - `func balance() throws -> Balance`: returns the current balance of the account.
-- `func pendingBalance() throws -> Balance`: returns the pending balance of the account that is waiting for confirmation.
 
 #### Sending transactions
 
