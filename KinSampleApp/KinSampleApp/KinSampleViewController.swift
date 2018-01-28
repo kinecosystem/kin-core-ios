@@ -106,7 +106,7 @@ extension KinSampleViewController: KinClientCellDelegate {
                 return
             }
 
-            aSelf.kinAccount.trustKIN(passphrase: KinAccountPassphrase, completion: { [weak self] txHash, error in
+            aSelf.kinAccount.activate(passphrase: KinAccountPassphrase, completion: { [weak self] txHash, error in
                 guard let aSelf = self else {
                     DispatchQueue.main.async {
                         getKinCell.getKinButton.isEnabled = true
