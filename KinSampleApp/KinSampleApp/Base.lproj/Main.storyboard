@@ -164,7 +164,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AddressLable"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AddressLabel"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eON-qs-1F5">
@@ -238,7 +238,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="BalanceLable"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="BalanceLabel"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Eu6-uS-hFe">
