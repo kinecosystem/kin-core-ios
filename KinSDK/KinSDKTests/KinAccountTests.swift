@@ -64,42 +64,40 @@ class KinAccountTests: XCTestCase {
         let stellar = Stellar(baseURL: node.url,
                               asset: Asset(assetCode: "KIN", issuer: node.networkId.issuer))
 
-        guard
-            let issuer = issuer
-            else {
-                throw KinError.unknown
+        guard let issuer = issuer else {
+            throw KinError.unknown
         }
 
-        stellar.fund(account: account.stellarAccount.publicKey!) { success in
-            if !success {
-                e = KinError.unknown
-
-                group.leave()
-
-                return
-            }
-
-            account.activate(passphrase: self.passphrase) { txHash, error in
-                if let error = error {
-                    e = error
+        stellar.fund(account: account.stellarAccount.publicKey!)
+            .then { success -> Void in
+                if let success = success as? Bool, !success {
+                    e = KinError.unknown
 
                     group.leave()
-
-                    return
                 }
 
-                stellar
-                    .payment(source: issuer,
-                             destination: account.stellarAccount.publicKey!,
-                             amount: 100 * 10000000,
-                             passphrase: self.passphrase) { txHash, error in
-                                defer {
-                                    group.leave()
-                                }
+                account.activate(passphrase: self.passphrase) { txHash, error in
+                    if let error = error {
+                        e = error
 
-                                e = error
+                        group.leave()
+
+                        return
+                    }
+
+                    stellar.payment(source: issuer,
+                                    destination: account.stellarAccount.publicKey!,
+                                    amount: 100 * 10000000,
+                                    passphrase: self.passphrase)
+                        .then { txHash in
+                            group.leave()
+                        }
+                        .error { error in
+                            group.leave()
+
+                            e = error
+                    }
                 }
-            }
         }
 
         group.wait()

@@ -139,24 +139,22 @@ extension KinSampleViewController: KinClientCellDelegate {
                 stellar.payment(source: issuer,
                                 destination: aSelf.kinAccount.publicAddress,
                                 amount: 1000 * 10000000,
-                                passphrase: KinAccountPassphrase) { [weak self] (txHash, error) in
-                                    DispatchQueue.main.async {
-                                        guard let aSelf = self else {
-                                            return
-                                        }
+                                passphrase: KinAccountPassphrase)
+                    .then { [weak self] txHash in
+                        DispatchQueue.main.async {
+                            guard let aSelf = self else {
+                                return
+                            }
 
-                                        getKinCell.getKinButton.isEnabled = true
+                            getKinCell.getKinButton.isEnabled = true
 
-                                        if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                                            balanceCell.refreshBalance(aSelf)
-                                        }
-                                    }
-
-                                    if let error = error {
-                                        print("Not able to get test Kin. \(error)")
-                                        
-                                        return
-                                    }
+                            if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                                balanceCell.refreshBalance(aSelf)
+                            }
+                        }
+                    }
+                    .error { error in
+                        print("Not able to get test Kin. \(error)")
                 }
             })
         }
