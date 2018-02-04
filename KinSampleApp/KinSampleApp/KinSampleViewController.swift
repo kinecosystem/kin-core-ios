@@ -91,92 +91,144 @@ extension KinSampleViewController: KinClientCellDelegate {
 
         getKinCell.getKinButton.isEnabled = false
 
-        kinAccount.fund { [weak self] success in
-            guard let aSelf = self else {
-                return
-            }
+        let user_id = UUID().uuidString
 
-            if !success {
-                DispatchQueue.main.async {
-                    getKinCell.getKinButton.isEnabled = true
+        print("Creating account.")
+
+        DispatchQueue(label: "").async {
+            self.createAccount(user_id: user_id)
+                .then { result -> Any? in
+                    print("Activating account.")
+
+                    return self.activate()
                 }
+                .then { result -> Any? in
+                    print("Funding account")
 
-                print("Not able to get test lumens.")
-
-                return
-            }
-
-            aSelf.kinAccount.activate(passphrase: KinAccountPassphrase, completion: { [weak self] txHash, error in
-                guard let aSelf = self else {
+                    return self.fund(user_id: user_id)
+                }
+                .then { result -> Void in
                     DispatchQueue.main.async {
                         getKinCell.getKinButton.isEnabled = true
-                    }
 
-                    return
-                }
-
-                if let error = error {
-                    DispatchQueue.main.async {
-                        getKinCell.getKinButton.isEnabled = true
-                    }
-
-                    print("Not able to trust KIN asset. \(error)")
-
-                    return
-                }
-
-                DispatchQueue.main.async {
-                    if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                        balanceCell.refreshBalance(aSelf)
-                    }
-                }
-
-                let stellar = Stellar(baseURL: aSelf.kinClient.url,
-                                      asset: Asset(assetCode: "KIN",
-                                                   issuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH"))
-                let issuer = try! KeyStore.importSecretSeed("SCML43HASLG5IIN34KCJLDQ6LPWYQ3HIROP5CRBHVC46YRMJ6QLOYQJS",
-                                                            passphrase: KinAccountPassphrase)
-                stellar.payment(source: issuer,
-                                destination: aSelf.kinAccount.publicAddress,
-                                amount: 1000 * 10000000,
-                                passphrase: KinAccountPassphrase)
-                    .then { [weak self] txHash in
-                        DispatchQueue.main.async {
-                            guard let aSelf = self else {
-                                return
-                            }
-
-                            getKinCell.getKinButton.isEnabled = true
-
-                            if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                                balanceCell.refreshBalance(aSelf)
-                            }
+                        if let balanceCell = self.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                            balanceCell.refreshBalance(self)
                         }
                     }
-                    .error { error in
-                        print("Not able to get test Kin. \(error)")
                 }
-            })
-        }
+                .error { error in
+                    DispatchQueue.main.async {
+                        getKinCell.getKinButton.isEnabled = true
 
-//        let urlString = "http://kin-faucet.rounds.video/send?public_address=\(kinAccount.publicAddress)"
-//        URLSession.shared.dataTask(with: URL(string: urlString)!) { [weak self] _, _, error in
-//            DispatchQueue.main.async {
-//                guard let aSelf = self else {
-//                    return
-//                }
-//
-//                getKinCell.getKinButton.isEnabled = true
-//
-//                if let error = error {
-//                    print("Not able to get test Kin. \(error)")
-//                    return
-//                }
-//
-//                if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-//                    balanceCell.refreshBalance(aSelf)
-//                }
-//            }
-//        }.resume()
+                        if let balanceCell = self.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                            balanceCell.refreshBalance(self)
+                        }
+                    }
+            }
+        }
+    }
+
+    enum OnBoardingError: Error {
+        case invalidResponse
+        case errorResponse
+        case activationFailed
+    }
+
+    private func createAccount(user_id: String) -> Promise {
+        let p = Promise()
+
+        let content = [
+            "user_id": user_id,
+            "public_address": kinAccount.publicAddress,
+            ]
+        let body = try! JSONSerialization.data(withJSONObject: content, options: [])
+
+        let url = URL(string: "http://188.166.34.7:8000/create_account")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+
+        URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+            guard
+                let data = data,
+                let jsonOpt = try? JSONSerialization.jsonObject(with: data, options: []),
+                let json = jsonOpt as? [String: Any]
+                else {
+                    print("Unable to parse json.")
+
+                    p.signal(OnBoardingError.invalidResponse)
+
+                    return
+            }
+
+            guard let status = json["status"] as? String, status == "ok" else {
+                p.signal(OnBoardingError.errorResponse)
+
+                return
+            }
+
+            p.signal(true)
+        }).resume()
+
+        return p
+    }
+
+    private func activate() -> Promise {
+        let p = Promise()
+
+        kinAccount.activate(passphrase: KinAccountPassphrase, completion: { txHash, error in
+            if let error = error {
+                print("Activation failed: \(error)")
+
+                p.signal(OnBoardingError.activationFailed)
+
+                return
+            }
+
+            p.signal(true)
+        })
+
+        return p
+    }
+
+    private func fund(user_id: String) -> Promise {
+        let p = Promise()
+
+        let content = [
+            "user_id": user_id,
+            "public_address": kinAccount.publicAddress,
+            ]
+        let body = try! JSONSerialization.data(withJSONObject: content, options: [])
+
+        let url = URL(string: "http://188.166.34.7:8000/fund")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+
+        URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+            guard
+                let data = data,
+                let jsonOpt = try? JSONSerialization.jsonObject(with: data, options: []),
+                let json = jsonOpt as? [String: Any]
+                else {
+                    print("Unable to parse json.")
+
+                    p.signal(OnBoardingError.invalidResponse)
+
+                    return
+            }
+
+            guard let status = json["status"] as? String, status == "ok" else {
+                p.signal(OnBoardingError.errorResponse)
+
+                return
+            }
+
+            p.signal(true)
+        }).resume()
+
+        return p
     }
 }

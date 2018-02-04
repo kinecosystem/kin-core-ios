@@ -34,7 +34,7 @@ extension NetworkId {
         case .mainNet:
             return ""
         case .testNet:
-            return "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH"
+            return "GCKG5WGBIJP74UDNRIRDFGENNIH5Y3KBI5IHREFAJKV4MQXLELT7EX6V"
         case .custom (let issuer, _):
             return issuer
         }
