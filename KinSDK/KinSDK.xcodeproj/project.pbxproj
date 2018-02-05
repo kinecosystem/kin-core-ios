@@ -659,6 +659,7 @@
 					"-read_only_relocs",
 					suppress,
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -692,6 +693,7 @@
 					"-read_only_relocs",
 					suppress,
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

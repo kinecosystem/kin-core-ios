@@ -151,12 +151,6 @@ final class KinStellarAccount: KinAccount {
                       account: stellarAccount,
                       passphrase: passphrase)
             .then { txHash -> Void in
-                guard let txHash = txHash as? String else {
-                    completion(nil, KinError.internalInconsistency)
-
-                    return
-                }
-
                 completion(txHash, nil)
             }
             .error { error in
@@ -193,12 +187,6 @@ final class KinStellarAccount: KinAccount {
                         amount: intKin,
                         passphrase: passphrase)
             .then { txHash -> Void in
-                guard let txHash = txHash as? String else {
-                    completion(nil, KinError.internalInconsistency)
-
-                    return
-                }
-
                 completion(txHash, nil)
             }
             .error { error in
@@ -248,12 +236,7 @@ final class KinStellarAccount: KinAccount {
         
         stellar.balance(account: stellarAccount.publicKey!)
             .then { balance -> Void in
-                if let balance = balance as? Decimal {
-                    completion(balance, nil)
-                }
-                else {
-                    completion(nil, KinError.internalInconsistency)
-                }
+                completion(balance, nil)
             }
             .error { error in
                 completion(nil, error)
@@ -327,12 +310,10 @@ extension KinStellarAccount {
         
         stellar.fund(account: stellarAccount.publicKey!)
             .then { success -> Void in
-                if let success = success as? Bool {
-                    completion(success)
-                }
-                else {
-                    completion(false)
-                }
+                completion(true)
+        }
+            .error { error in
+                completion(false)
         }
     }
 }

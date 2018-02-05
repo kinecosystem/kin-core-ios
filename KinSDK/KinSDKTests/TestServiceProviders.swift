@@ -20,7 +20,7 @@ struct NodeProvider: ServiceProvider {
         case .testNet:
             self.url = URL(string: "https://horizon-testnet.stellar.org")!
         default:
-            fatalError("Unsupported network")
+            self.url = URL(string: "https://horizon-testnet.stellar.org")!
         }
     }
 }

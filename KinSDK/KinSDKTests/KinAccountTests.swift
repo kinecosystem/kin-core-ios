@@ -15,7 +15,8 @@ class KinAccountTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
 
-    let node = NodeProvider(networkId: .testNet)
+    let node = NodeProvider(networkId: .custom(issuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH",
+                                               stellarNetworkId: NetworkId.testNet.stellarNetworkId))
 
     var account0: KinAccount?
     var account1: KinAccount?

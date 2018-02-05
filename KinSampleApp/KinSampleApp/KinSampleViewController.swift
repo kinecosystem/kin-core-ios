@@ -97,12 +97,12 @@ extension KinSampleViewController: KinClientCellDelegate {
 
         DispatchQueue(label: "").async {
             self.createAccount(user_id: user_id)
-                .then { result -> Any? in
+                .then { result -> Promise<Bool> in
                     print("Activating account.")
 
                     return self.activate()
                 }
-                .then { result -> Any? in
+                .then { result -> Promise<Bool> in
                     print("Funding account")
 
                     return self.fund(user_id: user_id)
@@ -134,8 +134,8 @@ extension KinSampleViewController: KinClientCellDelegate {
         case activationFailed
     }
 
-    private func createAccount(user_id: String) -> Promise {
-        let p = Promise()
+    private func createAccount(user_id: String) -> Promise<Bool> {
+        let p = Promise<Bool>()
 
         let content = [
             "user_id": user_id,
@@ -174,8 +174,8 @@ extension KinSampleViewController: KinClientCellDelegate {
         return p
     }
 
-    private func activate() -> Promise {
-        let p = Promise()
+    private func activate() -> Promise<Bool> {
+        let p = Promise<Bool>()
 
         kinAccount.activate(passphrase: KinAccountPassphrase, completion: { txHash, error in
             if let error = error {
@@ -192,8 +192,8 @@ extension KinSampleViewController: KinClientCellDelegate {
         return p
     }
 
-    private func fund(user_id: String) -> Promise {
-        let p = Promise()
+    private func fund(user_id: String) -> Promise<Bool> {
+        let p = Promise<Bool>()
 
         let content = [
             "user_id": user_id,
