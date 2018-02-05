@@ -70,13 +70,7 @@ class KinAccountTests: XCTestCase {
         }
 
         stellar.fund(account: account.stellarAccount.publicKey!)
-            .then { success -> Void in
-                if let success = success as? Bool, !success {
-                    e = KinError.unknown
-
-                    group.leave()
-                }
-
+            .then { txHash -> Void in
                 account.activate(passphrase: self.passphrase) { txHash, error in
                     if let error = error {
                         e = error
@@ -86,7 +80,7 @@ class KinAccountTests: XCTestCase {
                         return
                     }
 
-                    stellar.payment(source: issuer,
+                    return stellar.payment(source: issuer,
                                     destination: account.stellarAccount.publicKey!,
                                     amount: 100 * 10000000,
                                     passphrase: self.passphrase)
@@ -99,6 +93,11 @@ class KinAccountTests: XCTestCase {
                             e = error
                     }
                 }
+        }
+            .error { error in
+                e = error
+
+                group.leave()
         }
 
         group.wait()
@@ -252,7 +251,8 @@ class KinAccountTests: XCTestCase {
                               "Tried to send kin with insufficient funds, but didn't get an error")
             }
             catch {
-                if let paymentError = error as? PaymentError {
+                if case let KinError.paymentFailed(error) = error,
+                    let paymentError = error as? PaymentError {
                     XCTAssertEqual(paymentError, PaymentError.PAYMENT_UNDERFUNDED)
                 } else {
                     XCTAssertTrue(false,
@@ -281,11 +281,11 @@ class KinAccountTests: XCTestCase {
                           "Tried to send kin with insufficient funds, but didn't get an error")
         }
         catch {
-            if let kinError = error as? KinError {
-                XCTAssertEqual(kinError, KinError.invalidAmount)
+            if let kinError = error as? KinError,
+                case KinError.invalidAmount = kinError {
             } else {
                 XCTAssertTrue(false,
-                              "Tried to send kin, and got error, but not a PaymentError: \(error.localizedDescription)")
+                              "Received unexpected error: \(error.localizedDescription)")
             }
         }
     }
@@ -300,7 +300,12 @@ class KinAccountTests: XCTestCase {
             XCTAssert(false, "An exception should have been thrown.")
         }
         catch {
-            XCTAssert((error as? KinError) == KinError.accountDeleted, "Expected .accountDeleted error, received: \(error)")
+            if let kinError = error as? KinError,
+                case KinError.accountDeleted = kinError {
+            } else {
+                XCTAssertTrue(false,
+                              "Received unexpected error: \(error.localizedDescription)")
+            }
         }
     }
 
@@ -315,7 +320,12 @@ class KinAccountTests: XCTestCase {
             XCTAssert(false, "An exception should have been thrown.")
         }
         catch {
-            XCTAssert((error as? KinError) == KinError.accountDeleted, "Expected .accountDeleted error, received: \(error)")
+            if let kinError = error as? KinError,
+                case KinError.accountDeleted = kinError {
+            } else {
+                XCTAssertTrue(false,
+                              "Received unexpected error: \(error.localizedDescription)")
+            }
         }
     }
 
@@ -329,7 +339,12 @@ class KinAccountTests: XCTestCase {
             XCTAssert(false, "An exception should have been thrown.")
         }
         catch {
-            XCTAssert((error as? KinError) == KinError.accountDeleted, "Expected .accountDeleted error, received: \(error)")
+            if let kinError = error as? KinError,
+                case KinError.accountDeleted = kinError {
+            } else {
+                XCTAssertTrue(false,
+                              "Received unexpected error: \(error.localizedDescription)")
+            }
         }
     }
 

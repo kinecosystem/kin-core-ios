@@ -154,7 +154,7 @@ final class KinStellarAccount: KinAccount {
                 completion(txHash, nil)
             }
             .error { error in
-                completion(nil, error)
+                completion(nil, KinError.activationFailed(error))
         }
     }
     
@@ -190,7 +190,7 @@ final class KinStellarAccount: KinAccount {
                 completion(txHash, nil)
             }
             .error { error in
-                completion(nil, error)
+                completion(nil, KinError.paymentFailed(error))
         }
     }
     
@@ -239,7 +239,7 @@ final class KinStellarAccount: KinAccount {
                 completion(balance, nil)
             }
             .error { error in
-                completion(nil, error)
+                completion(nil, KinError.balanceQueryFailed(error))
         }
     }
     

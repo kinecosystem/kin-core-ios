@@ -14,19 +14,29 @@ import Foundation
  */
 public enum KinError: Error {
     /**
-     An internal error happened in the KinSDK.
+     Account creation failed.
      */
-    case internalInconsistency
+    case accountCreationFailed (Error)
 
     /**
-     Thrown when any operation that requires a passphrase receives the wrong passphrase.
+     Account deletion failed.
      */
-    case invalidPassphrase
+    case accountDeletionFailed (Error)
 
     /**
-     An invalid address was used as a recipient in a transaction.
+     Account activation failed.
      */
-    case invalidAddress
+    case activationFailed (Error)
+
+    /**
+     Sending a payment failed.
+     */
+    case paymentFailed (Error)
+
+    /**
+     Querying for the account balance failed.
+     */
+    case balanceQueryFailed (Error)
 
     /**
      Amounts must be greater than zero when trying to transfer Kin. When sending 0 Kin, this error
@@ -40,6 +50,11 @@ public enum KinError: Error {
     case accountDeleted
 
     /**
+     An internal error happened in the KinSDK.
+     */
+    case internalInconsistency
+
+    /**
      An unknown error happened.
      */
     case unknown
@@ -49,16 +64,22 @@ extension KinError: LocalizedError {
     /// :nodoc:
     public var errorDescription: String? {
         switch self {
-        case .internalInconsistency:
-            return "Internal Inconsistency"
-        case .invalidPassphrase:
-            return "Invalid Passphrase"
-        case .invalidAddress:
-            return "Invalid Address"
+        case .accountCreationFailed:
+            return "Account creation failed"
+        case .accountDeletionFailed:
+            return "Account deletion failed"
+        case .activationFailed:
+            return "Account activation failed"
+        case .paymentFailed:
+            return "Payment failed"
+        case .balanceQueryFailed:
+            return "Balance query failed"
         case .invalidAmount:
             return "Invalid Amount"
         case .accountDeleted:
             return "Account Deleted"
+        case .internalInconsistency:
+            return "Internal Inconsistency"
         case .unknown:
             return "Unknown Error"
         }

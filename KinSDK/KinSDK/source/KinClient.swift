@@ -71,7 +71,12 @@ public final class KinClient {
      */
     @available(*, deprecated)
     public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount {
-        return try accounts[0] ?? accounts.createAccount(with: passphrase)
+        do {
+            return try accounts[0] ?? accounts.createAccount(with: passphrase)
+        }
+        catch {
+            throw KinError.accountCreationFailed(error)
+        }
     }
 
     /**
@@ -82,7 +87,12 @@ public final class KinClient {
      - throws: If creating the account fails.
      */
     public func addAccount(with passphrase: String) throws -> KinAccount {
-        return try accounts.createAccount(with: passphrase)
+        do {
+            return try accounts.createAccount(with: passphrase)
+        }
+        catch {
+            throw KinError.accountCreationFailed(error)
+        }
     }
 
     /**
@@ -98,7 +108,12 @@ public final class KinClient {
      */
     @available(*, deprecated)
     public func deleteAccount(with passphrase: String) throws {
-        try accounts.deleteAccount(at: 0, with: passphrase)
+        do {
+            try accounts.deleteAccount(at: 0, with: passphrase)
+        }
+        catch {
+            throw KinError.accountDeletionFailed(error)
+        }
     }
 
     /**
@@ -115,7 +130,12 @@ public final class KinClient {
      - throws: If the passphrase is invalid, or if deleting the account fails.
      */
     public func deleteAccount(at index: Int, with passphrase: String) throws {
-        try accounts.deleteAccount(at: index, with: passphrase)
+        do {
+            try accounts.deleteAccount(at: index, with: passphrase)
+        }
+        catch {
+            throw KinError.accountDeletionFailed(error)
+        }
     }
 
     /**
