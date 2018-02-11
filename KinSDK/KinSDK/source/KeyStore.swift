@@ -49,6 +49,8 @@ public class StellarAccount: Account {
         return accountData.pkey
     }
 
+    public var sign: ((Data) throws -> Data)?
+
     public func sign(message: Data, passphrase: String) throws -> Data {
         guard let signingKey = secretKey(passphrase: passphrase) else {
             throw KeyStoreErrors.noSecretKey

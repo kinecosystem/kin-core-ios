@@ -146,14 +146,21 @@ final class KinStellarAccount: KinAccount {
             
             return
         }
+
+        stellarAccount.sign = { message in
+            return try self.stellarAccount.sign(message: message, passphrase: passphrase)
+        }
         
         stellar.trust(asset: stellar.asset,
-                      account: stellarAccount,
-                      passphrase: passphrase)
+                      account: stellarAccount)
             .then { txHash -> Void in
+                self.stellarAccount.sign = nil
+
                 completion(txHash, nil)
             }
             .error { error in
+                self.stellarAccount.sign = nil
+
                 completion(nil, KinError.activationFailed(error))
         }
     }
@@ -181,15 +188,22 @@ final class KinStellarAccount: KinAccount {
             
             return
         }
-        
+
+        stellarAccount.sign = { message in
+            return try self.stellarAccount.sign(message: message, passphrase: passphrase)
+        }
+
         stellar.payment(source: stellarAccount,
                         destination: recipient,
-                        amount: intKin,
-                        passphrase: passphrase)
+                        amount: intKin)
             .then { txHash -> Void in
+                self.stellarAccount.sign = nil
+
                 completion(txHash, nil)
             }
             .error { error in
+                self.stellarAccount.sign = nil
+
                 completion(nil, KinError.paymentFailed(error))
         }
     }

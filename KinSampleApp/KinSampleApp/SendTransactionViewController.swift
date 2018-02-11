@@ -97,8 +97,6 @@ class SendTransactionViewController: UIViewController {
                         break
                     }
                 }
-            case .parseError:
-                return "Unable to parse server response"
             case .unknownError:
                 return "Unknown error"
             default:

@@ -80,10 +80,14 @@ class KinAccountTests: XCTestCase {
                         return
                     }
 
+                    issuer.sign = { message in
+                        return try issuer.sign(message: message,
+                                               passphrase: self.passphrase)
+                    }
+
                     return stellar.payment(source: issuer,
                                     destination: account.stellarAccount.publicKey!,
-                                    amount: 100 * 10000000,
-                                    passphrase: self.passphrase)
+                                    amount: 100 * 10000000)
                         .then { txHash in
                             group.leave()
                         }
