@@ -36,6 +36,7 @@ class SendTransactionViewController: UIViewController {
 
         kinAccount.sendTransaction(to: address,
                                    kin: Decimal(amount),
+                                   memo: nil,
                                    passphrase: KinAccountPassphrase) { transactionId, error in
                                     DispatchQueue.main.async { [weak self] in
                                         guard let aSelf = self else {

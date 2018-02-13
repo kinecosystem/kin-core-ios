@@ -221,6 +221,7 @@ class KinAccountTests: XCTestCase {
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
                                                     kin: sendAmount,
+                                                    memo: nil,
                                                     passphrase: passphrase)
 
             XCTAssertNotNil(txId)
@@ -250,6 +251,7 @@ class KinAccountTests: XCTestCase {
             do {
                 _ = try account0.sendTransaction(to: account1.publicAddress,
                                                  kin: balance * 10000000 + 1,
+                                                 memo: nil,
                                                  passphrase: passphrase)
                 XCTAssertTrue(false,
                               "Tried to send kin with insufficient funds, but didn't get an error")
@@ -280,6 +282,7 @@ class KinAccountTests: XCTestCase {
         do {
             _ = try account0.sendTransaction(to: account1.publicAddress,
                                              kin: 0,
+                                             memo: nil,
                                              passphrase: passphrase)
             XCTAssertTrue(false,
                           "Tried to send kin with insufficient funds, but didn't get an error")
@@ -338,7 +341,7 @@ class KinAccountTests: XCTestCase {
             let account = kinClient.accounts[0]
             
             try kinClient.deleteAccount(at: 0, with: passphrase)
-            _ = try account?.sendTransaction(to: "", kin: 1, passphrase: passphrase)
+            _ = try account?.sendTransaction(to: "", kin: 1, memo: nil, passphrase: passphrase)
 
             XCTAssert(false, "An exception should have been thrown.")
         }

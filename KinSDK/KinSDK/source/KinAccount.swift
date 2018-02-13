@@ -39,9 +39,11 @@ public protocol KinAccount {
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
      - parameter passphrase: The passphrase used to generate the `KinAccount`
+     - parameter memo: An optional string, up-to 28 characters, included on the transaction record.
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
+                         memo: String?,
                          passphrase: String,
                          completion: @escaping TransactionCompletion)
     
@@ -56,12 +58,16 @@ public protocol KinAccount {
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
      - parameter passphrase: The passphrase used to generate the `KinAccount`
-     
+     - parameter memo: An optional string, up-to 28 characters, included on the transaction record.
+
      - throws: An `Error` if the transaction fails to be generated or submitted
      
      - returns: The `TransactionId` in case of success.
      */
-    func sendTransaction(to recipient: String, kin: Decimal, passphrase: String) throws -> TransactionId
+    func sendTransaction(to recipient: String,
+                         kin: Decimal,
+                         memo: String?,
+                         passphrase: String) throws -> TransactionId
     
     /**
      **Asynchronously** gets the current Kin balance. **Does not** take into account
@@ -167,6 +173,7 @@ final class KinStellarAccount: KinAccount {
     
     func sendTransaction(to recipient: String,
                          kin: Decimal,
+                         memo: String? = nil,
                          passphrase: String,
                          completion: @escaping TransactionCompletion) {
         guard let stellar = stellar else {
@@ -195,7 +202,8 @@ final class KinStellarAccount: KinAccount {
 
         stellar.payment(source: stellarAccount,
                         destination: recipient,
-                        amount: intKin)
+                        amount: intKin,
+                        memo: memo)
             .then { txHash -> Void in
                 self.stellarAccount.sign = nil
 
@@ -208,14 +216,17 @@ final class KinStellarAccount: KinAccount {
         }
     }
     
-    func sendTransaction(to recipient: String, kin: Decimal, passphrase: String) throws -> TransactionId {
+    func sendTransaction(to recipient: String,
+                         kin: Decimal,
+                         memo: String? = nil,
+                         passphrase: String) throws -> TransactionId {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         
         var errorToThrow: Error? = nil
         var txHashToReturn: TransactionId? = nil
         
-        sendTransaction(to: recipient, kin: kin, passphrase: passphrase) { txHash, error in
+        sendTransaction(to: recipient, kin: kin, memo: memo, passphrase: passphrase) { txHash, error in
             errorToThrow = error
             txHashToReturn = txHash
             
@@ -325,7 +336,7 @@ extension KinStellarAccount {
         stellar.fund(account: stellarAccount.publicKey!)
             .then { success -> Void in
                 completion(true)
-        }
+            }
             .error { error in
                 completion(false)
         }
