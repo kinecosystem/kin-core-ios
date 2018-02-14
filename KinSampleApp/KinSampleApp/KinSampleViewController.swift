@@ -33,6 +33,16 @@ class KinSampleViewController: UITableViewController {
         }
 
         tableView.tableFooterView = UIView()
+
+        try? kinAccount.watch { [weak self] tx in
+            guard let me = self else {
+                return
+            }
+
+            if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                balanceCell.refreshBalance(me)
+            }
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
