@@ -39,8 +39,10 @@ class KinSampleViewController: UITableViewController {
                 return
             }
 
-            if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                balanceCell.refreshBalance(me)
+            DispatchQueue.main.async {
+                if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                    balanceCell.refreshBalance(me)
+                }
             }
         }
     }
