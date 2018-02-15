@@ -13,6 +13,7 @@ protocol KinClientCellDelegate: class {
     func revealKeyStore()
     func startSendTransaction()
     func deleteAccountTapped()
+    func recentTransactionsTapped()
     func getTestKin(cell: KinClientCell)
 }
 

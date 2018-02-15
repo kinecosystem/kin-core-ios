@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		820AAABA2035D2E90077D873 /* RecentTxsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAAB72035D2E90077D873 /* RecentTxsCell.swift */; };
+		820AAABC2035D6BF0077D873 /* TxCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAABB2035D6BF0077D873 /* TxCells.swift */; };
+		820AAABE2035D79B0077D873 /* RecentTxsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAABD2035D79B0077D873 /* RecentTxsTableViewController.swift */; };
 		910EEA001FB8A3D000610D06 /* SendTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */; };
 		910EEA041FB8A60C00610D06 /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA031FB8A60C00610D06 /* HelperExtensions.swift */; };
 		910EEA061FB8A8DC00610D06 /* SendTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */; };
@@ -80,6 +83,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		820AAAB72035D2E90077D873 /* RecentTxsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTxsCell.swift; sourceTree = "<group>"; };
+		820AAABB2035D6BF0077D873 /* TxCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxCells.swift; sourceTree = "<group>"; };
+		820AAABD2035D79B0077D873 /* RecentTxsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTxsTableViewController.swift; sourceTree = "<group>"; };
 		910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionViewController.swift; sourceTree = "<group>"; };
 		910EEA031FB8A60C00610D06 /* HelperExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
 		910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -139,6 +145,7 @@
 				919238751FB09E9000390BE5 /* HomeViewController.swift */,
 				919238871FB0AA6A00390BE5 /* KinSampleViewController.swift */,
 				910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */,
+				820AAABD2035D79B0077D873 /* RecentTxsTableViewController.swift */,
 				9176B8FF1FB8811A00AEDBDE /* KeyStoreViewController.swift */,
 				919238771FB09E9000390BE5 /* Main.storyboard */,
 				9192387A1FB09E9000390BE5 /* Assets.xcassets */,
@@ -157,8 +164,10 @@
 				9176B8FB1FB84C9400AEDBDE /* KinAccountTableViewCell.swift */,
 				910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */,
 				9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */,
+				820AAAB72035D2E90077D873 /* RecentTxsCell.swift */,
 				91DDFE001FCABED7004B0903 /* DeleteAccountCell.swift */,
 				91FFFF5A1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift */,
+				820AAABB2035D6BF0077D873 /* TxCells.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -287,10 +296,13 @@
 			files = (
 				91DDFE011FCABED7004B0903 /* DeleteAccountCell.swift in Sources */,
 				919238761FB09E9000390BE5 /* HomeViewController.swift in Sources */,
+				820AAABA2035D2E90077D873 /* RecentTxsCell.swift in Sources */,
 				9192389B1FB1C62800390BE5 /* KinClientCell.swift in Sources */,
+				820AAABE2035D79B0077D873 /* RecentTxsTableViewController.swift in Sources */,
 				919238741FB09E9000390BE5 /* AppDelegate.swift in Sources */,
 				9192388B1FB1BE1D00390BE5 /* BalanceTableViewCell.swift in Sources */,
 				9176B8FC1FB84C9400AEDBDE /* KinAccountTableViewCell.swift in Sources */,
+				820AAABC2035D6BF0077D873 /* TxCells.swift in Sources */,
 				91FFFF5B1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift in Sources */,
 				910EEA001FB8A3D000610D06 /* SendTransactionViewController.swift in Sources */,
 				919238861FB0A16100390BE5 /* UIKitExtensions.swift in Sources */,

@@ -90,9 +90,7 @@ public protocol KinAccount {
      */
     func balance() throws -> Balance
 
-    func watch(closure: @escaping (Transaction) -> Void) throws
-
-    func cancelWatch()
+    func watch() throws -> PaymentWatch
 
     /**
      **Deprecated**: this method returns the result of `balance(completion:)`.
@@ -299,7 +297,7 @@ final class KinStellarAccount: KinAccount {
         return balance
     }
 
-    public func watch(closure: @escaping (Transaction) -> Void) throws {
+    public func watch() throws -> PaymentWatch {
         guard let stellar = stellar else {
             throw KinError.internalInconsistency
         }
@@ -308,11 +306,7 @@ final class KinStellarAccount: KinAccount {
             throw KinError.accountDeleted
         }
 
-        stellar.watch(account: stellarAccount.publicKey!, closure: closure)
-    }
-
-    public func cancelWatch() {
-        stellar?.cancelWatch()
+        return PaymentWatch(stellar: stellar, account: stellarAccount.publicKey!)
     }
 
     @available(*, deprecated)

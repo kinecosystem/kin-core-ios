@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StellarKit
 
 /**
  A protocol to encapsulate the formation of the endpoint `URL` and the `NetworkId`.
@@ -38,7 +39,80 @@ public typealias TransactionCompletion = (TransactionId?, Error?) -> Void
  */
 public typealias BalanceCompletion = (Balance?, Error?) -> Void
 
-public enum TransactionStatus {
-    case pending
-    case complete
+public struct PaymentInfo {
+    let txInfo: TxInfo
+
+    public var createdAt: String {
+        return txInfo.createdAt
+    }
+
+    public var source: String {
+        return txInfo.source
+    }
+
+    public var hash: String {
+        return txInfo.hash
+    }
+
+    public var amount: Decimal {
+        guard let txAmount = txInfo.amount else {
+            return Decimal(0)
+        }
+
+        return Decimal(txAmount) / Decimal(KinMultiplier)
+    }
+
+    public var destination: String {
+        return txInfo.destination ?? ""
+    }
+
+    init(txInfo: TxInfo) {
+        self.txInfo = txInfo
+    }
+}
+
+public class PaymentWatch {
+    public let filter: (PaymentInfo) -> PaymentInfo? = { $0 }
+    public var onMessage: ((PaymentInfo) -> Void)? = nil
+
+    public var paused: Bool = false {
+        didSet {
+            if paused == false {
+                while buffer.isEmpty == false {
+                    onMessage?(buffer[0])
+                    buffer.remove(at: 0)
+                }
+            }
+        }
+    }
+
+    private let stellar: Stellar
+    private var buffer = [PaymentInfo]()
+
+    init(stellar: Stellar, account: String) {
+        self.stellar = stellar
+
+        stellar.watch(account: account) { [weak self] txInfo in
+            guard let me = self else {
+                return
+            }
+
+            if txInfo.isPayment {
+                if me.paused {
+                    me.buffer.append(PaymentInfo(txInfo: txInfo))
+
+                    while me.buffer.count > 1000 {
+                        me.buffer.remove(at: 0)
+                    }
+                }
+                else {
+                    me.onMessage?(PaymentInfo(txInfo: txInfo))
+                }
+            }
+        }
+    }
+
+    deinit {
+        stellar.cancelWatch()
+    }
 }

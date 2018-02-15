@@ -13,6 +13,7 @@ import StellarKit
 class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!
     private var kinAccount: KinAccount!
+    private var watch: PaymentWatch?
 
     class func instantiate(with kinClient: KinClient, kinAccount: KinAccount) -> KinSampleViewController {
         guard let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "KinSampleViewController") as? KinSampleViewController else {
@@ -34,10 +35,13 @@ class KinSampleViewController: UITableViewController {
 
         tableView.tableFooterView = UIView()
 
-        try? kinAccount.watch { [weak self] tx in
+        watch = try? kinAccount.watch()
+        watch?.onMessage = { [weak self] paymentInfo in
             guard let me = self else {
                 return
             }
+
+            me.add(tx: paymentInfo)
 
             DispatchQueue.main.async {
                 if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
@@ -45,6 +49,26 @@ class KinSampleViewController: UITableViewController {
                 }
             }
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        recentTxsTableViewController = nil
+    }
+    
+    var recentTxsTableViewController: RecentTxsTableViewController?
+
+    private var txs = [PaymentInfo]()
+
+    func add(tx: PaymentInfo) {
+        txs.append(tx)
+
+        while txs.count > 100 {
+            txs.remove(at: 0)
+        }
+
+        recentTxsTableViewController?.add(tx: tx)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,12 +105,29 @@ extension KinSampleViewController: KinClientCellDelegate {
         navigationController?.pushViewController(txViewController, animated: true)
     }
 
+    func recentTransactionsTapped() {
+        guard let txViewController = storyboard?.instantiateViewController(withIdentifier: "RecentTxsTableViewController") as? RecentTxsTableViewController else {
+            return
+        }
+
+        for tx in txs {
+            txViewController.add(tx: tx)
+        }
+
+        txViewController.view.tintColor = view.tintColor
+        txViewController.kinAccount = kinAccount
+        navigationController?.pushViewController(txViewController, animated: true)
+
+        recentTxsTableViewController = txViewController
+    }
+
     func deleteAccountTapped() {
         let alertController = UIAlertController(title: "Delete Wallet?",
                                                 message: "Deleting a wallet will cause funds to be lost",
                                                 preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "OK", style: .destructive) { _ in
             try? self.kinClient.deleteAccount(at: 0, with: KinAccountPassphrase)
+            self.watch = nil
             self.navigationController?.popViewController(animated: true)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
