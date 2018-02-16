@@ -98,15 +98,19 @@ public class PaymentWatch {
             }
 
             if txInfo.isPayment {
+                guard let paymentInfo = me.filter(PaymentInfo(txInfo: txInfo)) else {
+                    return
+                }
+
                 if me.paused {
-                    me.buffer.append(PaymentInfo(txInfo: txInfo))
+                    me.buffer.append(paymentInfo)
 
                     while me.buffer.count > 1000 {
                         me.buffer.remove(at: 0)
                     }
                 }
                 else {
-                    me.onMessage?(PaymentInfo(txInfo: txInfo))
+                    me.onMessage?(paymentInfo)
                 }
             }
         }
