@@ -66,6 +66,10 @@ public struct PaymentInfo {
         return txInfo.destination ?? ""
     }
 
+    public var memo: String? {
+        return txInfo.memoString
+    }
+
     init(txInfo: TxInfo) {
         self.txInfo = txInfo
     }
@@ -77,7 +81,7 @@ public class PaymentWatch {
 
     public var paused: Bool = false {
         didSet {
-            if paused == false {
+            if paused == false && oldValue != paused {
                 while buffer.isEmpty == false {
                     onMessage?(buffer[0])
                     buffer.remove(at: 0)
