@@ -43,7 +43,7 @@ public protocol KinAccount {
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
-                         memo: String?,
+                         memo: Data?,
                          passphrase: String,
                          completion: @escaping TransactionCompletion)
     
@@ -66,7 +66,7 @@ public protocol KinAccount {
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
-                         memo: String?,
+                         memo: Data?,
                          passphrase: String) throws -> TransactionId
     
     /**
@@ -154,7 +154,7 @@ final class KinStellarAccount: KinAccount {
     
     func sendTransaction(to recipient: String,
                          kin: Decimal,
-                         memo: String? = nil,
+                         memo: Data? = nil,
                          passphrase: String,
                          completion: @escaping TransactionCompletion) {
         guard let stellar = stellar else {
@@ -184,7 +184,7 @@ final class KinStellarAccount: KinAccount {
         stellar.payment(source: stellarAccount,
                         destination: recipient,
                         amount: intKin,
-                        memo: memo)
+                        memoData: memo)
             .then { txHash -> Void in
                 self.stellarAccount.sign = nil
 
@@ -199,7 +199,7 @@ final class KinStellarAccount: KinAccount {
     
     func sendTransaction(to recipient: String,
                          kin: Decimal,
-                         memo: String? = nil,
+                         memo: Data? = nil,
                          passphrase: String) throws -> TransactionId {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
