@@ -17,6 +17,7 @@ class SendTransactionViewController: UIViewController {
 
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
+    @IBOutlet weak var memoTextField: UITextField!
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,7 +37,7 @@ class SendTransactionViewController: UIViewController {
 
         kinAccount.sendTransaction(to: address,
                                    kin: Decimal(amount),
-                                   memo: nil,
+                                   memo: memoTextField.text?.data(using: .utf8),
                                    passphrase: KinAccountPassphrase) { transactionId, error in
                                     DispatchQueue.main.async { [weak self] in
                                         guard let aSelf = self else {

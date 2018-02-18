@@ -54,6 +54,13 @@ class RecentTxsTableViewController: UITableViewController {
         cell.amountLabel.text = String(describing: tx.amount)
         cell.dateLabel.text = tx.createdAt
 
+        if let memo = tx.memo {
+            cell.memoLabel.text = String(bytes: memo, encoding: .utf8)
+        }
+        else {
+            cell.memoLabel.text = nil
+        }
+
         return cell
     }
 }

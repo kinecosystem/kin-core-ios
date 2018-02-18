@@ -12,6 +12,7 @@ class TxCell: KinClientCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var memoLabel: UILabel!
 }
 
 class IncomingTxCell: TxCell {
