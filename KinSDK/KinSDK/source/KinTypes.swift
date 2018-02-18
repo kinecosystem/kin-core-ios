@@ -66,8 +66,8 @@ public struct PaymentInfo {
         return txInfo.destination ?? ""
     }
 
-    public var memo: String? {
-        return txInfo.memoString
+    public var memo: Data? {
+        return txInfo.memoData
     }
 
     init(txInfo: TxInfo) {

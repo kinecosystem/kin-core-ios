@@ -181,19 +181,29 @@ final class KinStellarAccount: KinAccount {
             return try self.stellarAccount.sign(message: message, passphrase: passphrase)
         }
 
-        stellar.payment(source: stellarAccount,
-                        destination: recipient,
-                        amount: intKin,
-                        memoData: memo)
-            .then { txHash -> Void in
-                self.stellarAccount.sign = nil
-
-                completion(txHash, nil)
+        do {
+            var m = Memo.MEMO_NONE
+            if let memo = memo {
+                m = try Memo(memo)
             }
-            .error { error in
-                self.stellarAccount.sign = nil
 
-                completion(nil, KinError.paymentFailed(error))
+            stellar.payment(source: stellarAccount,
+                            destination: recipient,
+                            amount: intKin,
+                            memo: m)
+                .then { txHash -> Void in
+                    self.stellarAccount.sign = nil
+
+                    completion(txHash, nil)
+                }
+                .error { error in
+                    self.stellarAccount.sign = nil
+
+                    completion(nil, KinError.paymentFailed(error))
+            }
+        }
+        catch {
+            completion(nil, error)
         }
     }
     
