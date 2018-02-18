@@ -91,27 +91,6 @@ public protocol KinAccount {
     func balance() throws -> Balance
 
     func watch() throws -> PaymentWatch
-
-    /**
-     **Deprecated**: this method returns the result of `balance(completion:)`.
-     
-     - parameter completion: A callback block to be invoked once the pending balance is fetched, or
-     fails to be fetched.
-     */
-    @available(*, deprecated)
-    func pendingBalance(completion: @escaping BalanceCompletion)
-    
-    /**
-     **Deprecated**: this method returns the result of `balance()`.
-     
-     **Do not** call this from the main thread.
-     
-     - throws: An `Error` if balance cannot be fetched.
-     
-     - returns: The pending balance of the account.
-     */
-    @available(*, deprecated)
-    func pendingBalance() throws -> Balance
     
     /**
      Exports this account as a Key Store JSON string, to be backed up by the user.
@@ -309,16 +288,6 @@ final class KinStellarAccount: KinAccount {
         return PaymentWatch(stellar: stellar, account: stellarAccount.publicKey!)
     }
 
-    @available(*, deprecated)
-    func pendingBalance(completion: @escaping BalanceCompletion) {
-        balance(completion: completion)
-    }
-    
-    @available(*, deprecated)
-    func pendingBalance() throws -> Balance {
-        return try balance()
-    }
-    
     @available(*, unavailable)
     private func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
         let accountData = KeyStore.exportAccount(account: stellarAccount, passphrase: passphrase, newPassphrase: exportPassphrase)

@@ -42,16 +42,6 @@ public final class KinClient {
         return stellar.baseURL
     }
 
-    /**
-     The current account associated to this client.
-
-     Returns `nil` if no account has been created yet, or if it was deleted.
-     */
-    @available(*, deprecated)
-    public var account: KinAccount? {
-        return accounts[0]
-    }
-
     public var accounts: KinAccounts
 
     internal let stellar: Stellar
@@ -60,24 +50,6 @@ public final class KinClient {
      The `NetworkId` of the network which this client communicates to.
      */
     public let networkId: NetworkId
-
-    /**
-     Creates an account associated to this client. If one or more accounts already exist, the
-     first account is returned.
-
-     - parameter passphrase: The passphrase to use in order to create the associated account.
-
-     - throws: If creating the account fails.
-     */
-    @available(*, deprecated)
-    public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount {
-        do {
-            return try accounts[0] ?? accounts.createAccount(with: passphrase)
-        }
-        catch {
-            throw KinError.accountCreationFailed(error)
-        }
-    }
 
     /**
      Adds an account associated to this client, and returns it.
@@ -92,27 +64,6 @@ public final class KinClient {
         }
         catch {
             throw KinError.accountCreationFailed(error)
-        }
-    }
-
-    /**
-     Deletes the account at index 0. This method is a no-op in case there are no accounts.
-
-     If this is an action triggered by the user, make sure you let the him know that any funds owned
-     by the account will be lost if it hasn't been backed up. See
-     `exportKeyStore(passphrase:exportPassphrase:)`.
-
-     - parameter passphrase: The passphrase used to create the associated account.
-
-     - throws: If the passphrase is invalid, or if deleting the account fails.
-     */
-    @available(*, deprecated)
-    public func deleteAccount(with passphrase: String) throws {
-        do {
-            try accounts.deleteAccount(at: 0, with: passphrase)
-        }
-        catch {
-            throw KinError.accountDeletionFailed(error)
         }
     }
 

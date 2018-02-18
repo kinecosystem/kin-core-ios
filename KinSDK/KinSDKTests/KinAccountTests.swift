@@ -168,39 +168,6 @@ class KinAccountTests: XCTestCase {
 
     }
 
-    func test_pending_balance() {
-        do {
-            let pendingBalance = try account0?.pendingBalance()
-
-            XCTAssertNotNil(pendingBalance,
-                            "Unable to retrieve pending balance for account: \(String(describing: account0))")
-        }
-        catch {
-            XCTAssertTrue(false, "Something went wrong: \(error)")
-        }
-    }
-
-    func test_pending_balance_async() {
-        let expectation = self.expectation(description: "wait for callback")
-
-        account0!.pendingBalance(completion: { balance, error in
-            let bothNil = balance == nil && error == nil
-            let bothNotNil = balance != nil && error != nil
-
-            let stringBalance = String(describing: balance)
-            let stringError = String(describing: error)
-
-            XCTAssertFalse(bothNil,
-                           "Only one of balance [\(stringBalance)] and error [\(stringError)] should be nil")
-            XCTAssertFalse(bothNotNil,
-                           "Only one of balance [\(stringBalance)] and error [\(stringError)] should be non-nil")
-
-            expectation.fulfill()
-        })
-
-        self.waitForExpectations(timeout: 5.0)
-    }
-
     func test_send_transaction() {
         let sendAmount: Decimal = 5
 
@@ -303,26 +270,6 @@ class KinAccountTests: XCTestCase {
 
             try kinClient.deleteAccount(at: 0, with: passphrase)
             _ = try account?.balance()
-
-            XCTAssert(false, "An exception should have been thrown.")
-        }
-        catch {
-            if let kinError = error as? KinError,
-                case KinError.accountDeleted = kinError {
-            } else {
-                XCTAssertTrue(false,
-                              "Received unexpected error: \(error.localizedDescription)")
-            }
-        }
-    }
-
-    @available(*, deprecated)
-    func test_use_after_delete_pending_balance() {
-        do {
-            let account = kinClient.accounts[0]
-
-            try kinClient.deleteAccount(at: 0, with: passphrase)
-            _ = try account?.pendingBalance()
 
             XCTAssert(false, "An exception should have been thrown.")
         }

@@ -77,30 +77,4 @@ class KinClientTests: XCTestCase {
         }
     }
 
-    @available(*, deprecated)
-    func test_account_creation_limited_to_one_deprecated() {
-        do {
-            _ = try kinClient.createAccountIfNeeded(with: passphrase)
-            _ = try kinClient.createAccountIfNeeded(with: passphrase)
-        }
-        catch {
-        }
-
-        XCTAssertEqual(KeyStore.count(), 1)
-    }
-
-    @available(*, deprecated)
-    func test_delete_account_deprecated() {
-        do {
-            let account = try kinClient.addAccount(with: passphrase)
-
-            try kinClient.deleteAccount(with: passphrase)
-
-            XCTAssertNotNil(account)
-            XCTAssertNil(kinClient.account)
-        }
-        catch {
-            XCTAssertTrue(false, "Something went wrong: \(error)")
-        }
-    }
 }
