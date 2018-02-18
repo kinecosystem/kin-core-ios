@@ -39,7 +39,7 @@ public protocol KinAccount {
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
      - parameter passphrase: The passphrase used to generate the `KinAccount`
-     - parameter memo: An optional string, up-to 28 characters, included on the transaction record.
+     - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
@@ -58,7 +58,7 @@ public protocol KinAccount {
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
      - parameter passphrase: The passphrase used to generate the `KinAccount`
-     - parameter memo: An optional string, up-to 28 characters, included on the transaction record.
+     - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
 
      - throws: An `Error` if the transaction fails to be generated or submitted
      
