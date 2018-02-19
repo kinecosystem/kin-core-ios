@@ -103,28 +103,29 @@ public class PaymentWatch {
         self.stellar = stellar
 
         DispatchQueue.global().async {
-            self.eventSource = stellar.watch(account: account) { [weak self] txInfo in
-                guard let me = self else {
-                    return
-                }
+            self.eventSource = stellar.watch(account: account,
+                                             lastEventId: cursor) { [weak self] txInfo in
+                                                guard let me = self else {
+                                                    return
+                                                }
 
-                if txInfo.isPayment && txInfo.asset == "KIN" {
-                    let paymentInfo = PaymentInfo(txInfo: txInfo)
-                    guard me.filter(paymentInfo) else {
-                        return
-                    }
+                                                if txInfo.isPayment && txInfo.asset == "KIN" {
+                                                    let paymentInfo = PaymentInfo(txInfo: txInfo)
+                                                    guard me.filter(paymentInfo) else {
+                                                        return
+                                                    }
 
-                    if me.paused {
-                        me.buffer.append(paymentInfo)
+                                                    if me.paused {
+                                                        me.buffer.append(paymentInfo)
 
-                        while me.buffer.count > 1000 {
-                            me.buffer.remove(at: 0)
-                        }
-                    }
-                    else {
-                        me.onMessage?(paymentInfo)
-                    }
-                }
+                                                        while me.buffer.count > 1000 {
+                                                            me.buffer.remove(at: 0)
+                                                        }
+                                                    }
+                                                    else {
+                                                        me.onMessage?(paymentInfo)
+                                                    }
+                                                }
             }
         }
     }

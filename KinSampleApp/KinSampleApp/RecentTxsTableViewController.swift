@@ -34,7 +34,7 @@ class RecentTxsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        paymentWatch = try? kinAccount.watch()
+        paymentWatch = try? kinAccount.watch(cursor: nil)
         paymentWatch?.onMessage = { [weak self] paymentInfo in
             guard let me = self else {
                 return

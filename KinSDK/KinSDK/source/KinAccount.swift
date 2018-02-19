@@ -90,7 +90,7 @@ public protocol KinAccount {
      */
     func balance() throws -> Balance
 
-    func watch() throws -> PaymentWatch
+    func watch(cursor: String?) throws -> PaymentWatch
     
     /**
      Exports this account as a Key Store JSON string, to be backed up by the user.
@@ -286,7 +286,7 @@ final class KinStellarAccount: KinAccount {
         return balance
     }
 
-    public func watch() throws -> PaymentWatch {
+    public func watch(cursor: String?) throws -> PaymentWatch {
         guard let stellar = stellar else {
             throw KinError.internalInconsistency
         }
@@ -295,7 +295,7 @@ final class KinStellarAccount: KinAccount {
             throw KinError.accountDeleted
         }
 
-        return PaymentWatch(stellar: stellar, account: stellarAccount.publicKey!)
+        return PaymentWatch(stellar: stellar, account: stellarAccount.publicKey!, cursor: cursor)
     }
 
     @available(*, unavailable)

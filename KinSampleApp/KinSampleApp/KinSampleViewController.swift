@@ -35,7 +35,7 @@ class KinSampleViewController: UITableViewController {
 
         tableView.tableFooterView = UIView()
 
-        watch = try? kinAccount.watch()
+        watch = try? kinAccount.watch(cursor: "now")
         watch?.onMessage = { [weak self] paymentInfo in
             guard let me = self else {
                 return
