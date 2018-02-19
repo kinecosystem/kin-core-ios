@@ -11,6 +11,10 @@ import KinSDK
 
 class RecentTxsTableViewController: UITableViewController {
     private var txs = [PaymentInfo]()
+    private var filteredTxs: [PaymentInfo]?
+
+    private var paymentWatch: PaymentWatch?
+
     var kinAccount: KinAccount!
 
     func add(tx: PaymentInfo) {
@@ -20,6 +24,8 @@ class RecentTxsTableViewController: UITableViewController {
             txs.remove(at: txs.count - 1)
         }
 
+        filteredTxs?.insert(tx, at: 0)
+
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
@@ -27,6 +33,15 @@ class RecentTxsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        paymentWatch = try? kinAccount.watch()
+        paymentWatch?.onMessage = { [weak self] paymentInfo in
+            guard let me = self else {
+                return
+            }
+
+            me.add(tx: paymentInfo)
+        }
     }
 
     // MARK: - Table view data source
@@ -36,11 +51,11 @@ class RecentTxsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return txs.count
+        return filteredTxs?.count ?? txs.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tx = txs[indexPath.row]
+        let tx = filteredTxs?[indexPath.row] ?? txs[indexPath.row]
 
         let cell: TxCell
 
@@ -62,5 +77,34 @@ class RecentTxsTableViewController: UITableViewController {
         }
 
         return cell
+    }
+}
+
+extension RecentTxsTableViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+
+        if let text = textField.text, text.isEmpty == false {
+            let filter: (PaymentInfo) -> Bool = { paymentInfo in
+                if let memo = paymentInfo.memo, let string = String(bytes: memo, encoding: .utf8) {
+                    return string.contains(text)
+                }
+
+                return false
+            }
+
+            filteredTxs = txs.filter(filter)
+            tableView.reloadData()
+
+            paymentWatch?.filter = filter
+        }
+        else {
+            paymentWatch?.filter = { _ in true }
+            filteredTxs = nil
+            
+            tableView.reloadData()
+        }
+
+        return true
     }
 }

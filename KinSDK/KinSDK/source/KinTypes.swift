@@ -76,7 +76,7 @@ public struct PaymentInfo {
 }
 
 public class PaymentWatch {
-    public let filter: (PaymentInfo) -> PaymentInfo? = { $0 }
+    public var filter: (PaymentInfo) -> Bool = { _ in true }
     public var onMessage: ((PaymentInfo) -> Void)? = nil
 
     public var paused: Bool = false {
@@ -102,7 +102,8 @@ public class PaymentWatch {
             }
 
             if txInfo.isPayment {
-                guard let paymentInfo = me.filter(PaymentInfo(txInfo: txInfo)) else {
+                let paymentInfo = PaymentInfo(txInfo: txInfo)
+                guard me.filter(paymentInfo) else {
                     return
                 }
 

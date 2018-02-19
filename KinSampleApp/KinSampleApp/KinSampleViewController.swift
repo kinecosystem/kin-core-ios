@@ -41,34 +41,12 @@ class KinSampleViewController: UITableViewController {
                 return
             }
 
-            me.add(tx: paymentInfo)
-
             DispatchQueue.main.async {
                 if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
                     balanceCell.refreshBalance(me)
                 }
             }
         }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        recentTxsTableViewController = nil
-    }
-    
-    var recentTxsTableViewController: RecentTxsTableViewController?
-
-    private var txs = [PaymentInfo]()
-
-    func add(tx: PaymentInfo) {
-        txs.append(tx)
-
-        while txs.count > 100 {
-            txs.remove(at: 0)
-        }
-
-        recentTxsTableViewController?.add(tx: tx)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -110,15 +88,9 @@ extension KinSampleViewController: KinClientCellDelegate {
             return
         }
 
-        for tx in txs {
-            txViewController.add(tx: tx)
-        }
-
-        txViewController.view.tintColor = view.tintColor
         txViewController.kinAccount = kinAccount
+        txViewController.view.tintColor = view.tintColor
         navigationController?.pushViewController(txViewController, animated: true)
-
-        recentTxsTableViewController = txViewController
     }
 
     func deleteAccountTapped() {
