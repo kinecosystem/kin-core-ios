@@ -76,6 +76,8 @@ public struct PaymentInfo {
 }
 
 public class PaymentWatch {
+    private var eventSource: StellarEventSource?
+
     public var filter: (PaymentInfo) -> Bool = { _ in true }
     public var onMessage: ((PaymentInfo) -> Void)? = nil
 
@@ -96,32 +98,34 @@ public class PaymentWatch {
     init(stellar: Stellar, account: String) {
         self.stellar = stellar
 
-        stellar.watch(account: account) { [weak self] txInfo in
-            guard let me = self else {
-                return
-            }
-
-            if txInfo.isPayment {
-                let paymentInfo = PaymentInfo(txInfo: txInfo)
-                guard me.filter(paymentInfo) else {
+        DispatchQueue.global().async {
+            self.eventSource = stellar.watch(account: account) { [weak self] txInfo in
+                guard let me = self else {
                     return
                 }
 
-                if me.paused {
-                    me.buffer.append(paymentInfo)
-
-                    while me.buffer.count > 1000 {
-                        me.buffer.remove(at: 0)
+                if txInfo.isPayment {
+                    let paymentInfo = PaymentInfo(txInfo: txInfo)
+                    guard me.filter(paymentInfo) else {
+                        return
                     }
-                }
-                else {
-                    me.onMessage?(paymentInfo)
+
+                    if me.paused {
+                        me.buffer.append(paymentInfo)
+
+                        while me.buffer.count > 1000 {
+                            me.buffer.remove(at: 0)
+                        }
+                    }
+                    else {
+                        me.onMessage?(paymentInfo)
+                    }
                 }
             }
         }
     }
 
     deinit {
-        stellar.cancelWatch()
+        eventSource?.close()
     }
 }
