@@ -92,10 +92,14 @@ public class PaymentWatch {
         }
     }
 
+    public var cursor: String? {
+        return eventSource?.lastEventId
+    }
+
     private let stellar: Stellar
     private var buffer = [PaymentInfo]()
 
-    init(stellar: Stellar, account: String) {
+    init(stellar: Stellar, account: String, cursor: String? = nil) {
         self.stellar = stellar
 
         DispatchQueue.global().async {
@@ -104,7 +108,7 @@ public class PaymentWatch {
                     return
                 }
 
-                if txInfo.isPayment {
+                if txInfo.isPayment && txInfo.asset == "KIN" {
                     let paymentInfo = PaymentInfo(txInfo: txInfo)
                     guard me.filter(paymentInfo) else {
                         return
