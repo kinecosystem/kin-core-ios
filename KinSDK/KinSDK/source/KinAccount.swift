@@ -19,6 +19,8 @@ public protocol KinAccount {
      manually to someone, or if you want to display the public address, use this property.
      */
     var publicAddress: String { get }
+
+    var extra: Data? { get set }
     
     /**
      Allow an account to receive KIN.
@@ -121,7 +123,21 @@ final class KinStellarAccount: KinAccount {
     var publicAddress: String {
         return stellarAccount.publicKey!
     }
-    
+
+    var extra: Data? {
+        get {
+            guard let extra = try? stellarAccount.extra() else {
+                return nil
+            }
+
+            return extra
+        }
+
+        set {
+            try? KeyStore.set(extra: newValue, for: stellarAccount)
+        }
+    }
+
     init(stellarAccount: StellarAccount, stellar: Stellar) {
         self.stellarAccount = stellarAccount
         self.stellar = stellar

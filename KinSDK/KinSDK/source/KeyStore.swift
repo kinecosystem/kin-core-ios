@@ -36,10 +36,11 @@ public struct AccountData: Codable {
     let pkey: String
     let seed: String
     let salt: String
+    let extra: Data?
 }
 
 public class StellarAccount: Account {
-    private(set) fileprivate var storageKey: String
+    fileprivate let storageKey: String
 
     public var publicKey: String? {
         guard let accountData = try? accountData() else {
@@ -47,6 +48,10 @@ public class StellarAccount: Account {
         }
 
         return accountData.pkey
+    }
+
+    public func extra() throws -> Data? {
+        return try accountData().extra
     }
 
     public var sign: ((Data) throws -> Data)?
@@ -117,6 +122,17 @@ public struct KeyStore {
 
     public static func account(at index: Int) -> StellarAccount? {
         return StorageClass.account(at: index)
+    }
+
+    public static func set(extra: Data?, for account: StellarAccount) throws {
+        let accountData = try account.accountData()
+
+        let newData = AccountData(pkey: accountData.pkey,
+                                  seed: accountData.seed,
+                                  salt: accountData.salt,
+                                  extra: extra)
+
+        try save(accountData: newData, key: account.storageKey)
     }
 
     @discardableResult
@@ -201,7 +217,8 @@ public struct KeyStore {
 
         return AccountData(pkey: KeyUtils.base32(publicKey: keypair.publicKey),
                            seed: encryptedSeed.hexString,
-                           salt: salt)
+                           salt: salt,
+                           extra: nil)
     }
 
     private static func reencrypt(_ accountData: AccountData,
@@ -221,7 +238,8 @@ public struct KeyStore {
 
         return AccountData(pkey: accountData.pkey,
                            seed: encryptedSeed.hexString,
-                           salt: newSalt)
+                           salt: newSalt,
+                           extra: nil)
     }
 
     private static func save(accountData: AccountData, key: String) throws {

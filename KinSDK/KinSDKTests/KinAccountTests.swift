@@ -130,6 +130,15 @@ class KinAccountTests: XCTestCase {
         return balance
     }
 
+    func test_extra_data() {
+        var a1 = kinClient.accounts[0]
+        a1?.extra = Data([1, 2, 3])
+
+        let a2 = kinClient.accounts[0]
+
+        XCTAssertEqual(Data([1, 2, 3]), a2?.extra)
+    }
+
     func test_balance_sync() {
         do {
             var balance = try account0?.balance()

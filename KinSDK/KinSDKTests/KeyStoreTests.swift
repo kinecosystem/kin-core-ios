@@ -45,6 +45,12 @@ class KeyStoreTests: XCTestCase {
         super.tearDown()
     }
 
+    func test_extra_data() {
+        try? KeyStore.set(extra: Data([1, 2, 4]), for: KeyStore.account(at: 0)!)
+        let a1 = KeyStore.account(at: 0)
+        try XCTAssertEqual(Data([1, 2, 4]), a1?.extra())
+    }
+
     func test_remove() {
         let account_pkey = account!.publicKey!
 
