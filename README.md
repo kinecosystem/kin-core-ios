@@ -60,6 +60,16 @@ account.activate(passphrase: "pass phrase", completion: { txHash, error in
 
 - `func sendTransaction(to: String, kin: Double, passphrase: String) throws -> TransactionId`: Sends a specific amount to an account's address, given the passphrase. Throws an error in case the passphrase is wrong. Returns the transaction ID. **Currently returns a hardcoded value of `MockTransactionId`**
 
+## Error handling
+
+`KinSDK` wraps errors in an operation-specific error for each method of `KinAccount`.  The underlying error is the actual cause of failure.
+
+### Common errors
+
+`StellarError.missingAccount`: The account does not exist on the Stellar network.  You must create the account by issuing a `CREATE_ACCOUNT` operation with `KinAccount.publicAddress` as the destination.  This is done using an app-specific service, and is outside the scope of this SDK.
+
+`StellarError.missingBalance`: For an account to receive KIN, it must trust the KIN Issuer.  Call `KinAccount.activate()` to perform this operation.
+
 ## Contributing
 
 Please review our [CONTRIBUTING.md](CONTRIBUTING.md) guide before opening issues and pull requests.
