@@ -13,7 +13,7 @@ import StellarKit
  `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
  other accounts.
  */
-public protocol KinAccount {
+public protocol KinAccount: class {
     /**
      The public address of this account. If the user wants to receive KIN by sending his address
      manually to someone, or if you want to display the public address, use this property.

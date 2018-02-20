@@ -131,7 +131,7 @@ class KinAccountTests: XCTestCase {
     }
 
     func test_extra_data() {
-        var a1 = kinClient.accounts[0]
+        let a1 = kinClient.accounts[0]
         a1?.extra = Data([1, 2, 3])
 
         let a2 = kinClient.accounts[0]
