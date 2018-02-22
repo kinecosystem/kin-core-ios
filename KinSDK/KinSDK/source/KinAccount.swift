@@ -199,7 +199,7 @@ final class KinStellarAccount: KinAccount {
 
         do {
             var m = Memo.MEMO_NONE
-            if let memo = memo {
+            if let memo = memo, !memo.isEmpty {
                 m = try Memo(memo)
             }
 
