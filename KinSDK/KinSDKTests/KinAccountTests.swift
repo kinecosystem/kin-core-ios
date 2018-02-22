@@ -177,7 +177,7 @@ class KinAccountTests: XCTestCase {
 
     }
 
-    func test_send_transaction() {
+    func test_send_transaction_with_nil_memo() {
         let sendAmount: Decimal = 5
 
         do {
@@ -198,6 +198,78 @@ class KinAccountTests: XCTestCase {
             let txId = try account0.sendTransaction(to: account1.publicAddress,
                                                     kin: sendAmount,
                                                     memo: nil,
+                                                    passphrase: passphrase)
+
+            XCTAssertNotNil(txId)
+
+            let balance0 = try account0.balance()
+            let balance1 = try account1.balance()
+
+            XCTAssertEqual(balance0, startBalance0 - sendAmount)
+            XCTAssertEqual(balance1, startBalance1 + sendAmount)
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
+
+    func test_send_transaction_with_memo() {
+        let sendAmount: Decimal = 5
+
+        do {
+            guard
+                let account0 = account0,
+                let account1 = account1 else {
+                    XCTAssertTrue(false, "No accounts to use.")
+                    return
+            }
+
+            var startBalance0 = try account0.balance()
+            let startBalance1 = try account1.balance()
+
+            if startBalance0 == 0 {
+                startBalance0 = try wait_for_non_zero_balance(account: account0)
+            }
+
+            let txId = try account0.sendTransaction(to: account1.publicAddress,
+                                                    kin: sendAmount,
+                                                    memo: "memo",
+                                                    passphrase: passphrase)
+
+            XCTAssertNotNil(txId)
+
+            let balance0 = try account0.balance()
+            let balance1 = try account1.balance()
+
+            XCTAssertEqual(balance0, startBalance0 - sendAmount)
+            XCTAssertEqual(balance1, startBalance1 + sendAmount)
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
+
+    func test_send_transaction_with_empty_memo() {
+        let sendAmount: Decimal = 5
+
+        do {
+            guard
+                let account0 = account0,
+                let account1 = account1 else {
+                    XCTAssertTrue(false, "No accounts to use.")
+                    return
+            }
+
+            var startBalance0 = try account0.balance()
+            let startBalance1 = try account1.balance()
+
+            if startBalance0 == 0 {
+                startBalance0 = try wait_for_non_zero_balance(account: account0)
+            }
+
+            let txId = try account0.sendTransaction(to: account1.publicAddress,
+                                                    kin: sendAmount,
+                                                    memo: "",
                                                     passphrase: passphrase)
 
             XCTAssertNotNil(txId)
