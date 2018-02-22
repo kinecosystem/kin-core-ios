@@ -69,12 +69,7 @@ class RecentTxsTableViewController: UITableViewController {
         cell.amountLabel.text = String(describing: tx.amount)
         cell.dateLabel.text = tx.createdAt
 
-        if let memo = tx.memo {
-            cell.memoLabel.text = String(bytes: memo, encoding: .utf8)
-        }
-        else {
-            cell.memoLabel.text = nil
-        }
+        cell.memoLabel.text = tx.memoText
 
         return cell
     }
@@ -86,8 +81,8 @@ extension RecentTxsTableViewController: UITextFieldDelegate {
 
         if let text = textField.text, text.isEmpty == false {
             let filter: (PaymentInfo) -> Bool = { paymentInfo in
-                if let memo = paymentInfo.memo, let string = String(bytes: memo, encoding: .utf8) {
-                    return string.contains(text)
+                if let memo = paymentInfo.memoText {
+                    return memo.contains(text)
                 }
 
                 return false
