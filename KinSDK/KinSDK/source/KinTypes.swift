@@ -80,61 +80,33 @@ public struct PaymentInfo {
 }
 
 public class PaymentWatch {
-    private var eventSource: StellarEventSource?
+    private var txWatch: TxWatch!
+    private var linkBag = LinkBag()
 
-    public var filter: (PaymentInfo) -> Bool = { _ in true }
-    public var onMessage: ((PaymentInfo) -> Void)? = nil
+    public let emitter: PausableObserver<PaymentInfo>
 
-    public var paused: Bool = false {
-        didSet {
-            if paused == false && oldValue != paused {
-                while buffer.isEmpty == false {
-                    onMessage?(buffer[0])
-                    buffer.remove(at: 0)
-                }
-            }
+    public var paused: Bool {
+        get {
+            return emitter.paused
+        }
+
+        set {
+            emitter.paused = newValue
         }
     }
 
     public var cursor: String? {
-        return eventSource?.lastEventId
+        return txWatch.eventSource.lastEventId
     }
-
-    private let stellar: Stellar
-    private var buffer = [PaymentInfo]()
 
     init(stellar: Stellar, account: String, cursor: String? = nil) {
-        self.stellar = stellar
+        self.txWatch = stellar.watch(account: account, lastEventId: cursor)
 
-        DispatchQueue.global().async {
-            self.eventSource = stellar.watch(account: account,
-                                             lastEventId: cursor) { [weak self] txInfo in
-                                                guard let me = self else {
-                                                    return
-                                                }
+        self.emitter = self.txWatch.emitter
+            .filter({ $0.isPayment && $0.asset == "KIN" })
+            .map({ return PaymentInfo(txInfo: $0) })
+            .pausable(limit: 1000)
 
-                                                if txInfo.isPayment && txInfo.asset == "KIN" {
-                                                    let paymentInfo = PaymentInfo(txInfo: txInfo)
-                                                    guard me.filter(paymentInfo) else {
-                                                        return
-                                                    }
-
-                                                    if me.paused {
-                                                        me.buffer.append(paymentInfo)
-
-                                                        while me.buffer.count > 1000 {
-                                                            me.buffer.remove(at: 0)
-                                                        }
-                                                    }
-                                                    else {
-                                                        me.onMessage?(paymentInfo)
-                                                    }
-                                                }
-            }
-        }
-    }
-
-    deinit {
-        eventSource?.close()
+        self.emitter.add(to: linkBag)
     }
 }

@@ -2,50 +2,57 @@
 //  RecentTxsTableViewController.swift
 //  KinSampleApp
 //
-//  Created by Avi Shevin on 15/02/2018.
+//  Created by Kin Foundation.
 //  Copyright © 2018 Kin Foundation. All rights reserved.
 //
 
 import UIKit
 import KinSDK
+import StellarKit
 
 class RecentTxsTableViewController: UITableViewController {
     private var txs = [PaymentInfo]()
     private var filteredTxs: [PaymentInfo]?
 
-    private var paymentWatch: PaymentWatch?
+    private var watch: PaymentWatch?
+    private var memoFilter = Observable<String?>()
+    private let linkBag = LinkBag()
 
     var kinAccount: KinAccount!
-
-    func add(tx: PaymentInfo) {
-        txs.insert(tx, at: 0)
-
-        while txs.count > 100 {
-            txs.remove(at: txs.count - 1)
-        }
-
-        filteredTxs?.insert(tx, at: 0)
-
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        paymentWatch = try? kinAccount.watch(cursor: nil)
-        paymentWatch?.onMessage = { [weak self] paymentInfo in
-            guard let me = self else {
-                return
-            }
+        watch = try? kinAccount.watch(cursor: nil)
+        watch?.emitter
+            .accumulate(limit: 100)
+            .combine(with: memoFilter)
+            .map({ (payments, filterText) -> [PaymentInfo]? in
+                return payments?.reversed().filter({
+                    guard let filterText = filterText else {
+                        return true
+                    }
 
-            me.add(tx: paymentInfo)
-        }
+                    if let filterText = filterText, !filterText.isEmpty {
+                        return $0.memoText?.contains(filterText) ?? false
+                    }
+
+                    return true
+                })
+            })
+            .on(next: { [weak self] payments in
+                self?.filteredTxs = payments
+            })
+            .on(queue: .main, next: { [weak self] _ in
+                self?.tableView.reloadData()
+            })
+            .add(to: linkBag)
     }
+}
 
-    // MARK: - Table view data source
+// MARK: - Table view data source
 
+extension RecentTxsTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -79,26 +86,13 @@ extension RecentTxsTableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
 
-        if let text = textField.text, text.isEmpty == false {
-            let filter: (PaymentInfo) -> Bool = { paymentInfo in
-                if let memo = paymentInfo.memoText {
-                    return memo.contains(text)
-                }
+        return true
+    }
 
-                return false
-            }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let new = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
 
-            filteredTxs = txs.filter(filter)
-            tableView.reloadData()
-
-            paymentWatch?.filter = filter
-        }
-        else {
-            paymentWatch?.filter = { _ in true }
-            filteredTxs = nil
-            
-            tableView.reloadData()
-        }
+        memoFilter.next(new)
 
         return true
     }
