@@ -8,7 +8,7 @@
 
 import UIKit
 import KinSDK
-import StellarKit
+import KinUtil
 
 class RecentTxsTableViewController: UITableViewController {
     private var txs = [PaymentInfo]()

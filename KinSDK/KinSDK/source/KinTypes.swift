@@ -8,6 +8,7 @@
 
 import Foundation
 import StellarKit
+import KinUtil
 
 /**
  A protocol to encapsulate the formation of the endpoint `URL` and the `NetworkId`.
