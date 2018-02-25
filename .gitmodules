@@ -1,6 +1,3 @@
 [submodule "KinSDK/StellarKit"]
 	path = KinSDK/StellarKit
 	url = https://github.com/kinfoundation/StellarKit.git
-[submodule "KinSDK/kin-util-ios"]
-	path = KinSDK/kin-util-ios
-	url = https://github.com/kinfoundation/kin-util-ios.git

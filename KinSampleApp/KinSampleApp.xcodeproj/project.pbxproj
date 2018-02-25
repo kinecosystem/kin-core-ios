@@ -10,6 +10,8 @@
 		820AAABA2035D2E90077D873 /* RecentTxsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAAB72035D2E90077D873 /* RecentTxsCell.swift */; };
 		820AAABC2035D6BF0077D873 /* TxCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAABB2035D6BF0077D873 /* TxCells.swift */; };
 		820AAABE2035D79B0077D873 /* RecentTxsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAABD2035D79B0077D873 /* RecentTxsTableViewController.swift */; };
+		8261EF2220433381001848CB /* KinUtil.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8261EF2120433380001848CB /* KinUtil.framework */; };
+		8261EF2320433381001848CB /* KinUtil.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8261EF2120433380001848CB /* KinUtil.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		910EEA001FB8A3D000610D06 /* SendTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */; };
 		910EEA041FB8A60C00610D06 /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA031FB8A60C00610D06 /* HelperExtensions.swift */; };
 		910EEA061FB8A8DC00610D06 /* SendTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */; };
@@ -76,6 +78,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				91ED61131FB212D5006D9FCC /* KinSDK.framework in Embed Frameworks */,
+				8261EF2320433381001848CB /* KinUtil.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +89,7 @@
 		820AAAB72035D2E90077D873 /* RecentTxsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTxsCell.swift; sourceTree = "<group>"; };
 		820AAABB2035D6BF0077D873 /* TxCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxCells.swift; sourceTree = "<group>"; };
 		820AAABD2035D79B0077D873 /* RecentTxsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTxsTableViewController.swift; sourceTree = "<group>"; };
+		8261EF2120433380001848CB /* KinUtil.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KinUtil.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionViewController.swift; sourceTree = "<group>"; };
 		910EEA031FB8A60C00610D06 /* HelperExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
 		910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91ED610F1FB1CE6E006D9FCC /* KinSDK.framework in Frameworks */,
+				8261EF2220433381001848CB /* KinUtil.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +127,7 @@
 		919238671FB09E9000390BE5 = {
 			isa = PBXGroup;
 			children = (
+				8261EF2120433380001848CB /* KinUtil.framework */,
 				9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */,
 				919238721FB09E9000390BE5 /* KinSampleApp */,
 				919238711FB09E9000390BE5 /* Products */,
