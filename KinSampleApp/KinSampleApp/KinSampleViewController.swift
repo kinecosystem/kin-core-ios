@@ -14,6 +14,7 @@ class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!
     private var kinAccount: KinAccount!
     private var watch: PaymentWatch?
+    private let linkBag = LinkBag()
 
     class func instantiate(with kinClient: KinClient, kinAccount: KinAccount) -> KinSampleViewController {
         guard let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "KinSampleViewController") as? KinSampleViewController else {
@@ -36,17 +37,16 @@ class KinSampleViewController: UITableViewController {
         tableView.tableFooterView = UIView()
 
         watch = try? kinAccount.watch(cursor: "now")
-        watch?.onMessage = { [weak self] paymentInfo in
+        watch?.emitter.on(queue: .main, next: { [weak self] paymentInfo in
             guard let me = self else {
                 return
             }
 
-            DispatchQueue.main.async {
-                if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                    balanceCell.refreshBalance(me)
-                }
+            if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                balanceCell.refreshBalance(me)
             }
-        }
+        })
+        .add(to: linkBag)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
