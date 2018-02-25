@@ -96,4 +96,10 @@ extension RecentTxsTableViewController: UITextFieldDelegate {
 
         return true
     }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        memoFilter.next(nil)
+
+        return true
+    }
 }
