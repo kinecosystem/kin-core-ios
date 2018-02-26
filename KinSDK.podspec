@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.5.3'
+  s.version          = '0.6.0'
   s.summary          = 'Pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -14,8 +14,9 @@ Pod::Spec.new do |s|
 
   s.source_files = 'KinSDK/KinSDK/**/*.swift'
 
-  s.dependency 'StellarKit', '0.1.7'
+  s.dependency 'StellarKit', '0.2.0'
 
   s.ios.deployment_target = '8.0'
+  s.swift_version = "3.2"
   s.platform = :ios, '8.0'
 end
