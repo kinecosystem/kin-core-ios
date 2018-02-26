@@ -38,12 +38,8 @@ class KinSampleViewController: UITableViewController {
 
         watch = try? kinAccount.watchBalance()
         watch?.emitter.on(queue: .main, next: { [weak self] balance in
-            guard let me = self else {
-                return
-            }
-
-            if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                balanceCell.balance = balance
+            if let balanceCell = self?.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                balanceCell.balance = balance.balance
             }
         })
         .add(to: linkBag)

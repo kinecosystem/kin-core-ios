@@ -83,6 +83,10 @@ public struct PaymentInfo {
         return txInfo.memoData
     }
 
+    public var sequence: UInt64 {
+        return txInfo.sequence
+    }
+
     init(txInfo: TxInfo, account: String) {
         self.txInfo = txInfo
         self.account = account

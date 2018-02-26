@@ -34,7 +34,7 @@ public class PaymentWatch {
         self.txWatch = stellar.watch(account: account, lastEventId: cursor)
 
         self.emitter = self.txWatch.emitter
-            .filter({ $0.isPayment && $0.asset == "KIN" })
+            .filter({ (ti: TxInfo) in ti.isPayment && ti.asset == "KIN" })
             .map({ return PaymentInfo(txInfo: $0, account: account) })
             .pausable(limit: 1000)
 
@@ -44,23 +44,17 @@ public class PaymentWatch {
 
 public class BalanceWatch {
     private var paymentWatch: PaymentWatch
-    private var balance: Decimal = 0
-    private var linkBag = LinkBag()
 
-    public let emitter = Observable<Decimal>()
+    public let emitter: Observable<(balance: Decimal, sequence: UInt64)>
 
-    init(stellar: Stellar, account: String) {
+    init(stellar: Stellar, account: String, sequence: UInt64? = nil) {
         self.paymentWatch = PaymentWatch(stellar: stellar, account: account)
 
-        paymentWatch.emitter
-            .on(next: { [weak self] paymentInfo in
-                guard let me = self else {
-                    return
-                }
+        var balance: Decimal = 0
 
-                me.balance += paymentInfo.amount * (paymentInfo.debit ? -1 : 1)
-                me.emitter.next(me.balance)
-            })
-            .add(to: linkBag)
+        self.emitter = paymentWatch.emitter
+            .on(next: { balance += $0.amount * ($0.debit ? -1 : 1) })
+            .filter({ return sequence != nil && $0.sequence > sequence! || true })
+            .map({ return (balance: balance, sequence: $0.sequence) })
     }
 }
