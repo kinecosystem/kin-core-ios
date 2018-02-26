@@ -8,6 +8,7 @@
 
 import Foundation
 import StellarKit
+import KinUtil
 
 /**
  `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
@@ -92,7 +93,9 @@ public protocol KinAccount: class {
      */
     func balance() throws -> Balance
 
-    func watch(cursor: String?) throws -> PaymentWatch
+    func watchBalance() throws -> BalanceWatch
+
+    func watchPayments(cursor: String?) throws -> PaymentWatch
     
     /**
      Exports this account as a Key Store JSON string, to be backed up by the user.
@@ -302,7 +305,20 @@ final class KinStellarAccount: KinAccount {
         return balance
     }
 
-    public func watch(cursor: String?) throws -> PaymentWatch {
+
+    public func watchBalance() throws -> BalanceWatch {
+        guard let stellar = stellar else {
+            throw KinError.internalInconsistency
+        }
+
+        guard deleted == false else {
+            throw KinError.accountDeleted
+        }
+
+        return BalanceWatch(stellar: stellar, account: stellarAccount.publicKey!)
+    }
+
+    public func watchPayments(cursor: String?) throws -> PaymentWatch {
         guard let stellar = stellar else {
             throw KinError.internalInconsistency
         }

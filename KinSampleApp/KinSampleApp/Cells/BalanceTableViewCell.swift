@@ -13,7 +13,15 @@ class BalanceTableViewCell: KinClientCell {
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var balanceActivityIndicator: UIActivityIndicatorView!
-    var balance: Decimal = 0
+    var balance: Decimal = 0 {
+        didSet {
+            DispatchQueue.main.async {
+                if let formattedBalance = self.numberFormatter.string(from: self.balance as NSDecimalNumber) {
+                    self.balanceLabel.text = "\(formattedBalance) KIN"
+                }
+            }
+        }
+    }
 
     var ongoingRequests = 0 {
         didSet {

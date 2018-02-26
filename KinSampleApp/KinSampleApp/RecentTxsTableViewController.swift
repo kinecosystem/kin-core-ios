@@ -23,7 +23,7 @@ class RecentTxsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        watch = try? kinAccount.watch(cursor: nil)
+        watch = try? kinAccount.watchPayments(cursor: nil)
         watch?.emitter
             .accumulate(limit: 100)
             .combine(with: memoFilter)

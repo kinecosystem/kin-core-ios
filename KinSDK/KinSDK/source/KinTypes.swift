@@ -8,7 +8,6 @@
 
 import Foundation
 import StellarKit
-import KinUtil
 
 /**
  A protocol to encapsulate the formation of the endpoint `URL` and the `NetworkId`.
@@ -90,34 +89,3 @@ public struct PaymentInfo {
     }
 }
 
-public class PaymentWatch {
-    private var txWatch: TxWatch!
-    private var linkBag = LinkBag()
-
-    public let emitter: PausableObserver<PaymentInfo>
-
-    public var paused: Bool {
-        get {
-            return emitter.paused
-        }
-
-        set {
-            emitter.paused = newValue
-        }
-    }
-
-    public var cursor: String? {
-        return txWatch.eventSource.lastEventId
-    }
-
-    init(stellar: Stellar, account: String, cursor: String? = nil) {
-        self.txWatch = stellar.watch(account: account, lastEventId: cursor)
-
-        self.emitter = self.txWatch.emitter
-            .filter({ $0.isPayment && $0.asset == "KIN" })
-            .map({ return PaymentInfo(txInfo: $0, account: account) })
-            .pausable(limit: 1000)
-
-        self.emitter.add(to: linkBag)
-    }
-}

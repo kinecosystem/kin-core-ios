@@ -13,7 +13,7 @@ import KinUtil
 class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!
     private var kinAccount: KinAccount!
-    private var watch: PaymentWatch?
+    private var watch: BalanceWatch?
     private let linkBag = LinkBag()
 
     class func instantiate(with kinClient: KinClient, kinAccount: KinAccount) -> KinSampleViewController {
@@ -36,14 +36,14 @@ class KinSampleViewController: UITableViewController {
 
         tableView.tableFooterView = UIView()
 
-        watch = try? kinAccount.watch(cursor: "now")
-        watch?.emitter.on(queue: .main, next: { [weak self] paymentInfo in
+        watch = try? kinAccount.watchBalance()
+        watch?.emitter.on(queue: .main, next: { [weak self] balance in
             guard let me = self else {
                 return
             }
 
             if let balanceCell = me.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                balanceCell.refreshBalance(me)
+                balanceCell.balance = balance
             }
         })
         .add(to: linkBag)
