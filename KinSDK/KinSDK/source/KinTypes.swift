@@ -39,6 +39,12 @@ public typealias TransactionCompletion = (TransactionId?, Error?) -> Void
  */
 public typealias BalanceCompletion = (Balance?, Error?) -> Void
 
+public enum AccountStatus {
+    case notCreated
+    case notActivated
+    case activated
+}
+
 public struct PaymentInfo {
     private let txInfo: TxInfo
     private let account: String

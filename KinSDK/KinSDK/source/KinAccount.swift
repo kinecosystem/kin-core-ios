@@ -30,7 +30,9 @@ public protocol KinAccount: class {
      - parameter completion: A block which receives the results of the activation
      */
     func activate(passphrase: String, completion: @escaping (String?, Error?) -> Void)
-    
+
+    func status(completion: @escaping (AccountStatus?, Error?) -> Void)
+
     /**
      **Asynchronously** posts a Kin transfer to a specific address.
      
@@ -170,7 +172,32 @@ final class KinStellarAccount: KinAccount {
                 completion(nil, KinError.activationFailed(error))
         }
     }
-    
+
+    func status(completion: @escaping (AccountStatus?, Error?) -> Void) {
+        balance { balance, error in
+            if let error = error {
+                if case let KinError.balanceQueryFailed(e) = error,
+                    let stellarError = e as? StellarError {
+                    switch stellarError {
+                    case .missingAccount: completion(.notCreated, nil)
+                    case .missingBalance: completion(.notActivated, nil)
+                    default: completion(nil, error)
+                    }
+                }
+                else {
+                    completion(nil, error)
+                }
+            }
+
+            if balance != nil {
+                completion(.activated, nil)
+            }
+            else {
+                completion(nil, KinError.internalInconsistency)
+            }
+        }
+    }
+
     func sendTransaction(to recipient: String,
                          kin: Decimal,
                          memo: String? = nil,
