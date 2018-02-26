@@ -14,17 +14,7 @@ public class PaymentWatch {
     private var txWatch: TxWatch!
     private var linkBag = LinkBag()
 
-    public let emitter: PausableObserver<PaymentInfo>
-
-    public var paused: Bool {
-        get {
-            return emitter.paused
-        }
-
-        set {
-            emitter.paused = newValue
-        }
-    }
+    public let emitter: Observable<PaymentInfo>
 
     public var cursor: String? {
         return txWatch.eventSource.lastEventId
@@ -36,14 +26,13 @@ public class PaymentWatch {
         self.emitter = self.txWatch.emitter
             .filter({ (ti: TxInfo) in ti.isPayment && ti.asset == "KIN" })
             .map({ return PaymentInfo(txInfo: $0, account: account) })
-            .pausable(limit: 1000)
 
         self.emitter.add(to: linkBag)
     }
 }
 
 public class BalanceWatch {
-    private var paymentWatch: PaymentWatch
+    private let paymentWatch: PaymentWatch
 
     public let emitter: Observable<(balance: Decimal, sequence: UInt64)>
 
