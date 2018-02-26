@@ -30,8 +30,6 @@
 		91DDFDFC1FC6ED99004B0903 /* KinError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDFDFB1FC6ED99004B0903 /* KinError.swift */; };
 		E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */; };
-		E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BCB1FBC736300C84F1C /* String+extensions.swift */; };
-		E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,8 +118,6 @@
 		91D4395D1FC410860006FEB5 /* KinAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccount.swift; sourceTree = "<group>"; };
 		91DDFDFB1FC6ED99004B0903 /* KinError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinError.swift; sourceTree = "<group>"; };
 		E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestServiceProviders.swift; sourceTree = "<group>"; };
-		E9816BCB1FBC736300C84F1C /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
-		E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +174,6 @@
 		82140EAB1FA88E5B00FAF19B /* KinSDK */ = {
 			isa = PBXGroup;
 			children = (
-				824CBAA11FB9932700B736AA /* extensions */,
 				8246E7231FC836F30087140A /* source */,
 				82140EAD1FA88E5B00FAF19B /* Info.plist */,
 				82140EAC1FA88E5B00FAF19B /* KinSDK.h */,
@@ -217,15 +212,6 @@
 				8261EF322043F390001848CB /* Watchers.swift */,
 			);
 			path = source;
-			sourceTree = "<group>";
-		};
-		824CBAA11FB9932700B736AA /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */,
-				E9816BCB1FBC736300C84F1C /* String+extensions.swift */,
-			);
-			path = extensions;
 			sourceTree = "<group>";
 		};
 		8278352F1FA9B5F20006C3DF /* KinTestHost */ = {
@@ -450,12 +436,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */,
-				E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */,
 				91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */,
 				91DDFDFC1FC6ED99004B0903 /* KinError.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* KinTypes.swift in Sources */,
 				91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */,
-				E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */,
 				E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */,
 				8261EF332043F390001848CB /* Watchers.swift in Sources */,
 				822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */,
