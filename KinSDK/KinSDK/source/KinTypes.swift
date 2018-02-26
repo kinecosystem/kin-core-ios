@@ -41,10 +41,19 @@ public typealias TransactionCompletion = (TransactionId?, Error?) -> Void
 public typealias BalanceCompletion = (Balance?, Error?) -> Void
 
 public struct PaymentInfo {
-    let txInfo: TxInfo
+    private let txInfo: TxInfo
+    private let account: String
 
     public var createdAt: String {
         return txInfo.createdAt
+    }
+
+    public var credit: Bool {
+        return account != txInfo.source
+    }
+
+    public var debit: Bool {
+        return !credit
     }
 
     public var source: String {
@@ -75,8 +84,9 @@ public struct PaymentInfo {
         return txInfo.memoData
     }
 
-    init(txInfo: TxInfo) {
+    init(txInfo: TxInfo, account: String) {
         self.txInfo = txInfo
+        self.account = account
     }
 }
 
@@ -105,7 +115,7 @@ public class PaymentWatch {
 
         self.emitter = self.txWatch.emitter
             .filter({ $0.isPayment && $0.asset == "KIN" })
-            .map({ return PaymentInfo(txInfo: $0) })
+            .map({ return PaymentInfo(txInfo: $0, account: account) })
             .pausable(limit: 1000)
 
         self.emitter.add(to: linkBag)

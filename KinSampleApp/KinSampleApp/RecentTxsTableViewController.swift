@@ -66,9 +66,7 @@ extension RecentTxsTableViewController {
 
         let cell: TxCell
 
-        let reuseIdentifier = tx.source == kinAccount.publicAddress
-            ? "OutgoingCell"
-            : "IncomingCell"
+        let reuseIdentifier = tx.debit ? "OutgoingCell" : "IncomingCell"
 
         cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TxCell
 
