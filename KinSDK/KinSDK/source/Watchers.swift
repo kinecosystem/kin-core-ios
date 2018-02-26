@@ -11,8 +11,8 @@ import StellarKit
 import KinUtil
 
 public class PaymentWatch {
-    private var txWatch: TxWatch!
-    private var linkBag = LinkBag()
+    private let txWatch: TxWatch
+    private let linkBag = LinkBag()
 
     public let emitter: Observable<PaymentInfo>
 
@@ -43,7 +43,7 @@ public class BalanceWatch {
 
         self.emitter = paymentWatch.emitter
             .on(next: { balance += $0.amount * ($0.debit ? -1 : 1) })
-            .filter({ return sequence != nil && $0.sequence > sequence! || true })
+            .filter({ return (sequence != nil && $0.sequence > sequence!) || sequence == nil })
             .map({ return (balance: balance, sequence: $0.sequence) })
     }
 }
