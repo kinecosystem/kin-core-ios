@@ -109,12 +109,7 @@ public protocol KinAccount: class {
      
      - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
      */
-    //    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
-    
-    /**
-     :nodoc
-     */
-    func fund(completion: @escaping (Bool) -> Void)
+//    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
 }
 
 let KinMultiplier: UInt64 = 10000000
@@ -372,25 +367,5 @@ final class KinStellarAccount: KinAccount {
         }
         
         return String(data: jsonData, encoding: .utf8)
-    }
-}
-
-// For testing
-
-extension KinStellarAccount {
-    public func fund(completion: @escaping (Bool) -> Void) {
-        guard let stellar = stellar else {
-            completion(false)
-            
-            return
-        }
-        
-        stellar.fund(account: stellarAccount.publicKey!)
-            .then { success -> Void in
-                completion(true)
-            }
-            .error { error in
-                completion(false)
-        }
     }
 }

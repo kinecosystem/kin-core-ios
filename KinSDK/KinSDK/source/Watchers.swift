@@ -2,7 +2,7 @@
 //  Watchers.swift
 //  KinSDK
 //
-//  Created by Avi Shevin on 26/02/2018.
+//  Created by Kin Foundation.
 //  Copyright © 2018 Kin Foundation. All rights reserved.
 //
 

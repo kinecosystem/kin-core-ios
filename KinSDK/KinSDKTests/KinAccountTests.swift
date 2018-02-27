@@ -9,6 +9,7 @@
 import XCTest
 @testable import KinSDK
 @testable import StellarKit
+import KinUtil
 
 class KinAccountTests: XCTestCase {
 
@@ -57,6 +58,36 @@ class KinAccountTests: XCTestCase {
         kinClient.deleteKeystore()
     }
 
+    func fund(account: String) -> Promise<String> {
+        let funderPK = "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7"
+        let funderSK = "SAXSDD5YEU6GMTJ5IHA6K35VZHXFVPV6IHMWYAQPSEKJRNC5LGMUQX35"
+
+        let sourcePK = PublicKey.PUBLIC_KEY_TYPE_ED25519(WrappedData32(KeyUtils.key(base32: funderPK)))
+
+        let funder = try! KeyStore.importSecretSeed(funderSK, passphrase: passphrase)
+        funder.sign = { message in
+            return try funder.sign(message: message, passphrase: self.passphrase)
+        }
+
+        let stellar = Stellar(baseURL: node.url,
+                              asset: Asset(assetCode: "KIN", issuer: node.networkId.issuer))
+
+        return stellar.sequence(account: funderPK)
+            .then { sequence in
+                let tx = Transaction(sourceAccount: sourcePK,
+                                     seqNum: sequence + 1,
+                                     timeBounds: nil,
+                                     memo: .MEMO_NONE,
+                                     operations: [stellar.createAccountOp(destination: account,
+                                                                          balance: 10 * 10000000)])
+
+                let envelope = try stellar.sign(transaction: tx,
+                                                signer: funder)
+
+                return stellar.postTransaction(baseURL: stellar.baseURL, envelope: envelope)
+        }
+    }
+
     func obtain_kin_and_lumens(for account: KinStellarAccount) throws {
         let group = DispatchGroup()
         group.enter()
@@ -69,7 +100,7 @@ class KinAccountTests: XCTestCase {
             throw KinError.unknown
         }
 
-        stellar.fund(account: account.stellarAccount.publicKey!)
+        fund(account: account.stellarAccount.publicKey!)
             .then { txHash -> Void in
                 account.activate(passphrase: self.passphrase) { txHash, error in
                     if let error = error {
