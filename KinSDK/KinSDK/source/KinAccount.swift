@@ -182,6 +182,8 @@ final class KinStellarAccount: KinAccount {
                 else {
                     completion(nil, error)
                 }
+
+                return
             }
 
             if balance != nil {
