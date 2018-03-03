@@ -69,7 +69,7 @@ class KinAccountTests: XCTestCase {
             return try funder.sign(message: message, passphrase: self.passphrase)
         }
 
-        let stellar = Stellar(baseURL: node.url,
+        let stellar = Stellar(node: StellarNode(baseURL: node.url),
                               asset: Asset(assetCode: "KIN", issuer: node.networkId.issuer))
 
         return stellar.sequence(account: funderPK)
@@ -78,13 +78,13 @@ class KinAccountTests: XCTestCase {
                                      seqNum: sequence + 1,
                                      timeBounds: nil,
                                      memo: .MEMO_NONE,
-                                     operations: [stellar.createAccountOp(destination: account,
-                                                                          balance: 10 * 10000000)])
+                                     operations: [Operation.createAccountOp(destination: account,
+                                                                            balance: 10 * 10000000)])
 
                 let envelope = try stellar.sign(transaction: tx,
                                                 signer: funder)
 
-                return stellar.postTransaction(baseURL: stellar.baseURL, envelope: envelope)
+                return stellar.postTransaction(baseURL: stellar.node.baseURL, envelope: envelope)
         }
     }
 
@@ -93,7 +93,7 @@ class KinAccountTests: XCTestCase {
         group.enter()
 
         var e: Error?
-        let stellar = Stellar(baseURL: node.url,
+        let stellar = Stellar(node: StellarNode(baseURL: node.url),
                               asset: Asset(assetCode: "KIN", issuer: node.networkId.issuer))
 
         guard let issuer = issuer else {

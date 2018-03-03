@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StellarKit
 
 /**
  `NetworkId` represents the block chain network to which `KinClient` will connect.
@@ -25,7 +26,7 @@ public enum NetworkId {
     /**
      A network with a custom ID. **Currently unsupported**
      */
-    case custom(issuer: String, stellarNetworkId: String)
+    case custom(issuer: String, stellarNetworkId: StellarKit.NetworkId)
 }
 
 extension NetworkId {
@@ -40,12 +41,12 @@ extension NetworkId {
         }
     }
 
-    public var stellarNetworkId: String {
+    public var stellarNetworkId: StellarKit.NetworkId {
         switch self {
         case .mainNet:
-            return ""
+            return .main
         case .testNet:
-            return "Test SDF Network ; September 2015"
+            return .test
         case .custom(_, let stellarNetworkId):
             return stellarNetworkId
         }
