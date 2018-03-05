@@ -1,6 +1,6 @@
 //
 //  KeyStore.swift
-//  StellarKit
+//  KinSDK
 //
 //  Created by Kin Foundation
 //  Copyright © 2018 Kin Foundation. All rights reserved.
@@ -81,7 +81,7 @@ public class StellarAccount: Account {
             return nil
         }
 
-        return KeyUtils.base32(seed: seed)
+        return StellarKit.KeyUtils.base32(seed: seed)
     }
 
     init(storageKey: String) {
@@ -146,7 +146,7 @@ public struct KeyStore {
 
     @discardableResult
     public static func importSecretSeed(_ seed: String, passphrase: String) throws -> StellarAccount {
-        let seedData = KeyUtils.key(base32: seed)
+        let seedData = StellarKit.KeyUtils.key(base32: seed)
 
         let storageKey = StorageClass.nextStorageKey()
 
@@ -215,7 +215,7 @@ public struct KeyStore {
             throw KeyStoreErrors.keypairGenerationFailed
         }
 
-        return AccountData(pkey: KeyUtils.base32(publicKey: keypair.publicKey),
+        return AccountData(pkey: StellarKit.KeyUtils.base32(publicKey: keypair.publicKey),
                            seed: encryptedSeed.hexString,
                            salt: salt,
                            extra: nil)

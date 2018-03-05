@@ -4,3 +4,6 @@
 [submodule "KinSDK/KinSDK/source/third-party/keychain-swift"]
 	path = KinSDK/KinSDK/source/third-party/keychain-swift
 	url = https://github.com/filippovdev/keychain-swift.git
+[submodule "KinSDK/KinSDK/source/third-party/swift-sodium"]
+	path = KinSDK/KinSDK/source/third-party/swift-sodium
+	url = https://github.com/jedisct1/swift-sodium.git
