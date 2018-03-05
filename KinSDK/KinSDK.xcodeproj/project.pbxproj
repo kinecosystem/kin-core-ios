@@ -23,6 +23,9 @@
 		827835381FA9B5F20006C3DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 827835371FA9B5F20006C3DF /* Assets.xcassets */; };
 		8278353B1FA9B5F20006C3DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 827835391FA9B5F20006C3DF /* LaunchScreen.storyboard */; };
 		827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835451FA9B5F20006C3DF /* KinClientTests.swift */; };
+		82BA1E83204D062800396AE2 /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1E3F204D062800396AE2 /* KeychainSwift.swift */; };
+		82BA1E84204D062800396AE2 /* KeychainSwiftAccessOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1E40204D062800396AE2 /* KeychainSwiftAccessOptions.swift */; };
+		82BA1E85204D062800396AE2 /* TegKeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1E41204D062800396AE2 /* TegKeychainConstants.swift */; };
 		82F6D8051FB2112B00AEE17D /* KinSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9148CE4F1FCACF9C0005D603 /* NetworkId.swift */; };
 		91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395B1FC410630006FEB5 /* KinClient.swift */; };
@@ -113,6 +116,9 @@
 		827835411FA9B5F20006C3DF /* KinSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		827835451FA9B5F20006C3DF /* KinClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientTests.swift; sourceTree = "<group>"; };
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82BA1E3F204D062800396AE2 /* KeychainSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwift.swift; sourceTree = "<group>"; };
+		82BA1E40204D062800396AE2 /* KeychainSwiftAccessOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftAccessOptions.swift; sourceTree = "<group>"; };
+		82BA1E41204D062800396AE2 /* TegKeychainConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TegKeychainConstants.swift; sourceTree = "<group>"; };
 		9148CE4F1FCACF9C0005D603 /* NetworkId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkId.swift; sourceTree = "<group>"; };
 		91D4395B1FC410630006FEB5 /* KinClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClient.swift; sourceTree = "<group>"; };
 		91D4395D1FC410860006FEB5 /* KinAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccount.swift; sourceTree = "<group>"; };
@@ -202,6 +208,7 @@
 		8246E7231FC836F30087140A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				82BA1E2B204D062800396AE2 /* third-party */,
 				8268D8EE2014431D005CF79E /* KeyStore.swift */,
 				91D4395D1FC410860006FEB5 /* KinAccount.swift */,
 				822107A31FD66DC80007D63F /* KinAccounts.swift */,
@@ -237,6 +244,32 @@
 				E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */,
 			);
 			path = KinSDKTests;
+			sourceTree = "<group>";
+		};
+		82BA1E2B204D062800396AE2 /* third-party */ = {
+			isa = PBXGroup;
+			children = (
+				82BA1E2C204D062800396AE2 /* keychain-swift */,
+			);
+			path = "third-party";
+			sourceTree = "<group>";
+		};
+		82BA1E2C204D062800396AE2 /* keychain-swift */ = {
+			isa = PBXGroup;
+			children = (
+				82BA1E3C204D062800396AE2 /* KeychainSwift */,
+			);
+			path = "keychain-swift";
+			sourceTree = "<group>";
+		};
+		82BA1E3C204D062800396AE2 /* KeychainSwift */ = {
+			isa = PBXGroup;
+			children = (
+				82BA1E3F204D062800396AE2 /* KeychainSwift.swift */,
+				82BA1E40204D062800396AE2 /* KeychainSwiftAccessOptions.swift */,
+				82BA1E41204D062800396AE2 /* TegKeychainConstants.swift */,
+			);
+			path = KeychainSwift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,9 +470,12 @@
 			files = (
 				9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */,
 				91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */,
+				82BA1E84204D062800396AE2 /* KeychainSwiftAccessOptions.swift in Sources */,
 				91DDFDFC1FC6ED99004B0903 /* KinError.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* KinTypes.swift in Sources */,
+				82BA1E85204D062800396AE2 /* TegKeychainConstants.swift in Sources */,
 				91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */,
+				82BA1E83204D062800396AE2 /* KeychainSwift.swift in Sources */,
 				E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */,
 				8261EF332043F390001848CB /* Watchers.swift in Sources */,
 				822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */,

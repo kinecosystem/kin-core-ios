@@ -1,3 +1,6 @@
 [submodule "KinSDK/StellarKit"]
 	path = KinSDK/StellarKit
 	url = https://github.com/kinfoundation/StellarKit.git
+[submodule "KinSDK/KinSDK/source/third-party/keychain-swift"]
+	path = KinSDK/KinSDK/source/third-party/keychain-swift
+	url = https://github.com/filippovdev/keychain-swift.git

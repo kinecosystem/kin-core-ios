@@ -6,21 +6,6 @@ KinSampleApp/KinSampleApp.xcodeproj/project.xcworkspace/xcuserdata
 KinSampleApp/KinSampleApp.xcodeproj/xcuserdata
 
 KinSDK/build
-KinSDK/Geth.framework
-geth-commit
-
-# test related files (ethereum testrpc):
-
-truffle/node_modules
-truffle/build
-
-truffle/testrpc.log
-truffle/testrpc.pid
-
-truffle/truffle.log
-truffle/token-contract-address
-
-npm-debug.log
 
 # Documentation
 
