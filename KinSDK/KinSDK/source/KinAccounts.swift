@@ -28,7 +28,7 @@ public final class KinAccounts {
         return account(at: index)
     }
 
-    func createAccount(with passphrase: String) throws -> KinAccount {
+    func createAccount() throws -> KinAccount {
         guard let stellar = stellar else {
             throw KinError.internalInconsistency
         }
@@ -38,7 +38,7 @@ public final class KinAccounts {
             self.cacheLock.unlock()
         }
 
-        let account = try KinStellarAccount(stellarAccount: KeyStore.newAccount(passphrase: passphrase),
+        let account = try KinStellarAccount(stellarAccount: KeyStore.newAccount(passphrase: ""),
                                             stellar: stellar)
 
         cache[count - 1] = account
@@ -46,7 +46,7 @@ public final class KinAccounts {
         return account
     }
 
-    func deleteAccount(at index: Int, with passphrase: String) throws {
+    func deleteAccount(at index: Int) throws {
         self.cacheLock.lock()
         defer {
             self.cacheLock.unlock()

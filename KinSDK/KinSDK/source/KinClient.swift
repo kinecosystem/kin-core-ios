@@ -55,13 +55,11 @@ public final class KinClient {
     /**
      Adds an account associated to this client, and returns it.
 
-     - parameter passphrase: The passphrase to use in order to create the associated account.
-
      - throws: If creating the account fails.
      */
-    public func addAccount(with passphrase: String) throws -> KinAccount {
+    public func addAccount() throws -> KinAccount {
         do {
-            return try accounts.createAccount(with: passphrase)
+            return try accounts.createAccount()
         }
         catch {
             throw KinError.accountCreationFailed(error)
@@ -77,13 +75,12 @@ public final class KinClient {
      `exportKeyStore(passphrase:exportPassphrase:)`.
 
      - parameter index: The index of the account to delete.
-     - parameter passphrase: The passphrase used to create the associated account.
 
-     - throws: If the passphrase is invalid, or if deleting the account fails.
+     - throws: When deleting the account fails.
      */
-    public func deleteAccount(at index: Int, with passphrase: String) throws {
+    public func deleteAccount(at index: Int) throws {
         do {
-            try accounts.deleteAccount(at: index, with: passphrase)
+            try accounts.deleteAccount(at: index)
         }
         catch {
             throw KinError.accountDeletionFailed(error)

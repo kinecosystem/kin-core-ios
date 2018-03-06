@@ -12,7 +12,6 @@ import XCTest
 
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
-    let passphrase = UUID().uuidString
     let stellar = NodeProvider(networkId: .testNet)
 
     override func setUp() {
@@ -39,7 +38,7 @@ class KinClientTests: XCTestCase {
         XCTAssertNil(account, "There should not be an existing account!")
 
         do {
-            account = try kinClient.addAccount(with: passphrase)
+            account = try kinClient.addAccount()
         }
         catch {
             e = error
@@ -50,9 +49,9 @@ class KinClientTests: XCTestCase {
 
     func test_delete_account() {
         do {
-            let account = try kinClient.addAccount(with: passphrase)
+            let account = try kinClient.addAccount()
 
-            try kinClient.deleteAccount(at: 0, with: passphrase)
+            try kinClient.deleteAccount(at: 0)
 
             XCTAssertNotNil(account)
             XCTAssertNil(kinClient.accounts[0])
@@ -64,7 +63,7 @@ class KinClientTests: XCTestCase {
 
     func test_account_instance_reuse() {
         do {
-            let _ = try kinClient.addAccount(with: passphrase) as? KinStellarAccount
+            let _ = try kinClient.addAccount() as? KinStellarAccount
 
             let first = kinClient.accounts[0] as? KinStellarAccount
             let second = kinClient.accounts[0] as? KinStellarAccount

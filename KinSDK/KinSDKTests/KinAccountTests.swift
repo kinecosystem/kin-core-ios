@@ -34,8 +34,8 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Unable to clear existing accounts!")
         }
 
-        self.account0 = try? kinClient.addAccount(with: passphrase)
-        self.account1 = try? kinClient.addAccount(with: passphrase)
+        self.account0 = try? kinClient.addAccount()
+        self.account1 = try? kinClient.addAccount()
 
         if account0 == nil || account1 == nil {
             XCTAssertTrue(false, "Unable to create account(s)!")
@@ -102,7 +102,7 @@ class KinAccountTests: XCTestCase {
 
         fund(account: account.stellarAccount.publicKey!)
             .then { txHash -> Void in
-                account.activate(passphrase: self.passphrase) { txHash, error in
+                account.activate() { txHash, error in
                     if let error = error {
                         e = error
 
@@ -228,8 +228,7 @@ class KinAccountTests: XCTestCase {
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
                                                     kin: sendAmount,
-                                                    memo: nil,
-                                                    passphrase: passphrase)
+                                                    memo: nil)
 
             XCTAssertNotNil(txId)
 
@@ -264,8 +263,7 @@ class KinAccountTests: XCTestCase {
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
                                                     kin: sendAmount,
-                                                    memo: "memo",
-                                                    passphrase: passphrase)
+                                                    memo: "memo")
 
             XCTAssertNotNil(txId)
 
@@ -300,8 +298,7 @@ class KinAccountTests: XCTestCase {
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
                                                     kin: sendAmount,
-                                                    memo: "",
-                                                    passphrase: passphrase)
+                                                    memo: "")
 
             XCTAssertNotNil(txId)
 
@@ -330,8 +327,7 @@ class KinAccountTests: XCTestCase {
             do {
                 _ = try account0.sendTransaction(to: account1.publicAddress,
                                                  kin: balance * 10000000 + 1,
-                                                 memo: nil,
-                                                 passphrase: passphrase)
+                                                 memo: nil)
                 XCTAssertTrue(false,
                               "Tried to send kin with insufficient funds, but didn't get an error")
             }
@@ -361,8 +357,7 @@ class KinAccountTests: XCTestCase {
         do {
             _ = try account0.sendTransaction(to: account1.publicAddress,
                                              kin: 0,
-                                             memo: nil,
-                                             passphrase: passphrase)
+                                             memo: nil)
             XCTAssertTrue(false,
                           "Tried to send kin with insufficient funds, but didn't get an error")
         }
@@ -380,7 +375,7 @@ class KinAccountTests: XCTestCase {
         do {
             let account = kinClient.accounts[0]
 
-            try kinClient.deleteAccount(at: 0, with: passphrase)
+            try kinClient.deleteAccount(at: 0)
             _ = try account?.balance()
 
             XCTAssert(false, "An exception should have been thrown.")
@@ -399,8 +394,8 @@ class KinAccountTests: XCTestCase {
         do {
             let account = kinClient.accounts[0]
             
-            try kinClient.deleteAccount(at: 0, with: passphrase)
-            _ = try account?.sendTransaction(to: "", kin: 1, memo: nil, passphrase: passphrase)
+            try kinClient.deleteAccount(at: 0)
+            _ = try account?.sendTransaction(to: "", kin: 1, memo: nil)
 
             XCTAssert(false, "An exception should have been thrown.")
         }

@@ -26,10 +26,9 @@ public protocol KinAccount: class {
     /**
      Allow an account to receive KIN.
      
-     - parameter passphrase: The passphrase used to generate the `KinAccount`
      - parameter completion: A block which receives the results of the activation
      */
-    func activate(passphrase: String, completion: @escaping (String?, Error?) -> Void)
+    func activate(completion: @escaping (String?, Error?) -> Void)
 
     func status(completion: @escaping (AccountStatus?, Error?) -> Void)
 
@@ -43,13 +42,11 @@ public protocol KinAccount: class {
      
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
-     - parameter passphrase: The passphrase used to generate the `KinAccount`
      - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
                          memo: String?,
-                         passphrase: String,
                          completion: @escaping TransactionCompletion)
     
     /**
@@ -62,7 +59,6 @@ public protocol KinAccount: class {
      
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
-     - parameter passphrase: The passphrase used to generate the `KinAccount`
      - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
 
      - throws: An `Error` if the transaction fails to be generated or submitted
@@ -71,8 +67,7 @@ public protocol KinAccount: class {
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
-                         memo: String?,
-                         passphrase: String) throws -> TransactionId
+                         memo: String?) throws -> TransactionId
     
     /**
      **Asynchronously** gets the current Kin balance. **Does not** take into account
@@ -143,7 +138,7 @@ final class KinStellarAccount: KinAccount {
         self.stellar = stellar
     }
     
-    public func activate(passphrase: String, completion: @escaping (String?, Error?) -> Void) {
+    public func activate(completion: @escaping (String?, Error?) -> Void) {
         guard let stellar = stellar else {
             completion(nil, KinError.internalInconsistency)
             
@@ -151,7 +146,7 @@ final class KinStellarAccount: KinAccount {
         }
 
         stellarAccount.sign = { message in
-            return try self.stellarAccount.sign(message: message, passphrase: passphrase)
+            return try self.stellarAccount.sign(message: message, passphrase: "")
         }
         
         stellar.trust(asset: stellar.asset,
@@ -198,7 +193,6 @@ final class KinStellarAccount: KinAccount {
     func sendTransaction(to recipient: String,
                          kin: Decimal,
                          memo: String? = nil,
-                         passphrase: String,
                          completion: @escaping TransactionCompletion) {
         guard let stellar = stellar else {
             completion(nil, KinError.internalInconsistency)
@@ -221,7 +215,7 @@ final class KinStellarAccount: KinAccount {
         }
 
         stellarAccount.sign = { message in
-            return try self.stellarAccount.sign(message: message, passphrase: passphrase)
+            return try self.stellarAccount.sign(message: message, passphrase: "")
         }
 
         do {
@@ -252,15 +246,14 @@ final class KinStellarAccount: KinAccount {
     
     func sendTransaction(to recipient: String,
                          kin: Decimal,
-                         memo: String? = nil,
-                         passphrase: String) throws -> TransactionId {
+                         memo: String? = nil) throws -> TransactionId {
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         
         var errorToThrow: Error? = nil
         var txHashToReturn: TransactionId? = nil
         
-        sendTransaction(to: recipient, kin: kin, memo: memo, passphrase: passphrase) { txHash, error in
+        sendTransaction(to: recipient, kin: kin, memo: memo) { txHash, error in
             errorToThrow = error
             txHashToReturn = txHash
             
