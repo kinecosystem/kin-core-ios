@@ -332,12 +332,11 @@ class KinAccountTests: XCTestCase {
                               "Tried to send kin with insufficient funds, but didn't get an error")
             }
             catch {
-                if case let KinError.paymentFailed(error) = error,
-                    let paymentError = error as? PaymentError {
-                    XCTAssertEqual(paymentError, PaymentError.PAYMENT_UNDERFUNDED)
-                } else {
+                guard case KinError.insufficientFunds = error else {
                     XCTAssertTrue(false,
-                                  "Tried to send kin, and got error, but not a PaymentError: \(error.localizedDescription)")
+                                  "Tried to send kin, and got error, but not .insufficientFunds: \(error)")
+
+                    return
                 }
             }
         }

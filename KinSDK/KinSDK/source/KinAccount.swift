@@ -236,6 +236,12 @@ final class KinStellarAccount: KinAccount {
                 .error { error in
                     self.stellarAccount.sign = nil
 
+                    if let error = error as? PaymentError, error == .PAYMENT_UNDERFUNDED {
+                        completion(nil, KinError.insufficientFunds)
+
+                        return
+                    }
+                    
                     completion(nil, KinError.paymentFailed(error))
             }
         }

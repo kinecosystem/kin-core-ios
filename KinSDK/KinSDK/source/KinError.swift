@@ -45,6 +45,11 @@ public enum KinError: Error {
     case invalidAmount
 
     /**
+     The account does not have sufficient Kin to complete the transaction.
+     */
+    case insufficientFunds
+
+    /**
      Thrown when trying to use an instance of `KinAccount` after `deleteAccount(:)` has been called.
      */
     case accountDeleted
@@ -76,6 +81,8 @@ extension KinError: LocalizedError {
             return "Balance query failed"
         case .invalidAmount:
             return "Invalid Amount"
+        case .insufficientFunds:
+            return "Insufficient funds"
         case .accountDeleted:
             return "Account Deleted"
         case .internalInconsistency:
