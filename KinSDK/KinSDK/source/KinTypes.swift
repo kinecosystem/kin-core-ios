@@ -55,7 +55,7 @@ public struct PaymentInfo {
     }
 
     public var credit: Bool {
-        return account != txInfo.source
+        return account == destination
     }
 
     public var debit: Bool {

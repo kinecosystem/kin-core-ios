@@ -51,10 +51,9 @@ public class BalanceWatch {
         self.paymentWatch = PaymentWatch(stellar: stellar, account: account)
 
         self.emitter = paymentWatch.emitter
-            .filter({ return $0.sequence > sequence })
+            .filter({ return $0.sequence > sequence && $0.source != $0.destination })
             .map({
-                let debit = BalanceWatch.debit(account, paymentInfo: $0)
-                balance += $0.amount * (debit ? -1 : 1)
+                balance += $0.amount * ($0.debit ? -1 : 1)
 
                 return balance
             })
