@@ -105,7 +105,6 @@
 		82BA200B204D22C500396AE2 /* Sodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F91204D22C400396AE2 /* Sodium.swift */; };
 		82BA200C204D22C500396AE2 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F92204D22C400396AE2 /* Stream.swift */; };
 		82BA200D204D22C500396AE2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F93204D22C400396AE2 /* Utils.swift */; };
-		82BA2015204D231600396AE2 /* libsodium-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BA2013204D231600396AE2 /* libsodium-osx.a */; };
 		82BA2016204D231600396AE2 /* libsodium-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BA2014204D231600396AE2 /* libsodium-ios.a */; };
 		82BA20AD204D867200396AE2 /* TegKeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1ED3204D22AB00396AE2 /* TegKeychainConstants.swift */; };
 		82BA20AE204D867200396AE2 /* KeyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F47204D22C400396AE2 /* KeyExchange.swift */; };
@@ -135,7 +134,6 @@
 		82BA20C6204D867200396AE2 /* PWHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F8A204D22C400396AE2 /* PWHash.swift */; };
 		82BA20C7204D867200396AE2 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8268D8EE2014431D005CF79E /* KeyStore.swift */; };
 		82BA20C9204D867200396AE2 /* libsodium-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BA2013204D231600396AE2 /* libsodium-osx.a */; };
-		82BA20CA204D867200396AE2 /* libsodium-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BA2014204D231600396AE2 /* libsodium-ios.a */; };
 		82BA20CB204D867200396AE2 /* KinUtil.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8261EF28204333A1001848CB /* KinUtil.framework */; };
 		82BA20CC204D867200396AE2 /* StellarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824063BF201488460055D70A /* StellarKit.framework */; };
 		82BA20CE204D867200396AE2 /* randombytes.h in Headers */ = {isa = PBXBuildFile; fileRef = 82BA1F83204D22C400396AE2 /* randombytes.h */; };
@@ -406,7 +404,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82BA2015204D231600396AE2 /* libsodium-osx.a in Frameworks */,
 				82BA2016204D231600396AE2 /* libsodium-ios.a in Frameworks */,
 				8261EF27204333A1001848CB /* KinUtil.framework in Frameworks */,
 				824063CB20148B290055D70A /* StellarKit.framework in Frameworks */,
@@ -434,7 +431,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82BA20C9204D867200396AE2 /* libsodium-osx.a in Frameworks */,
-				82BA20CA204D867200396AE2 /* libsodium-ios.a in Frameworks */,
 				82BA20CB204D867200396AE2 /* KinUtil.framework in Frameworks */,
 				82BA20CC204D867200396AE2 /* StellarKit.framework in Frameworks */,
 			);

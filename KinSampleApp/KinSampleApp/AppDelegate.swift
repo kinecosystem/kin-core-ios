@@ -8,8 +8,6 @@
 
 import UIKit
 
-let KinAccountPassphrase = "AccountPassphrase"
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

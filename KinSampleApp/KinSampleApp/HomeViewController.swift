@@ -74,7 +74,7 @@ class HomeViewController: UIViewController {
         let alertController = UIAlertController(title: "No \(testOrMainNet) Net Wallet Yet", message: "Let's create a new one, using the kinClient.createAccountIfNeeded() api.", preferredStyle: .alert)
         let createWalletAction = UIAlertAction(title: "Create a Wallet", style: .default) { _ in
             do {
-                let kinAccount = try kinClient.addAccount(with: KinAccountPassphrase)
+                let kinAccount = try kinClient.addAccount()
                 self.showSampleViewController(with: kinClient, kinAccount: kinAccount, production: production)
             } catch {
                 print("KinAccount couldn't be created: \(error)")

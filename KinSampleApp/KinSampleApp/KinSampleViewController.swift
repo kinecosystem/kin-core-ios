@@ -39,7 +39,7 @@ class KinSampleViewController: UITableViewController {
         watch = try? kinAccount.watchBalance()
         watch?.emitter.on(queue: .main, next: { [weak self] balance in
             if let balanceCell = self?.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                balanceCell.balance = balance.balance
+                balanceCell.balance = balance
             }
         })
         .add(to: linkBag)
@@ -94,7 +94,7 @@ extension KinSampleViewController: KinClientCellDelegate {
                                                 message: "Deleting a wallet will cause funds to be lost",
                                                 preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "OK", style: .destructive) { _ in
-            try? self.kinClient.deleteAccount(at: 0, with: KinAccountPassphrase)
+            try? self.kinClient.deleteAccount(at: 0)
             self.watch = nil
             self.navigationController?.popViewController(animated: true)
         }
@@ -198,7 +198,7 @@ extension KinSampleViewController: KinClientCellDelegate {
     private func activate() -> Promise<Bool> {
         let p = Promise<Bool>()
 
-        kinAccount.activate(passphrase: KinAccountPassphrase, completion: { txHash, error in
+        kinAccount.activate(completion: { txHash, error in
             if let error = error {
                 print("Activation failed: \(error)")
 

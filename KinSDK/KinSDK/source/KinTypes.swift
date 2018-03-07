@@ -48,6 +48,7 @@ public enum AccountStatus {
 public struct PaymentInfo {
     private let txInfo: TxInfo
     private let account: String
+    private let asset: Asset
 
     public var createdAt: String {
         return txInfo.createdAt
@@ -62,7 +63,7 @@ public struct PaymentInfo {
     }
 
     public var source: String {
-        return txInfo.source
+        return txInfo.payments.filter({ $0.asset == asset }).first?.source ?? txInfo.source
     }
 
     public var hash: String {
@@ -70,15 +71,11 @@ public struct PaymentInfo {
     }
 
     public var amount: Decimal {
-        guard let txAmount = txInfo.amount else {
-            return Decimal(0)
-        }
-
-        return Decimal(txAmount) / Decimal(KinMultiplier)
+        return txInfo.payments.filter({ $0.asset == asset }).first?.amount ?? Decimal(0)
     }
 
     public var destination: String {
-        return txInfo.destination ?? ""
+        return txInfo.payments.filter({ $0.asset == asset }).first?.destination ?? ""
     }
 
     public var memoText: String? {
@@ -93,9 +90,10 @@ public struct PaymentInfo {
         return txInfo.sequence
     }
 
-    init(txInfo: TxInfo, account: String) {
+    init(txInfo: TxInfo, account: String, asset: Asset) {
         self.txInfo = txInfo
         self.account = account
+        self.asset = asset
     }
 }
 
