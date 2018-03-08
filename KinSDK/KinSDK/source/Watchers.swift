@@ -44,14 +44,13 @@ public class BalanceWatch {
         return paymentInfo.source == account
     }
 
-    init(stellar: Stellar, account: String) {
-        var balance: Decimal = 0
-        var sequence: UInt64 = UInt64.max
+    init(stellar: Stellar, account: String, balance: Decimal) {
+        var balance = balance
 
-        self.paymentWatch = PaymentWatch(stellar: stellar, account: account)
+        self.paymentWatch = PaymentWatch(stellar: stellar, account: account, cursor: "now")
 
         self.emitter = paymentWatch.emitter
-            .filter({ return $0.sequence > sequence && $0.source != $0.destination })
+            .filter({ return $0.source != $0.destination })
             .map({
                 balance += $0.amount * ($0.debit ? -1 : 1)
 
@@ -59,15 +58,5 @@ public class BalanceWatch {
             })
 
         self.emitter.add(to: linkBag)
-        
-        stellar.accountDetails(account: account)
-            .then(handler: { [weak self] details in
-                balance = details.balances
-                    .filter({ $0.asset == stellar.asset }).first?.balanceNum ?? Decimal(0)
-
-                sequence = details.seqNum
-
-                self?.emitter.next(balance)
-            })
     }
 }

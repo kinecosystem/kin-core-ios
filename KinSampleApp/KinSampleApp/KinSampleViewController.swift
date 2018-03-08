@@ -36,7 +36,7 @@ class KinSampleViewController: UITableViewController {
 
         tableView.tableFooterView = UIView()
 
-        watch = try? kinAccount.watchBalance()
+        watch = try? kinAccount.watchBalance(kinAccount.balance())
         watch?.emitter.on(queue: .main, next: { [weak self] balance in
             if let balanceCell = self?.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
                 balanceCell.balance = balance

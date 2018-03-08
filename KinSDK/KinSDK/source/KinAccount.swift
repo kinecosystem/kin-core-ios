@@ -90,7 +90,7 @@ public protocol KinAccount: class {
      */
     func balance() throws -> Balance
 
-    func watchBalance() throws -> BalanceWatch
+    func watchBalance(_ balance: Decimal) throws -> BalanceWatch
 
     func watchPayments(cursor: String?) throws -> PaymentWatch
     
@@ -329,7 +329,7 @@ final class KinStellarAccount: KinAccount {
     }
 
 
-    public func watchBalance() throws -> BalanceWatch {
+    public func watchBalance(_ balance: Decimal) throws -> BalanceWatch {
         guard let stellar = stellar else {
             throw KinError.internalInconsistency
         }
@@ -338,7 +338,7 @@ final class KinStellarAccount: KinAccount {
             throw KinError.accountDeleted
         }
 
-        return BalanceWatch(stellar: stellar, account: stellarAccount.publicKey!)
+        return BalanceWatch(stellar: stellar, account: stellarAccount.publicKey!, balance: balance)
     }
 
     public func watchPayments(cursor: String?) throws -> PaymentWatch {
