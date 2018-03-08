@@ -253,30 +253,15 @@ final class KinStellarAccount: KinAccount {
     func sendTransaction(to recipient: String,
                          kin: Decimal,
                          memo: String? = nil) throws -> TransactionId {
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        
-        var errorToThrow: Error? = nil
-        var txHashToReturn: TransactionId? = nil
-        
-        sendTransaction(to: recipient, kin: kin, memo: memo) { txHash, error in
-            errorToThrow = error
-            txHashToReturn = txHash
-            
-            dispatchGroup.leave()
+        let txClosure = { (txComp: @escaping TransactionCompletion) in
+            self.sendTransaction(to: recipient, kin: kin, memo: memo, completion: txComp)
         }
-        
-        dispatchGroup.wait()
-        
-        if let error = errorToThrow {
-            throw error
+
+        if let txHash = try serialize(txClosure) {
+            return txHash
         }
-        
-        guard let txHash = txHashToReturn else {
-            throw KinError.unknown
-        }
-        
-        return txHash
+
+        throw KinError.unknown
     }
     
     func balance(completion: @escaping BalanceCompletion) {
@@ -300,34 +285,14 @@ final class KinStellarAccount: KinAccount {
                 completion(nil, KinError.balanceQueryFailed(error))
         }
     }
-    
-    func balance() throws -> Balance {
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        
-        var errorToThrow: Error? = nil
-        var balanceToReturn: Balance? = nil
-        
-        balance { (balance, error) in
-            errorToThrow = error
-            balanceToReturn = balance
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.wait()
-        
-        if let error = errorToThrow {
-            throw error
-        }
-        
-        guard let balance = balanceToReturn else {
-            throw KinError.unknown
-        }
-        
-        return balance
-    }
 
+    func balance() throws -> Balance {
+        if let balance: Decimal = try serialize(balance) {
+            return balance
+        }
+
+        throw KinError.unknown
+    }
 
     public func watchBalance(_ balance: Decimal) throws -> BalanceWatch {
         guard let stellar = stellar else {
