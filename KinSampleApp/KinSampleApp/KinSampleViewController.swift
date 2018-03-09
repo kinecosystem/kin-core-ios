@@ -36,7 +36,8 @@ class KinSampleViewController: UITableViewController {
 
         tableView.tableFooterView = UIView()
 
-        watch = try? kinAccount.watchBalance(kinAccount.balance())
+        let balance = try? kinAccount.balance()
+        watch = try? kinAccount.watchBalance(balance ?? 0)
         watch?.emitter.on(queue: .main, next: { [weak self] balance in
             if let balanceCell = self?.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
                 balanceCell.balance = balance
@@ -131,19 +132,11 @@ extension KinSampleViewController: KinClientCellDelegate {
                 .then { result -> Void in
                     DispatchQueue.main.async {
                         getKinCell.getKinButton.isEnabled = true
-
-                        if let balanceCell = self.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                            balanceCell.refreshBalance(self)
-                        }
                     }
                 }
                 .error { error in
                     DispatchQueue.main.async {
                         getKinCell.getKinButton.isEnabled = true
-
-                        if let balanceCell = self.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                            balanceCell.refreshBalance(self)
-                        }
                     }
             }
         }
