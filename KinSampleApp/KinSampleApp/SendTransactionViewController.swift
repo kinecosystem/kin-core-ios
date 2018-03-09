@@ -49,7 +49,7 @@ class SendTransactionViewController: UIViewController {
             .error(handler: { error in
                 DispatchQueue.main.async { [weak self] in
                     let alertController = UIAlertController(title: "Error",
-                                                            message: self?.stringForError(error),
+                                                            message: "\(error)",
                                                             preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self?.present(alertController, animated: true, completion: nil)
@@ -59,57 +59,6 @@ class SendTransactionViewController: UIViewController {
 
     @IBAction func pasteTapped(_ sender: Any) {
         addressTextField.text = UIPasteboard.general.string
-    }
-
-    func stringForError(_ error: Error?) -> String {
-        guard let error = error else {
-            return "No transaction ID"
-        }
-
-        if let sError = error as? StellarError {
-            switch sError {
-            case .missingPublicKey:
-                return "Misisng public key"
-            case .missingHash:
-                return "Transaction hash not found"
-            case .missingSequence:
-                return "Unable to retrieve sequence"
-            case .missingBalance:
-                return "Balance for asset not found"
-            case .urlEncodingFailed:
-                return "Unable to encode data for URL request"
-            case .dataEncodingFailed:
-                return "Unable to code string as Data"
-            case .signingFailed:
-                return "Signing failed"
-            case .destinationNotReadyForAsset (let e, _):
-                if let e = e as? StellarError {
-                    switch e {
-                    case .missingAccount:
-                        return "Account not found"
-                    case .missingBalance:
-                        return "No KIN trustline"
-                    default:
-                        break
-                    }
-                }
-            case .unknownError:
-                return "Unknown error"
-            default:
-                break
-            }
-        }
-
-        if let pError = error as? PaymentError {
-            switch pError {
-            case .PAYMENT_UNDERFUNDED:
-                return "Insufficient funds"
-            default:
-                return error.localizedDescription
-            }
-        }
-
-        return error.localizedDescription
     }
 }
 
