@@ -9,6 +9,7 @@
 import UIKit
 import KinSDK
 import StellarKit
+import KinUtil
 
 class SendTransactionViewController: UIViewController {
     var kinAccount: KinAccount!
@@ -35,31 +36,25 @@ class SendTransactionViewController: UIViewController {
         let amount = UInt64(amountTextField.text ?? "0") ?? 0
         let address = addressTextField.text ?? ""
 
-        kinAccount.sendTransaction(to: address,
-                                   kin: Decimal(amount),
-                                   memo: memoTextField.text) { transactionId, error in
-                                    DispatchQueue.main.async { [weak self] in
-                                        guard let aSelf = self else {
-                                            return
-                                        }
-
-                                        guard error == nil,
-                                            let transactionId = transactionId else {
-                                                let alertController = UIAlertController(title: "Error", message: aSelf.stringForError(error), preferredStyle: .alert)
-                                                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                                aSelf.present(alertController, animated: true, completion: nil)
-                                                return
-                                        }
-
-                                        let message = "Transaction with ID \(transactionId) sent to \(address)"
-                                        let alertController = UIAlertController(title: "Transaction Sent", message: message, preferredStyle: .alert)
-                                        alertController.addAction(UIAlertAction(title: "Copy Transaction ID", style: .default, handler: { _ in
-                                            UIPasteboard.general.string = transactionId
-                                        }))
-                                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                        aSelf.present(alertController, animated: true, completion: nil)
-                                    }
-        }
+        promise(curry(kinAccount.sendTransaction)(address)(Decimal(amount))(memoTextField.text))
+            .then(on: DispatchQueue.main, handler: { [weak self] transactionId in
+                let message = "Transaction with ID \(transactionId) sent to \(address)"
+                let alertController = UIAlertController(title: "Transaction Sent", message: message, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Copy Transaction ID", style: .default, handler: { _ in
+                    UIPasteboard.general.string = transactionId
+                }))
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alertController, animated: true, completion: nil)
+            })
+            .error(handler: { error in
+                DispatchQueue.main.async { [weak self] in
+                    let alertController = UIAlertController(title: "Error",
+                                                            message: self?.stringForError(error),
+                                                            preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self?.present(alertController, animated: true, completion: nil)
+                }
+            })
     }
 
     @IBAction func pasteTapped(_ sender: Any) {
