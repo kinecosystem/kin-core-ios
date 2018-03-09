@@ -35,24 +35,20 @@ public class PaymentWatch {
 }
 
 public class BalanceWatch {
-    private let paymentWatch: PaymentWatch
+    private let paymentWatch: StellarKit.PaymentWatch
     private let linkBag = LinkBag()
 
     public let emitter: Observable<Decimal>
 
-    private static func debit(_ account: String, paymentInfo: PaymentInfo) -> Bool {
-        return paymentInfo.source == account
-    }
-
     init(stellar: Stellar, account: String, balance: Decimal) {
         var balance = balance
 
-        self.paymentWatch = PaymentWatch(stellar: stellar, account: account, cursor: "now")
+        self.paymentWatch = stellar.paymentWatch(account: account, lastEventId: "now")
 
         self.emitter = paymentWatch.emitter
-            .filter({ return $0.source != $0.destination })
+            .filter({ $0.asset == stellar.asset && $0.source != $0.destination })
             .map({
-                balance += $0.amount * ($0.debit ? -1 : 1)
+                balance += $0.amount * ($0.source == account ? -1 : 1)
 
                 return balance
             })
