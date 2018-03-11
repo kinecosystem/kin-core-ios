@@ -129,12 +129,7 @@ extension KinSampleViewController: KinClientCellDelegate {
 
                     return self.fund(user_id: user_id)
                 }
-                .then { result -> Void in
-                    DispatchQueue.main.async {
-                        getKinCell.getKinButton.isEnabled = true
-                    }
-                }
-                .error { error in
+                .finally {
                     DispatchQueue.main.async {
                         getKinCell.getKinButton.isEnabled = true
                     }
