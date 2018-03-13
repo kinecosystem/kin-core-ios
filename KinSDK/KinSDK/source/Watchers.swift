@@ -56,3 +56,22 @@ public class BalanceWatch {
         self.emitter.add(to: linkBag)
     }
 }
+
+public class CreationWatch {
+    private let paymentWatch: StellarKit.PaymentWatch
+    private let linkBag = LinkBag()
+
+    public let emitter: Observable<Bool>
+
+    init(stellar: Stellar, account: String) {
+        self.paymentWatch = stellar.paymentWatch(account: account, lastEventId: nil)
+
+        self.emitter = paymentWatch.emitter
+            .map({ _ in
+                return true
+            })
+
+        self.emitter.add(to: linkBag)
+    }
+}
+
