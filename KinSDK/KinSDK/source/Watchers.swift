@@ -38,7 +38,7 @@ public class BalanceWatch {
     private let paymentWatch: StellarKit.PaymentWatch
     private let linkBag = LinkBag()
 
-    public let emitter: Observable<Decimal>
+    public let emitter: StatefulObserver<Decimal>
 
     init(stellar: Stellar, account: String, balance: Decimal) {
         var balance = balance
@@ -52,8 +52,11 @@ public class BalanceWatch {
 
                 return balance
             })
+            .stateful()
 
         self.emitter.add(to: linkBag)
+
+        self.emitter.next(balance)
     }
 }
 
