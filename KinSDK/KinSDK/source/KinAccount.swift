@@ -25,12 +25,21 @@ public protocol KinAccount: class {
     
     /**
      Allow an account to receive KIN.
-     
+
      - parameter completion: A block which receives the results of the activation
      */
     func activate(completion: @escaping (String?, Error?) -> Void)
 
+    /**
+     Allow an account to receive KIN.
+
+     - return: A promise which is signalled with the resulting transaction hash.
+     */
+    func activate() -> Promise<String>
+
     func status(completion: @escaping (AccountStatus?, Error?) -> Void)
+
+    func status() -> Promise<AccountStatus>
 
     /**
      **Asynchronously** posts a Kin transfer to a specific address.
@@ -48,27 +57,40 @@ public protocol KinAccount: class {
                          kin: Decimal,
                          memo: String?,
                          completion: @escaping TransactionCompletion)
-    
+
     /**
      **Synchronously** posts a Kin transfer to a specific address.
-     
+
      This function returns after the transaction is posted on the network, which is prior to
      confirmation.
-     
+
      Don't call this method from the main thread.
-     
+
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
      - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
 
      - throws: An `Error` if the transaction fails to be generated or submitted
-     
+
      - returns: The `TransactionId` in case of success.
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
                          memo: String?) throws -> TransactionId
-    
+
+    /**
+     **Asynchronously** posts a Kin transfer to a specific address.
+
+     - parameter recipient: The recipient's public address
+     - parameter kin: The amount of Kin to be sent
+     - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
+
+     - returns: A promise which is signalled with the `TransactionId`.
+     */
+    func sendTransaction(to recipient: String,
+                         kin: Decimal,
+                         memo: String?) -> Promise<TransactionId>
+
     /**
      **Asynchronously** gets the current Kin balance. **Does not** take into account
      transactions pending confirmations. The completion block **is not dispatched on the main thread**.
@@ -77,18 +99,27 @@ public protocol KinAccount: class {
      be fetched.
      */
     func balance(completion: @escaping BalanceCompletion)
-    
+
     /**
      **Synchronously** gets the current Kin balance. **Does not** take into account
      transactions pending confirmations.
-     
+
      **Do not** call this from the main thread.
-     
+
      - throws: An `Error` if balance cannot be fetched.
-     
+
      - returns: The `Balance` of the account.
      */
     func balance() throws -> Balance
+
+    /**
+     **Asynchronously** gets the current Kin balance.
+
+     - throws: An `Error` if balance cannot be fetched.
+
+     - returns: The `Balance` of the account.
+     */
+    func balance() -> Promise<Balance>
 
     func watchBalance(_ balance: Decimal) throws -> BalanceWatch
 
@@ -165,6 +196,10 @@ final class KinStellarAccount: KinAccount {
         }
     }
 
+    public func activate() -> Promise<String> {
+        return promise(activate)
+    }
+
     func status(completion: @escaping (AccountStatus?, Error?) -> Void) {
         balance { balance, error in
             if let error = error {
@@ -190,6 +225,10 @@ final class KinStellarAccount: KinAccount {
                 completion(nil, KinError.internalInconsistency)
             }
         }
+    }
+
+    func status() -> Promise<AccountStatus> {
+        return promise(status)
     }
 
     func sendTransaction(to recipient: String,
@@ -265,7 +304,15 @@ final class KinStellarAccount: KinAccount {
 
         throw KinError.unknown
     }
-    
+
+    func sendTransaction(to recipient: String, kin: Decimal, memo: String?) -> Promise<TransactionId> {
+        let txClosure = { (txComp: @escaping TransactionCompletion) in
+            self.sendTransaction(to: recipient, kin: kin, memo: memo, completion: txComp)
+        }
+
+        return promise(txClosure)
+    }
+
     func balance(completion: @escaping BalanceCompletion) {
         guard let stellar = stellar else {
             completion(nil, KinError.internalInconsistency)
@@ -296,6 +343,10 @@ final class KinStellarAccount: KinAccount {
         throw KinError.unknown
     }
 
+    func balance() -> Promise<Balance> {
+        return promise(balance)
+    }
+    
     public func watchBalance(_ balance: Decimal) throws -> BalanceWatch {
         guard let stellar = stellar else {
             throw KinError.internalInconsistency
