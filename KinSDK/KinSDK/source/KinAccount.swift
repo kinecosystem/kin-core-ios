@@ -42,7 +42,7 @@ public protocol KinAccount: class {
     func status() -> Promise<AccountStatus>
 
     /**
-     **Asynchronously** posts a Kin transfer to a specific address.
+     Posts a Kin transfer to a specific address.
      
      The completion block is called after the transaction is posted on the network, which is prior
      to confirmation.
@@ -58,28 +58,9 @@ public protocol KinAccount: class {
                          memo: String?,
                          completion: @escaping TransactionCompletion)
 
-    /**
-     **Synchronously** posts a Kin transfer to a specific address.
-
-     This function returns after the transaction is posted on the network, which is prior to
-     confirmation.
-
-     Don't call this method from the main thread.
-
-     - parameter recipient: The recipient's public address
-     - parameter kin: The amount of Kin to be sent
-     - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
-
-     - throws: An `Error` if the transaction fails to be generated or submitted
-
-     - returns: The `TransactionId` in case of success.
-     */
-    func sendTransaction(to recipient: String,
-                         kin: Decimal,
-                         memo: String?) throws -> TransactionId
 
     /**
-     **Asynchronously** posts a Kin transfer to a specific address.
+     Posts a Kin transfer to a specific address.
 
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
@@ -92,32 +73,17 @@ public protocol KinAccount: class {
                          memo: String?) -> Promise<TransactionId>
 
     /**
-     **Asynchronously** gets the current Kin balance. **Does not** take into account
-     transactions pending confirmations. The completion block **is not dispatched on the main thread**.
+     Retrieve the current Kin balance.
      
-     - parameter completion: A callback block to be invoked once the balance is fetched, or fails to
-     be fetched.
+     - parameter completion: A closure to be invoked once the request completes.  The closure is
+     invoked on a background thread.
      */
     func balance(completion: @escaping BalanceCompletion)
 
     /**
-     **Synchronously** gets the current Kin balance. **Does not** take into account
-     transactions pending confirmations.
+     Retrieve the current Kin balance.
 
-     **Do not** call this from the main thread.
-
-     - throws: An `Error` if balance cannot be fetched.
-
-     - returns: The `Balance` of the account.
-     */
-    func balance() throws -> Balance
-
-    /**
-     **Asynchronously** gets the current Kin balance.
-
-     - throws: An `Error` if balance cannot be fetched.
-
-     - returns: The `Balance` of the account.
+     - returns: A `Promise` which is signalled with the current balance.
      */
     func balance() -> Promise<Balance>
 
@@ -290,20 +256,6 @@ final class KinStellarAccount: KinAccount {
             completion(nil, error)
         }
     }
-    
-    func sendTransaction(to recipient: String,
-                         kin: Decimal,
-                         memo: String? = nil) throws -> TransactionId {
-        let txClosure = { (txComp: @escaping TransactionCompletion) in
-            self.sendTransaction(to: recipient, kin: kin, memo: memo, completion: txComp)
-        }
-
-        if let txHash = try serialize(txClosure) {
-            return txHash
-        }
-
-        throw KinError.unknown
-    }
 
     func sendTransaction(to recipient: String, kin: Decimal, memo: String?) -> Promise<TransactionId> {
         let txClosure = { (txComp: @escaping TransactionCompletion) in
@@ -333,14 +285,6 @@ final class KinStellarAccount: KinAccount {
             .error { error in
                 completion(nil, KinError.balanceQueryFailed(error))
         }
-    }
-
-    func balance() throws -> Balance {
-        if let balance: Decimal = try serialize(balance) {
-            return balance
-        }
-
-        throw KinError.unknown
     }
 
     func balance() -> Promise<Balance> {

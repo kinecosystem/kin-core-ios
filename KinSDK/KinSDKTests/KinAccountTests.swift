@@ -58,6 +58,29 @@ class KinAccountTests: XCTestCase {
         kinClient.deleteKeystore()
     }
 
+    func sendTransaction(from account: KinAccount,
+                         to recipient: String,
+                         kin: Decimal,
+                         memo: String? = nil) throws -> TransactionId {
+        let txClosure = { (txComp: @escaping TransactionCompletion) in
+            account.sendTransaction(to: recipient, kin: kin, memo: memo, completion: txComp)
+        }
+
+        if let txHash = try serialize(txClosure) {
+            return txHash
+        }
+
+        throw KinError.unknown
+    }
+
+    func getBalance(_ account: KinAccount) throws -> Balance {
+        if let balance: Decimal = try serialize(account.balance) {
+            return balance
+        }
+
+        throw KinError.unknown
+    }
+
     func fund(account: String) -> Promise<String> {
         let funderPK = "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7"
         let funderSK = "SAXSDD5YEU6GMTJ5IHA6K35VZHXFVPV6IHMWYAQPSEKJRNC5LGMUQX35"
@@ -141,11 +164,11 @@ class KinAccountTests: XCTestCase {
     }
 
     func wait_for_non_zero_balance(account: KinAccount) throws -> Balance {
-        var balance: Decimal = try account.balance()
+        var balance: Decimal = try getBalance(account)
 
         let exp = expectation(for: NSPredicate(block: { _, _ in
             do {
-                balance = try account.balance()
+                balance = try self.getBalance(account)
             }
             catch {
                 XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -170,7 +193,7 @@ class KinAccountTests: XCTestCase {
 
     func test_balance_sync() {
         do {
-            var balance: Decimal? = try account0?.balance()
+            var balance: Decimal? = try getBalance(account0!)
 
             if balance == 0 {
                 balance = try wait_for_non_zero_balance(account: account0!)
@@ -239,8 +262,8 @@ class KinAccountTests: XCTestCase {
                     return
             }
 
-            var startBalance0: Decimal = try account0.balance()
-            var startBalance1: Decimal = try account1.balance()
+            var startBalance0: Decimal = try getBalance(account0)
+            var startBalance1: Decimal = try getBalance(account1)
 
             if startBalance0 == 0 {
                 startBalance0 = try wait_for_non_zero_balance(account: account0)
@@ -250,14 +273,15 @@ class KinAccountTests: XCTestCase {
                 startBalance1 = try wait_for_non_zero_balance(account: account1)
             }
 
-            let txId = try account0.sendTransaction(to: account1.publicAddress,
-                                                    kin: sendAmount,
-                                                    memo: nil) as TransactionId?
+            let txId = try sendTransaction(from: account0,
+                                           to: account1.publicAddress,
+                                           kin: sendAmount,
+                                           memo: nil) as TransactionId?
 
             XCTAssertNotNil(txId)
 
-            let balance0: Decimal = try account0.balance()
-            let balance1: Decimal = try account1.balance()
+            let balance0: Decimal = try getBalance(account0)
+            let balance1: Decimal = try getBalance(account1)
 
             XCTAssertEqual(balance0, startBalance0 - sendAmount)
             XCTAssertEqual(balance1, startBalance1 + sendAmount)
@@ -278,8 +302,8 @@ class KinAccountTests: XCTestCase {
                     return
             }
 
-            var startBalance0: Decimal = try account0.balance()
-            var startBalance1: Decimal = try account1.balance()
+            var startBalance0: Decimal = try getBalance(account0)
+            var startBalance1: Decimal = try getBalance(account1)
 
             if startBalance0 == 0 {
                 startBalance0 = try wait_for_non_zero_balance(account: account0)
@@ -289,14 +313,15 @@ class KinAccountTests: XCTestCase {
                 startBalance1 = try wait_for_non_zero_balance(account: account1)
             }
 
-            let txId = try account0.sendTransaction(to: account1.publicAddress,
-                                                    kin: sendAmount,
-                                                    memo: "memo") as TransactionId?
+            let txId = try sendTransaction(from: account0,
+                                           to: account1.publicAddress,
+                                           kin: sendAmount,
+                                           memo: "memo") as TransactionId?
 
             XCTAssertNotNil(txId)
 
-            let balance0: Decimal = try account0.balance()
-            let balance1: Decimal = try account1.balance()
+            let balance0: Decimal = try getBalance(account0)
+            let balance1: Decimal = try getBalance(account1)
 
             XCTAssertEqual(balance0, startBalance0 - sendAmount)
             XCTAssertEqual(balance1, startBalance1 + sendAmount)
@@ -317,8 +342,8 @@ class KinAccountTests: XCTestCase {
                     return
             }
 
-            var startBalance0: Decimal = try account0.balance()
-            var startBalance1: Decimal = try account1.balance()
+            var startBalance0: Decimal = try getBalance(account0)
+            var startBalance1: Decimal = try getBalance(account1)
 
             if startBalance0 == 0 {
                 startBalance0 = try wait_for_non_zero_balance(account: account0)
@@ -328,14 +353,15 @@ class KinAccountTests: XCTestCase {
                 startBalance1 = try wait_for_non_zero_balance(account: account1)
             }
 
-            let txId = try account0.sendTransaction(to: account1.publicAddress,
-                                                    kin: sendAmount,
-                                                    memo: "") as TransactionId?
+            let txId = try sendTransaction(from: account0,
+                                           to: account1.publicAddress,
+                                           kin: sendAmount,
+                                           memo: "") as TransactionId?
 
             XCTAssertNotNil(txId)
 
-            let balance0: Decimal = try account0.balance()
-            let balance1: Decimal = try account1.balance()
+            let balance0: Decimal = try getBalance(account0)
+            let balance1: Decimal = try getBalance(account1)
 
             XCTAssertEqual(balance0, startBalance0 - sendAmount)
             XCTAssertEqual(balance1, startBalance1 + sendAmount)
@@ -354,12 +380,13 @@ class KinAccountTests: XCTestCase {
                     return
             }
 
-            let balance: Decimal = try account0.balance()
+            let balance: Decimal = try getBalance(account0)
 
             do {
-                _ = try account0.sendTransaction(to: account1.publicAddress,
-                                                 kin: balance * 10000000 + 1,
-                                                 memo: nil) as TransactionId?
+                _ = try sendTransaction(from: account0,
+                                        to: account1.publicAddress,
+                                        kin: balance * 10000000 + 1,
+                                        memo: nil) as TransactionId?
 
                 XCTAssertTrue(false,
                               "Tried to send kin with insufficient funds, but didn't get an error")
@@ -387,9 +414,10 @@ class KinAccountTests: XCTestCase {
         }
 
         do {
-            _ = try account0.sendTransaction(to: account1.publicAddress,
-                                             kin: 0,
-                                             memo: nil) as TransactionId?
+            _ = try sendTransaction(from: account0,
+                                    to: account1.publicAddress,
+                                    kin: 0,
+                                    memo: nil) as TransactionId?
             XCTAssertTrue(false,
                           "Tried to send kin with insufficient funds, but didn't get an error")
         }
@@ -408,7 +436,7 @@ class KinAccountTests: XCTestCase {
             let account = kinClient.accounts[0]
 
             try kinClient.deleteAccount(at: 0)
-            _ = try account?.balance() as Decimal?
+            _ = try getBalance(account!)
 
             XCTAssert(false, "An exception should have been thrown.")
         }
@@ -427,7 +455,7 @@ class KinAccountTests: XCTestCase {
             let account = kinClient.accounts[0]
             
             try kinClient.deleteAccount(at: 0)
-            _ = try account?.sendTransaction(to: "", kin: 1, memo: nil) as TransactionId?
+            _ = try sendTransaction(from: account!, to: "", kin: 1, memo: nil)
 
             XCTAssert(false, "An exception should have been thrown.")
         }

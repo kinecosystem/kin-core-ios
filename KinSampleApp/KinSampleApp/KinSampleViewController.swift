@@ -36,14 +36,21 @@ class KinSampleViewController: UITableViewController {
 
         tableView.tableFooterView = UIView()
 
-        let balance: Decimal? = try? kinAccount.balance()
-        watch = try? kinAccount.watchBalance(balance ?? 0)
-        watch?.emitter.on(queue: .main, next: { [weak self] balance in
-            if let balanceCell = self?.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                balanceCell.balance = balance
-            }
-        })
-        .add(to: linkBag)
+        let setupWatch: (Decimal) -> () = { balance in
+            self.watch = try? self.kinAccount.watchBalance(balance)
+            self.watch?.emitter.on(queue: .main, next: { [weak self] balance in
+                if let balanceCell = self?.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                    balanceCell.balance = balance
+                }
+            })
+                .add(to: self.linkBag)
+        }
+
+        kinAccount.balance()
+            .then(handler: setupWatch)
+            .error { _ in
+                setupWatch(0)
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
