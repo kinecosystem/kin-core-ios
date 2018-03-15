@@ -37,7 +37,7 @@ class SendTransactionViewController: UIViewController {
         let address = addressTextField.text ?? ""
 
         promise(curry(kinAccount.sendTransaction)(address)(Decimal(amount))(memoTextField.text))
-            .then(on: DispatchQueue.main, handler: { [weak self] transactionId in
+            .then(on: DispatchQueue.main, { [weak self] transactionId in
                 let message = "Transaction with ID \(transactionId) sent to \(address)"
                 let alertController = UIAlertController(title: "Transaction Sent", message: message, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Copy Transaction ID", style: .default, handler: { _ in
@@ -46,7 +46,7 @@ class SendTransactionViewController: UIViewController {
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self?.present(alertController, animated: true, completion: nil)
             })
-            .error(handler: { error in
+            .error({ error in
                 DispatchQueue.main.async { [weak self] in
                     let alertController = UIAlertController(title: "Error",
                                                             message: "\(error)",

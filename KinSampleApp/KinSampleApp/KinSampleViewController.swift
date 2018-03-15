@@ -47,7 +47,7 @@ class KinSampleViewController: UITableViewController {
         }
 
         kinAccount.balance()
-            .then(handler: setupWatch)
+            .then(setupWatch)
             .error { _ in
                 setupWatch(0)
         }
@@ -142,7 +142,7 @@ extension KinSampleViewController: KinClientCellDelegate {
         }
 
         try! kinAccount.watchCreation()
-            .then(handler: { _ in
+            .finally({
                 print("I see a new account!")
             })
     }
