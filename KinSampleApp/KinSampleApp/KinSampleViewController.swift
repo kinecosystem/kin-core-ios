@@ -124,24 +124,27 @@ extension KinSampleViewController: KinClientCellDelegate {
 
         print("Creating account.")
 
-        DispatchQueue(label: "").async {
-            self.createAccount(user_id: user_id)
-                .then { result -> Promise<Bool> in
-                    print("Activating account.")
+        self.createAccount(user_id: user_id)
+            .then { result -> Promise<Bool> in
+                print("Activating account.")
 
-                    return self.activate()
-                }
-                .then { result -> Promise<Bool> in
-                    print("Funding account")
-
-                    return self.fund(user_id: user_id)
-                }
-                .finally {
-                    DispatchQueue.main.async {
-                        getKinCell.getKinButton.isEnabled = true
-                    }
+                return self.activate()
             }
+            .then { result -> Promise<Bool> in
+                print("Funding account")
+
+                return self.fund(user_id: user_id)
+            }
+            .finally {
+                DispatchQueue.main.async {
+                    getKinCell.getKinButton.isEnabled = true
+                }
         }
+
+        try! kinAccount.watchCreation()
+            .then(handler: { _ in
+                print("I see a new account!")
+            })
     }
 
     enum OnBoardingError: Error {
