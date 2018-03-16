@@ -29,23 +29,24 @@ public final class KinClient {
      - parameter networkId: The `NetworkId` to be used.
      */
     public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
-        let node = StellarNode(baseURL: nodeProviderUrl,
-                               networkId: networkId.stellarNetworkId)
+        self.node = Stellar.Node(baseURL: nodeProviderUrl,
+                                 networkId: networkId.stellarNetworkId)
 
-        self.stellar = Stellar(node: node,
-                               asset: Asset(assetCode: "KIN", issuer: networkId.issuer))
-        self.accounts = KinAccounts(stellar: stellar)
+        self.asset = Asset(assetCode: "KIN", issuer: networkId.issuer)!
+
+        self.accounts = KinAccounts(node: node, asset: asset)
 
         self.networkId = networkId
     }
 
     public var url: URL {
-        return stellar.node.baseURL
+        return node.baseURL
     }
 
     public var accounts: KinAccounts
 
-    internal let stellar: Stellar
+    internal let node: Stellar.Node
+    internal let asset: Asset
 
     /**
      The `NetworkId` of the network which this client communicates to.

@@ -8,6 +8,7 @@
 
 import Foundation
 import StellarKit
+import StellarErrors
 import KinUtil
 
 /**
@@ -110,8 +111,9 @@ let KinMultiplier: UInt64 = 10000000
 
 final class KinStellarAccount: KinAccount {
     internal let stellarAccount: StellarAccount
-    fileprivate weak var stellar: Stellar?
-    
+    fileprivate let node: Stellar.Node
+    fileprivate let asset: Asset
+
     var deleted = false
     
     var publicAddress: String {
@@ -132,24 +134,20 @@ final class KinStellarAccount: KinAccount {
         }
     }
 
-    init(stellarAccount: StellarAccount, stellar: Stellar) {
+    init(stellarAccount: StellarAccount, asset: Asset, node: Stellar.Node) {
         self.stellarAccount = stellarAccount
-        self.stellar = stellar
+        self.asset = asset
+        self.node = node
     }
     
     public func activate(completion: @escaping (String?, Error?) -> Void) {
-        guard let stellar = stellar else {
-            completion(nil, KinError.internalInconsistency)
-            
-            return
-        }
-
         stellarAccount.sign = { message in
             return try self.stellarAccount.sign(message: message, passphrase: "")
         }
         
-        stellar.trust(asset: stellar.asset,
-                      account: stellarAccount)
+        Stellar.trust(asset: asset,
+                      account: stellarAccount,
+                      node: node)
             .then { txHash -> Void in
                 self.stellarAccount.sign = nil
 
@@ -201,12 +199,6 @@ final class KinStellarAccount: KinAccount {
                          kin: Decimal,
                          memo: String? = nil,
                          completion: @escaping TransactionCompletion) {
-        guard let stellar = stellar else {
-            completion(nil, KinError.internalInconsistency)
-            
-            return
-        }
-        
         guard deleted == false else {
             completion(nil, KinError.accountDeleted)
             
@@ -231,10 +223,12 @@ final class KinStellarAccount: KinAccount {
                 m = try Memo(memo)
             }
 
-            stellar.payment(source: stellarAccount,
+            Stellar.payment(source: stellarAccount,
                             destination: recipient,
                             amount: intKin,
-                            memo: m)
+                            asset: asset,
+                            memo: m,
+                            node: node)
                 .then { txHash -> Void in
                     self.stellarAccount.sign = nil
 
@@ -266,19 +260,13 @@ final class KinStellarAccount: KinAccount {
     }
 
     func balance(completion: @escaping BalanceCompletion) {
-        guard let stellar = stellar else {
-            completion(nil, KinError.internalInconsistency)
-            
-            return
-        }
-        
         guard deleted == false else {
             completion(nil, KinError.accountDeleted)
             
             return
         }
         
-        stellar.balance(account: stellarAccount.publicKey!)
+        Stellar.balance(account: stellarAccount.publicKey!, asset: asset, node: node)
             .then { balance -> Void in
                 completion(balance, nil)
             }
@@ -292,34 +280,22 @@ final class KinStellarAccount: KinAccount {
     }
     
     public func watchBalance(_ balance: Decimal) throws -> BalanceWatch {
-        guard let stellar = stellar else {
-            throw KinError.internalInconsistency
-        }
-
         guard deleted == false else {
             throw KinError.accountDeleted
         }
 
-        return BalanceWatch(stellar: stellar, account: stellarAccount.publicKey!, balance: balance)
+        return BalanceWatch(node: node, account: stellarAccount.publicKey!, balance: balance, asset: asset)
     }
 
     public func watchPayments(cursor: String?) throws -> PaymentWatch {
-        guard let stellar = stellar else {
-            throw KinError.internalInconsistency
-        }
-
         guard deleted == false else {
             throw KinError.accountDeleted
         }
 
-        return PaymentWatch(stellar: stellar, account: stellarAccount.publicKey!, cursor: cursor)
+        return PaymentWatch(node: node, account: stellarAccount.publicKey!, asset: asset, cursor: cursor)
     }
 
     public func watchCreation() throws -> Promise<Void> {
-        guard let stellar = stellar else {
-            throw KinError.internalInconsistency
-        }
-
         guard deleted == false else {
             throw KinError.accountDeleted
         }
@@ -327,16 +303,16 @@ final class KinStellarAccount: KinAccount {
         let p = Promise<Void>()
 
         var linkBag = LinkBag()
-        var watch: CreationWatch? = CreationWatch(stellar: stellar, account: stellarAccount.publicKey!)
+        var watch: CreationWatch? = CreationWatch(node: node, account: stellarAccount.publicKey!)
 
         _ = watch?.emitter.on(next: { _ in
             watch = nil
 
             linkBag = LinkBag()
-
+            
             p.signal(())
         })
-        .add(to: linkBag)
+            .add(to: linkBag)
 
         return p
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StellarErrors
 import StellarKit
 
 enum KeyUtilsError: Error {

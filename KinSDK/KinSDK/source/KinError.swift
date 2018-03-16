@@ -55,6 +55,11 @@ public enum KinError: Error {
     case accountDeleted
 
     /**
+     Thrown when signing a transaction fails.
+     */
+    case signingFailed
+
+    /**
      An internal error happened in the KinSDK.
      */
     case internalInconsistency
@@ -85,6 +90,8 @@ extension KinError: LocalizedError {
             return "Insufficient funds"
         case .accountDeleted:
             return "Account Deleted"
+        case .signingFailed:
+            return "Signing Failed"
         case .internalInconsistency:
             return "Internal Inconsistency"
         case .unknown:

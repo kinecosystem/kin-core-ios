@@ -16,8 +16,8 @@ class KinAccountTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
 
-    let node = NodeProvider(networkId: .custom(issuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH",
-                                               stellarNetworkId: NetworkId.testNet.stellarNetworkId))
+    let provider = NodeProvider(networkId: .custom(issuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH",
+                                                   stellarNetworkId: NetworkId.testNet.stellarNetworkId))
 
     var account0: KinAccount?
     var account1: KinAccount?
@@ -26,7 +26,7 @@ class KinAccountTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: node)
+        kinClient = try! KinClient(provider: provider)
 
         KeyStore.removeAll()
 
@@ -92,10 +92,9 @@ class KinAccountTests: XCTestCase {
             return try funder.sign(message: message, passphrase: self.passphrase)
         }
 
-        let stellar = Stellar(node: StellarNode(baseURL: node.url),
-                              asset: Asset(assetCode: "KIN", issuer: node.networkId.issuer))
+        let node = Stellar.Node(baseURL: provider.url)
 
-        return stellar.sequence(account: funderPK)
+        return Stellar.sequence(account: funderPK, node: node)
             .then { sequence in
                 let tx = Transaction(sourceAccount: sourcePK,
                                      seqNum: sequence + 1,
@@ -104,10 +103,11 @@ class KinAccountTests: XCTestCase {
                                      operations: [Operation.createAccountOp(destination: account,
                                                                             balance: 10 * 10000000)])
 
-                let envelope = try stellar.sign(transaction: tx,
-                                                signer: funder)
+                let envelope = try Stellar.sign(transaction: tx,
+                                                signer: funder,
+                                                node: node)
 
-                return stellar.postTransaction(baseURL: stellar.node.baseURL, envelope: envelope)
+                return Stellar.postTransaction(baseURL: node.baseURL, envelope: envelope)
         }
     }
 
@@ -116,8 +116,9 @@ class KinAccountTests: XCTestCase {
         group.enter()
 
         var e: Error?
-        let stellar = Stellar(node: StellarNode(baseURL: node.url),
-                              asset: Asset(assetCode: "KIN", issuer: node.networkId.issuer))
+
+        let node = Stellar.Node(baseURL: provider.url)
+        let asset = Asset(assetCode: "KIN", issuer: provider.networkId.issuer)!
 
         guard let issuer = issuer else {
             throw KinError.unknown
@@ -139,9 +140,11 @@ class KinAccountTests: XCTestCase {
                                                passphrase: self.passphrase)
                     }
 
-                    return stellar.payment(source: issuer,
+                    return Stellar.payment(source: issuer,
                                            destination: account.stellarAccount.publicKey!,
-                                           amount: 100 * 10000000)
+                                           amount: 100 * 10000000,
+                                           asset: asset,
+                                           node: node)
                         .error { error in
                             e = error
                         }

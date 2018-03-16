@@ -23,6 +23,7 @@
 		827835381FA9B5F20006C3DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 827835371FA9B5F20006C3DF /* Assets.xcassets */; };
 		8278353B1FA9B5F20006C3DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 827835391FA9B5F20006C3DF /* LaunchScreen.storyboard */; };
 		827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835451FA9B5F20006C3DF /* KinClientTests.swift */; };
+		828CB555205E26FB007C679C /* StellarErrors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828CB554205E26EE007C679C /* StellarErrors.framework */; };
 		82BA1EBD204D211300396AE2 /* KeyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1EBC204D211300396AE2 /* KeyUtils.swift */; };
 		82BA1F13204D22AB00396AE2 /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1ED1204D22AB00396AE2 /* KeychainSwift.swift */; };
 		82BA1F14204D22AB00396AE2 /* KeychainSwiftAccessOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1ED2204D22AB00396AE2 /* KeychainSwiftAccessOptions.swift */; };
@@ -253,6 +254,20 @@
 			remoteGlobalIDString = 82140EA81FA88E5B00FAF19B;
 			remoteInfo = KinSDK;
 		};
+		828CB54E205E26EE007C679C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 828CB534205E23F9007C679C;
+			remoteInfo = StellarErrors;
+		};
+		828CB553205E26EE007C679C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 828CB535205E23F9007C679C;
+			remoteInfo = StellarErrors;
+		};
 		82BA2118204D867300396AE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
@@ -404,6 +419,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				828CB555205E26FB007C679C /* StellarErrors.framework in Frameworks */,
 				82BA2016204D231600396AE2 /* libsodium-ios.a in Frameworks */,
 				8261EF27204333A1001848CB /* KinUtil.framework in Frameworks */,
 				824063CB20148B290055D70A /* StellarKit.framework in Frameworks */,
@@ -490,6 +506,7 @@
 				824063C1201488460055D70A /* StellarKitTests.xctest */,
 				824063C3201488460055D70A /* StellarKitHost.app */,
 				82BA2119204D867300396AE2 /* StellarKit.framework */,
+				828CB554205E26EE007C679C /* StellarErrors.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -826,6 +843,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				828CB54F205E26EE007C679C /* PBXTargetDependency */,
 				824063C720148B210055D70A /* PBXTargetDependency */,
 			);
 			name = KinSDK;
@@ -966,6 +984,13 @@
 			fileType = wrapper.application;
 			path = StellarKitHost.app;
 			remoteRef = 824063C2201488460055D70A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		828CB554205E26EE007C679C /* StellarErrors.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = StellarErrors.framework;
+			remoteRef = 828CB553205E26EE007C679C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		82BA2119204D867300396AE2 /* StellarKit.framework */ = {
@@ -1149,6 +1174,11 @@
 			isa = PBXTargetDependency;
 			target = 82140EA81FA88E5B00FAF19B /* KinSDK */;
 			targetProxy = 8278354F1FA9B6290006C3DF /* PBXContainerItemProxy */;
+		};
+		828CB54F205E26EE007C679C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = StellarErrors;
+			targetProxy = 828CB54E205E26EE007C679C /* PBXContainerItemProxy */;
 		};
 		82BA211B204D86FA00396AE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

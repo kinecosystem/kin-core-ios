@@ -48,9 +48,7 @@ class KinSampleViewController: UITableViewController {
 
         kinAccount.balance()
             .then(setupWatch)
-            .error { _ in
-                setupWatch(0)
-        }
+            .error { _ in setupWatch(0) }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -20,15 +20,15 @@ public class PaymentWatch {
         return txWatch.eventSource.lastEventId
     }
 
-    init(stellar: Stellar, account: String, asset: Asset? = nil, cursor: String? = nil) {
-        self.txWatch = stellar.txWatch(account: account, lastEventId: cursor)
+    init(node: Stellar.Node, account: String, asset: Asset, cursor: String? = nil) {
+        self.txWatch = Stellar.txWatch(account: account, lastEventId: cursor, node: node)
 
         self.emitter = self.txWatch.emitter
             .filter({ ti in
                 ti.payments.count > 0 && ti.payments
-                    .filter({ $0.asset == asset ?? stellar.asset }).count > 0
+                    .filter({ $0.asset == asset }).count > 0
             })
-            .map({ return PaymentInfo(txInfo: $0, account: account, asset: asset ?? stellar.asset) })
+            .map({ return PaymentInfo(txInfo: $0, account: account, asset: asset) })
 
         self.emitter.add(to: linkBag)
     }
@@ -40,13 +40,13 @@ public class BalanceWatch {
 
     public let emitter: StatefulObserver<Decimal>
 
-    init(stellar: Stellar, account: String, balance: Decimal) {
+    init(node: Stellar.Node, account: String, balance: Decimal, asset: Asset) {
         var balance = balance
 
-        self.paymentWatch = stellar.paymentWatch(account: account, lastEventId: "now")
+        self.paymentWatch = Stellar.paymentWatch(account: account, lastEventId: "now", node: node)
 
         self.emitter = paymentWatch.emitter
-            .filter({ $0.asset == stellar.asset && $0.source != $0.destination })
+            .filter({ $0.asset == asset && $0.source != $0.destination })
             .map({
                 balance += $0.amount * ($0.source == account ? -1 : 1)
 
@@ -66,8 +66,8 @@ public class CreationWatch {
 
     public let emitter: Observable<Bool>
 
-    init(stellar: Stellar, account: String) {
-        self.paymentWatch = stellar.paymentWatch(account: account, lastEventId: nil)
+    init(node: Stellar.Node, account: String) {
+        self.paymentWatch = Stellar.paymentWatch(account: account, lastEventId: nil, node: node)
 
         self.emitter = paymentWatch.emitter
             .map({ _ in
