@@ -107,7 +107,7 @@ class KinAccountTests: XCTestCase {
                                                 signer: funder,
                                                 node: node)
 
-                return Stellar.postTransaction(baseURL: node.baseURL, envelope: envelope)
+                return Stellar.postTransaction(envelope: envelope, node: node)
         }
     }
 

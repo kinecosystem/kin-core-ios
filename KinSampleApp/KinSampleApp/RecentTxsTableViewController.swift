@@ -18,10 +18,16 @@ class RecentTxsTableViewController: UITableViewController {
     private var memoFilter = Observable<String?>()
     private let linkBag = LinkBag()
 
+    private var formatter: DateFormatter!
+
     var kinAccount: KinAccount!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .long
 
         watch = try? kinAccount.watchPayments(cursor: nil)
         watch?.emitter
@@ -72,7 +78,7 @@ extension RecentTxsTableViewController {
 
         cell.addressLabel.text = tx.source == kinAccount.publicAddress ? tx.destination : tx.source
         cell.amountLabel.text = String(describing: tx.amount)
-        cell.dateLabel.text = tx.createdAt
+        cell.dateLabel.text = formatter.string(from: tx.createdAt)
 
         cell.memoLabel.text = tx.memoText
 

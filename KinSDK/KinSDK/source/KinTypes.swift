@@ -46,12 +46,12 @@ public enum AccountStatus {
 }
 
 public struct PaymentInfo {
-    private let txInfo: TxInfo
+    private let txEvent: TxEvent
     private let account: String
     private let asset: Asset
 
-    public var createdAt: String {
-        return txInfo.createdAt
+    public var createdAt: Date {
+        return txEvent.created_at
     }
 
     public var credit: Bool {
@@ -63,35 +63,31 @@ public struct PaymentInfo {
     }
 
     public var source: String {
-        return txInfo.payments.filter({ $0.asset == asset }).first?.source ?? txInfo.source
+        return txEvent.payments.filter({ $0.asset == asset }).first?.source ?? txEvent.source_account
     }
 
     public var hash: String {
-        return txInfo.hash
+        return txEvent.hash
     }
 
     public var amount: Decimal {
-        return txInfo.payments.filter({ $0.asset == asset }).first?.amount ?? Decimal(0)
+        return txEvent.payments.filter({ $0.asset == asset }).first?.amount ?? Decimal(0)
     }
 
     public var destination: String {
-        return txInfo.payments.filter({ $0.asset == asset }).first?.destination ?? ""
+        return txEvent.payments.filter({ $0.asset == asset }).first?.destination ?? ""
     }
 
     public var memoText: String? {
-        return txInfo.memoText
+        return txEvent.memoText
     }
 
     public var memoData: Data? {
-        return txInfo.memoData
+        return txEvent.memoData
     }
 
-    public var sequence: UInt64 {
-        return txInfo.sequence
-    }
-
-    init(txInfo: TxInfo, account: String, asset: Asset) {
-        self.txInfo = txInfo
+    init(txEvent: TxEvent, account: String, asset: Asset) {
+        self.txEvent = txEvent
         self.account = account
         self.asset = asset
     }

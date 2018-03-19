@@ -28,7 +28,7 @@ public class PaymentWatch {
                 ti.payments.count > 0 && ti.payments
                     .filter({ $0.asset == asset }).count > 0
             })
-            .map({ return PaymentInfo(txInfo: $0, account: account, asset: asset) })
+            .map({ return PaymentInfo(txEvent: $0, account: account, asset: asset) })
 
         self.emitter.add(to: linkBag)
     }
