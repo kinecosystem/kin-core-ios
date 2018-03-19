@@ -40,7 +40,7 @@ public final class KinAccounts {
                                             node: node)
 
         cache[count - 1] = account
-        cache.first
+
         return account
     }
     
@@ -133,5 +133,9 @@ extension KinAccounts: RandomAccessCollection {
 
     public var endIndex: Int {
         return KeyStore.count()
+    }
+
+    public var last: KinAccount? {
+        return count > 0 ? self[count - 1]! : nil
     }
 }
