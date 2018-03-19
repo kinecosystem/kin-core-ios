@@ -40,7 +40,7 @@ public final class KinAccounts {
                                             node: node)
 
         cache[count - 1] = account
-        
+        cache.first
         return account
     }
     
@@ -115,7 +115,7 @@ public final class KinAccounts {
 extension KinAccounts: Sequence {
     public func makeIterator() -> AnyIterator<KinAccount> {
         var index = 0
-        
+
         return AnyIterator {
             let account = index <= self.count ? self[index] : nil
             
@@ -126,3 +126,12 @@ extension KinAccounts: Sequence {
     }
 }
 
+extension KinAccounts: RandomAccessCollection {
+    public var startIndex: Int {
+        return 0
+    }
+
+    public var endIndex: Int {
+        return KeyStore.count()
+    }
+}
