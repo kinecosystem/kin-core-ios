@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import StellarErrors
 import StellarKit
 
 enum KeyUtilsError: Error {
@@ -16,6 +15,7 @@ enum KeyUtilsError: Error {
     case hashingFailed
     case passphraseIncorrect
     case unknownError
+    case signingFailed
 }
 
 public struct KeyUtils {
@@ -82,7 +82,7 @@ public struct KeyUtils {
 
     public static func sign(message: Data, signingKey: Data) throws -> Data {
         guard let signature = Sodium().sign.signature(message: message, secretKey: signingKey) else {
-            throw StellarError.signingFailed
+            throw KeyUtilsError.signingFailed
         }
 
         return signature
