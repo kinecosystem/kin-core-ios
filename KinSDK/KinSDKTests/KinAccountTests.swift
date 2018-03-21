@@ -100,8 +100,8 @@ class KinAccountTests: XCTestCase {
                                      seqNum: sequence + 1,
                                      timeBounds: nil,
                                      memo: .MEMO_NONE,
-                                     operations: [Operation.createAccountOp(destination: account,
-                                                                            balance: 10 * 10000000)])
+                                     operations: [Operation.createAccount(destination: account,
+                                                                          balance: 10 * 10000000)])
 
                 let envelope = try Stellar.sign(transaction: tx,
                                                 signer: funder,
