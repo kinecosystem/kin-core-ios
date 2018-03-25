@@ -212,6 +212,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8213D9262067731500A940ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8241388A2061712D00D7117E;
+			remoteInfo = "StellarErrors-macos";
+		};
 		824063BE201488460055D70A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 824063B8201488460055D70A /* StellarKit.xcodeproj */;
@@ -507,6 +514,7 @@
 				824063C3201488460055D70A /* StellarKitHost.app */,
 				82BA2119204D867300396AE2 /* StellarKit.framework */,
 				828CB554205E26EE007C679C /* StellarErrors.framework */,
+				8213D9272067731500A940ED /* StellarErrors.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -965,6 +973,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		8213D9272067731500A940ED /* StellarErrors.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = StellarErrors.framework;
+			remoteRef = 8213D9262067731500A940ED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		824063BF201488460055D70A /* StellarKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1355,7 +1370,6 @@
 					"-read_only_relocs",
 					suppress,
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1392,7 +1406,6 @@
 					"-read_only_relocs",
 					suppress,
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1514,7 +1527,6 @@
 					"-read_only_relocs",
 					suppress,
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = KinSDK;
 				SDKROOT = macosx;
@@ -1552,7 +1564,6 @@
 					"-read_only_relocs",
 					suppress,
 				);
-				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = KinSDK;
 				SDKROOT = macosx;
