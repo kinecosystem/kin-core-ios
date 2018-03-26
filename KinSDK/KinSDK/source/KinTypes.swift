@@ -39,7 +39,7 @@ public typealias TransactionCompletion = (TransactionId?, Error?) -> Void
  */
 public typealias BalanceCompletion = (Balance?, Error?) -> Void
 
-public enum AccountStatus {
+public enum AccountStatus: Int {
     case notCreated
     case notActivated
     case activated
