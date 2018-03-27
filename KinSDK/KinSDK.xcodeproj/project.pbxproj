@@ -1274,11 +1274,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LIBRARY_SEARCH_PATHS = "\"$(PROJECT_DIR)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Module $(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1332,9 +1333,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LIBRARY_SEARCH_PATHS = "\"$(PROJECT_DIR)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Module $(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
@@ -1361,10 +1363,6 @@
 				INFOPLIST_FILE = KinSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)",
-					"$(PROJECT_DIR)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium",
-				);
 				MACH_O_TYPE = mh_dylib;
 				"OTHER_LDFLAGS[arch=i386]" = (
 					"-read_only_relocs",
@@ -1397,10 +1395,6 @@
 				INFOPLIST_FILE = KinSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)",
-					"$(PROJECT_DIR)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium",
-				);
 				MACH_O_TYPE = mh_dylib;
 				"OTHER_LDFLAGS[arch=i386]" = (
 					"-read_only_relocs",
