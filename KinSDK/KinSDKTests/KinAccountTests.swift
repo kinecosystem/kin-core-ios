@@ -16,17 +16,22 @@ class KinAccountTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
 
-    let provider = NodeProvider(networkId: .custom(issuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH",
-                                                   stellarNetworkId: NetworkId.testNet.stellarNetworkId))
-
     var account0: KinAccount?
     var account1: KinAccount?
     var issuer: StellarAccount?
 
+    let endpoint = "http://localhost:8000"
+    let sNetworkId: StellarKit.NetworkId = .custom("private testnet")
+    lazy var node = Stellar.Node(baseURL: URL(string: endpoint)!, networkId: sNetworkId)
+
+    lazy var kNetworkId = KinSDK.NetworkId.custom(issuer: "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7",
+                                                  stellarNetworkId: sNetworkId)
+
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: provider)
+        kinClient = try! KinClient(with: URL(string: endpoint)!,
+                                   networkId: kNetworkId)
 
         KeyStore.removeAll()
 
@@ -41,7 +46,7 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Unable to create account(s)!")
         }
 
-        issuer = try? KeyStore.importSecretSeed("SCML43HASLG5IIN34KCJLDQ6LPWYQ3HIROP5CRBHVC46YRMJ6QLOYQJS",
+        issuer = try? KeyStore.importSecretSeed("SAXSDD5YEU6GMTJ5IHA6K35VZHXFVPV6IHMWYAQPSEKJRNC5LGMUQX35",
                                                 passphrase: passphrase)
 
         if issuer == nil {
@@ -82,8 +87,8 @@ class KinAccountTests: XCTestCase {
     }
 
     func fund(account: String) -> Promise<String> {
-        let funderPK = "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7"
-        let funderSK = "SAXSDD5YEU6GMTJ5IHA6K35VZHXFVPV6IHMWYAQPSEKJRNC5LGMUQX35"
+        let funderPK = "GCLBBAIDP34M4JACPQJUYNSPZCQK7IRHV7ETKV6U53JPYYUIIVDVJJFQ"
+        let funderSK = "SDBDJVXHPVQGDXYHEVOBBV4XZUDD7IQTXM5XHZRLXRJVY5YMH4YUCNZC"
 
         let sourcePK = PublicKey.PUBLIC_KEY_TYPE_ED25519(WrappedData32(KeyUtils.key(base32: funderPK)))
 
@@ -92,8 +97,6 @@ class KinAccountTests: XCTestCase {
             return try funder.sign(message: message, passphrase: self.passphrase)
         }
 
-        let node = Stellar.Node(baseURL: provider.url)
-
         return Stellar.sequence(account: funderPK, node: node)
             .then { sequence in
                 let tx = Transaction(sourceAccount: sourcePK,
@@ -101,13 +104,13 @@ class KinAccountTests: XCTestCase {
                                      timeBounds: nil,
                                      memo: .MEMO_NONE,
                                      operations: [Operation.createAccount(destination: account,
-                                                                          balance: 10 * 10000000)])
+                                                                          balance: 100 * 10000000)])
 
                 let envelope = try Stellar.sign(transaction: tx,
                                                 signer: funder,
-                                                node: node)
+                                                node: self.node)
 
-                return Stellar.postTransaction(envelope: envelope, node: node)
+                return Stellar.postTransaction(envelope: envelope, node: self.node)
         }
     }
 
@@ -117,8 +120,7 @@ class KinAccountTests: XCTestCase {
 
         var e: Error?
 
-        let node = Stellar.Node(baseURL: provider.url)
-        let asset = Asset(assetCode: "KIN", issuer: provider.networkId.issuer)!
+        let asset = Asset(assetCode: "KIN", issuer: kNetworkId.issuer)!
 
         guard let issuer = issuer else {
             throw KinError.unknown
@@ -144,7 +146,7 @@ class KinAccountTests: XCTestCase {
                                            destination: account.stellarAccount.publicKey!,
                                            amount: 100 * 10000000,
                                            asset: asset,
-                                           node: node)
+                                           node: self.node)
                         .error { error in
                             e = error
                         }

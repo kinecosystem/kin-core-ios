@@ -127,7 +127,6 @@
 		82BA20BE204D867200396AE2 /* KeyDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F46204D22C400396AE2 /* KeyDerivation.swift */; };
 		82BA20BF204D867200396AE2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F93204D22C400396AE2 /* Utils.swift */; };
 		82BA20C0204D867200396AE2 /* KinAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395D1FC410860006FEB5 /* KinAccount.swift */; };
-		82BA20C1204D867200396AE2 /* TestServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */; };
 		82BA20C2204D867200396AE2 /* RandomBytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F8B204D22C400396AE2 /* RandomBytes.swift */; };
 		82BA20C3204D867200396AE2 /* KeyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1EBC204D211300396AE2 /* KeyUtils.swift */; };
 		82BA20C4204D867200396AE2 /* Watchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8261EF322043F390001848CB /* Watchers.swift */; };
@@ -208,7 +207,6 @@
 		91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395D1FC410860006FEB5 /* KinAccount.swift */; };
 		91DDFDFC1FC6ED99004B0903 /* KinError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDFDFB1FC6ED99004B0903 /* KinError.swift */; };
 		E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
-		E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -418,7 +416,6 @@
 		91D4395B1FC410630006FEB5 /* KinClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClient.swift; sourceTree = "<group>"; };
 		91D4395D1FC410860006FEB5 /* KinAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccount.swift; sourceTree = "<group>"; };
 		91DDFDFB1FC6ED99004B0903 /* KinError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinError.swift; sourceTree = "<group>"; };
-		E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestServiceProviders.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -556,7 +553,6 @@
 				8268D8F320144339005CF79E /* KeyStoreTests.swift */,
 				824539421FAB0102009117B4 /* KinAccountTests.swift */,
 				827835451FA9B5F20006C3DF /* KinClientTests.swift */,
-				E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */,
 			);
 			path = KinSDKTests;
 			sourceTree = "<group>";
@@ -1109,7 +1105,6 @@
 				82BA1FC2204D22C500396AE2 /* KeyDerivation.swift in Sources */,
 				82BA200D204D22C500396AE2 /* Utils.swift in Sources */,
 				91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */,
-				E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */,
 				82BA2005204D22C500396AE2 /* RandomBytes.swift in Sources */,
 				82BA1EBD204D211300396AE2 /* KeyUtils.swift in Sources */,
 				8261EF332043F390001848CB /* Watchers.swift in Sources */,
@@ -1162,7 +1157,6 @@
 				82BA20BE204D867200396AE2 /* KeyDerivation.swift in Sources */,
 				82BA20BF204D867200396AE2 /* Utils.swift in Sources */,
 				82BA20C0204D867200396AE2 /* KinAccount.swift in Sources */,
-				82BA20C1204D867200396AE2 /* TestServiceProviders.swift in Sources */,
 				82BA20C2204D867200396AE2 /* RandomBytes.swift in Sources */,
 				82BA20C3204D867200396AE2 /* KeyUtils.swift in Sources */,
 				82BA20C4204D867200396AE2 /* Watchers.swift in Sources */,

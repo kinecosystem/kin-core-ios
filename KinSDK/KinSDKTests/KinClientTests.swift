@@ -12,13 +12,13 @@ import XCTest
 
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
-    let stellar = NodeProvider(networkId: .testNet)
-
     override func setUp() {
         super.setUp()
 
         do {
-            kinClient = try KinClient(provider: stellar)
+            kinClient = try KinClient(with: URL(string: "http://localhost:8000")!,
+                                      networkId: .custom(issuer: "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7",
+                                                         stellarNetworkId: .custom("private testnet")))
         }
         catch {
             XCTAssert(false, "Couldn't create kinClient")
