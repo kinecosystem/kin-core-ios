@@ -113,7 +113,7 @@ public final class KinAccounts {
 }
 
 extension KinAccounts: Sequence {
-    public func makeIterator() -> AnyIterator<KinAccount> {
+    public func makeIterator() -> AnyIterator<KinAccount?> {
         var index = 0
 
         return AnyIterator {
@@ -133,9 +133,5 @@ extension KinAccounts: RandomAccessCollection {
 
     public var endIndex: Int {
         return KeyStore.count()
-    }
-
-    public var last: KinAccount? {
-        return count > 0 ? self[count - 1]! : nil
     }
 }
