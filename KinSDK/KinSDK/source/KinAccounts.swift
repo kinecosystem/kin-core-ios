@@ -118,7 +118,7 @@ extension KinAccounts: Sequence {
 
         return AnyIterator {
             let account = index <= self.count ? self[index] : nil
-            
+
             index += 1
             
             return account
