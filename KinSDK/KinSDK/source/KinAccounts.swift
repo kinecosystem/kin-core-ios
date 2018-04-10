@@ -135,3 +135,9 @@ extension KinAccounts: RandomAccessCollection {
         return KeyStore.count()
     }
 }
+
+extension KinAccounts {
+    public var last: KinAccount? {
+        return count > 0 ? self[self.count - 1] : nil
+    }
+}
