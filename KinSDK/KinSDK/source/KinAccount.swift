@@ -88,7 +88,7 @@ public protocol KinAccount: class {
      */
     func balance() -> Promise<Balance>
 
-    func watchBalance(_ balance: Decimal) throws -> BalanceWatch
+    func watchBalance(_ balance: Decimal?) throws -> BalanceWatch
 
     func watchPayments(cursor: String?) throws -> PaymentWatch
 
@@ -279,12 +279,15 @@ final class KinStellarAccount: KinAccount {
         return promise(balance)
     }
     
-    public func watchBalance(_ balance: Decimal) throws -> BalanceWatch {
+    public func watchBalance(_ balance: Decimal?) throws -> BalanceWatch {
         guard deleted == false else {
             throw KinError.accountDeleted
         }
 
-        return BalanceWatch(node: node, account: stellarAccount.publicKey!, balance: balance, asset: asset)
+        return BalanceWatch(node: node,
+                            account: stellarAccount.publicKey!,
+                            balance: balance,
+                            asset: asset)
     }
 
     public func watchPayments(cursor: String?) throws -> PaymentWatch {
@@ -292,7 +295,10 @@ final class KinStellarAccount: KinAccount {
             throw KinError.accountDeleted
         }
 
-        return PaymentWatch(node: node, account: stellarAccount.publicKey!, asset: asset, cursor: cursor)
+        return PaymentWatch(node: node,
+                            account: stellarAccount.publicKey!,
+                            asset: asset,
+                            cursor: cursor)
     }
 
     public func watchCreation() throws -> Promise<Void> {

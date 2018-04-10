@@ -35,20 +35,36 @@ public class PaymentWatch {
 }
 
 public class BalanceWatch {
-    private let paymentWatch: StellarKit.PaymentWatch
+    private let txWatch: StellarKit.TxWatch
     private let linkBag = LinkBag()
 
     public let emitter: StatefulObserver<Decimal>
 
-    init(node: Stellar.Node, account: String, balance: Decimal, asset: Asset) {
-        var balance = balance
+    init(node: Stellar.Node, account: String, balance: Decimal? = nil, asset: Asset) {
+        var balance = balance ?? Decimal(0)
 
-        self.paymentWatch = Stellar.paymentWatch(account: account, lastEventId: "now", node: node)
+        self.txWatch = Stellar.txWatch(account: account, lastEventId: "now", node: node)
 
-        self.emitter = paymentWatch.emitter
-            .filter({ $0.asset == asset && $0.source != $0.destination })
-            .map({
-                balance += $0.amount * ($0.source == account ? -1 : 1)
+        self.emitter = txWatch.emitter
+            .map({ txEvent in
+                if case let TransactionMeta.operations(opsMeta) = txEvent.meta {
+                    for op in opsMeta {
+                        for change in op.changes {
+                            switch change {
+                            case .LEDGER_ENTRY_CREATED: break
+                            case .LEDGER_ENTRY_REMOVED: break
+                            case .LEDGER_ENTRY_UPDATED(let le):
+                                if case let LedgerEntry.Data.TRUSTLINE(trustlineEntry) = le.data {
+                                    if trustlineEntry.account == account && trustlineEntry.asset == asset {
+                                        balance = Decimal(Double(trustlineEntry.balance) / Double(KinMultiplier))
+                                        return balance
+                                    }
+                                }
+                            case .LEDGER_ENTRY_STATE: break
+                            }
+                        }
+                    }
+                }
 
                 return balance
             })
@@ -56,7 +72,9 @@ public class BalanceWatch {
 
         self.emitter.add(to: linkBag)
 
-        self.emitter.next(balance)
+        if balance > 0 {
+            self.emitter.next(balance)
+        }
     }
 }
 
