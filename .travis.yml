@@ -10,7 +10,7 @@ before_script:
   - brew install node
   - npm install -g appium
   - npm install -g wd
-  - pip3 install --trusted-host pypi.python.org  Appium-Python-Client pytest requests
+  - sudo pip3 install --trusted-host pypi.python.org  Appium-Python-Client pytest requests
   - appium &
   - git clone https://github.com/kinfoundation/Kin-Stellar-SampleApp-Automation.git
 script:
