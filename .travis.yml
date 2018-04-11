@@ -13,12 +13,10 @@ before_script:
   - ./travis-stellar-core-macos/stellarcmd/stellarcmd -c ./travis-stellar-core-macos/stellarcmd/config.json info GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7
 
   #Install appium
-  - brew install python
+  - brew upgrade python
   - brew install node
   - npm install -g appium
   - npm install -g wd
-  - python --version
-  - pip --version
   - sudo pip install --trusted-host pypi.python.org  Appium-Python-Client pytest requests
   - appium &
   - git clone https://github.com/kinfoundation/Kin-Stellar-SampleApp-Automation.git
