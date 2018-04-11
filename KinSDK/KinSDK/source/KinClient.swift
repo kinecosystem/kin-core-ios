@@ -43,7 +43,7 @@ public final class KinClient {
         return node.baseURL
     }
 
-    public var accounts: KinAccounts
+    public private(set) var accounts: KinAccounts
 
     internal let node: Stellar.Node
     internal let asset: Asset
