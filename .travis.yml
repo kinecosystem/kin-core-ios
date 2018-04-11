@@ -6,11 +6,11 @@ xcode_sdk: iphonesimulator8.4
 
 before_script:
   #Install appium
-  - brew install python
+  - brew install python3
   - brew install node
   - npm install -g appium
   - npm install -g wd
-  - pip install Appium-Python-Client pytest requests
+  - pip3 install --trusted-host pypi.python.org  Appium-Python-Client pytest requests
   - appium &
   - git clone https://github.com/kinfoundation/Kin-Stellar-SampleApp-Automation.git
 script:
