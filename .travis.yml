@@ -16,6 +16,7 @@ before_script:
   - brew upgrade python
   - npm install -g appium
   - npm install -g wd
+  - curl https://bootstrap.pypa.io/get-pip.py | python
   - sudo pip install --trusted-host pypi.python.org Appium-Python-Client pytest requests
   - appium &
   - git clone https://github.com/kinfoundation/Kin-Stellar-SampleApp-Automation.git
