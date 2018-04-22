@@ -10,12 +10,14 @@ import UIKit
 
 extension String {
     func prettified() -> String? {
-        guard let jsonObject = try? JSONSerialization.jsonObject(with: self.data(using: .utf8)!, options: []),
+        guard
+            let jsonObject = try? JSONSerialization.jsonObject(with: self.data(using: .utf8)!, options: []),
             let prettyPrintedData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted),
-            let prettyPrinted = String(data: prettyPrintedData, encoding: String.Encoding.utf8) else {
+            let prettyPrinted = String(data: prettyPrintedData, encoding: String.Encoding.utf8)
+            else {
                 return nil
         }
-
+        
         return prettyPrinted
     }
 }
