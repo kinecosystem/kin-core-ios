@@ -27,3 +27,7 @@ script:
   - cd ..
   - cd KinSampleApp
   - xcodebuild -scheme KinSampleApp -destination 'platform=iOS Simulator,name=iPhone 8 Plus'
+#Run automation
+  - cd ..
+  - cd Kin-Stellar-SampleApp-Automation
+  - pytest -x -v iOS_Sanity.py
