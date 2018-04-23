@@ -17,7 +17,7 @@ before_script:
   - brew upgrade python
   - npm install -g appium
   - npm install -g wd
-  - sudo pip install Appium-Python-Client pytest requests
+  - sudo pip3 install Appium-Python-Client pytest requests
   - appium &
   - git clone https://github.com/kinfoundation/Kin-Stellar-SampleApp-Automation.git
 script:
