@@ -26,7 +26,9 @@ script:
 #Build sample app
   - cd ..
   - cd KinSampleApp
-  - xcodebuild -scheme KinSampleApp -destination 'platform=iOS Simulator,name=iPhone 8 Plus'
+  - mkdir derivedData
+  - xcodebuild -scheme KinSampleApp -destination -derivedDataPath derivedData 'platform=iOS Simulator,name=iPhone 8 Plus'
+  - xcrun simsctl install booted derivedData/Build/Products/Debug-iphonesimulator/KinSampleApp.app
 #Run automation
   - cd ..
   - cd Kin-Stellar-SampleApp-Automation
