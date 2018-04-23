@@ -13,7 +13,7 @@ before_script:
   - ./travis-stellar-core-macos/stellarcmd/stellarcmd -c ./travis-stellar-core-macos/stellarcmd/config.json info GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7
 
   #Install appium
-  - brew install openssl
+  - brew upgrade openssl
   - brew upgrade python
   - npm install -g appium
   - npm install -g wd
