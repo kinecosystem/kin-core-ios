@@ -12,9 +12,11 @@ before_script:
   - ./travis-stellar-core-macos/stellarcmd/stellarcmd -c ./travis-stellar-core-macos/stellarcmd/config.json create GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7
   - ./travis-stellar-core-macos/stellarcmd/stellarcmd -c ./travis-stellar-core-macos/stellarcmd/config.json info GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7
 
-  #Install appium
+#Install appium
   - brew upgrade openssl
   - brew upgrade python
+  #Installs GNU grep
+  - brew install grep
   - npm install -g appium
   - npm install -g wd
   - sudo pip3 install Appium-Python-Client pytest requests
@@ -28,6 +30,9 @@ script:
   - cd KinSampleApp
   - mkdir derivedData
   - xcodebuild -scheme KinSampleApp -derivedDataPath derivedData -destination 'platform=iOS Simulator,name=iPhone 8 Plus'
+  - ID=$(xcrun simctl list | grep 'iPhone 8 Plus' | grep 'Shutdown' | head -1 | ggrep -oP '(?<=\().+?(?=\))' | head -1)
+  - xcrun simctl boot $ID
+  - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
   - xcrun simsctl install booted derivedData/Build/Products/Debug-iphonesimulator/KinSampleApp.app
 #Run automation
   - cd ..
