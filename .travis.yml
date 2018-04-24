@@ -20,7 +20,6 @@ before_script:
   - npm install -g appium
   - npm install -g wd
   - sudo pip3 install Appium-Python-Client pytest requests
-  - appium &
   - git clone https://github.com/kinfoundation/Kin-Stellar-SampleApp-Automation.git
 script:
   - cd KinSDK
@@ -37,4 +36,5 @@ script:
 #Run automation
   - cd ..
   - cd Kin-Stellar-SampleApp-Automation
+  - appium &
   - pytest -x -v iOS_Sanity.py
