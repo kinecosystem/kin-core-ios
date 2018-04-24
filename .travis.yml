@@ -37,4 +37,4 @@ script:
   - cd ..
   - cd Kin-Stellar-SampleApp-Automation
   - appium &
-  - pytest -x -v iOS_Sanity.py
+  - python -m pytest -x -v iOS_Sanity.py
