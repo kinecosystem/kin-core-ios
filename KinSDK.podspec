@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.7.2'
+  s.version          = '0.7.4'
   s.summary          = 'Pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
     'LIBRARY_SEARCH_PATHS' => '$(PODS_TARGET_SRCROOT)/KinSDK/KinSDK/source/third-party/swift-sodium/Sodium/libsodium'
   }
 
-  s.dependency 'StellarKit', '0.3.3'
+  s.dependency 'StellarKit', '0.3.5'
 
   s.ios.deployment_target = '8.0'
   s.swift_version = "3.2"
