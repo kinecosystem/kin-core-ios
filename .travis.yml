@@ -29,12 +29,6 @@ script:
   - cd KinSampleApp
   - mkdir derivedData
   - xcodebuild -scheme KinSampleApp -derivedDataPath derivedData -destination 'platform=iOS Simulator,name=iPhone 8 Plus'
-  - xcrun simctl list
-  - ID=$(xcrun simctl list | grep 'iPhone 8 Plus' | grep 'Shutdown' | head -1 | ggrep -oP '(?<=\().+?(?=\))' | head -1)
-  - echo $ID
-  - xcrun simctl boot $ID
-  - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
-  - xcrun simctl install booted derivedData/Build/Products/Debug-iphonesimulator/KinSampleApp.app
 #Run automation
   - cd ..
   - cd Kin-Stellar-SampleApp-Automation
