@@ -8,7 +8,6 @@
 
 import UIKit
 import KinSDK
-import KinUtil
 
 class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!

@@ -8,6 +8,7 @@
 
 import Foundation
 import StellarKit
+import KinUtil
 
 /**
  A protocol to encapsulate the formation of the endpoint `URL` and the `NetworkId`.
@@ -93,3 +94,6 @@ public struct PaymentInfo {
     }
 }
 
+public typealias LinkBag = KinUtil.LinkBag
+public typealias Promise = KinUtil.Promise
+public typealias Observable<T> = KinUtil.Observable<T>

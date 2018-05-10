@@ -8,7 +8,6 @@
 
 import UIKit
 import KinSDK
-import KinUtil
 
 class RecentTxsTableViewController: UITableViewController {
     private var txs = [PaymentInfo]()
