@@ -137,6 +137,10 @@ extension KinAccounts: RandomAccessCollection {
 }
 
 extension KinAccounts {
+    public var first: KinAccount? {
+        return count > 0 ? self[0] : nil
+    }
+
     public var last: KinAccount? {
         return count > 0 ? self[self.count - 1] : nil
     }

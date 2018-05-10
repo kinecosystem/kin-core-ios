@@ -55,7 +55,7 @@ class HomeViewController: UIViewController {
             return
         }
 
-        if let kinAccount = kinClient.accounts[0] {
+        if let kinAccount = kinClient.accounts.first {
             //if we already have the account, pass it on to KinSampleViewController
             showSampleViewController(with: kinClient, kinAccount: kinAccount, production: production)
         } else {
