@@ -14,17 +14,17 @@ import StellarKit
  */
 public enum NetworkId {
     /**
-     A production node.
+     Kik's private Stellar production network.
      */
     case mainNet
 
     /**
-    The Stellar test net.
+    Kik's private Stellar test network.
      */
     case testNet
 
     /**
-     A network with a custom ID. **Currently unsupported**
+     A network with a custom issuer and Stellar sidentifier.
      */
     case custom(issuer: String, stellarNetworkId: StellarKit.NetworkId)
 }
@@ -33,7 +33,7 @@ extension NetworkId {
     public var issuer: String {
         switch self {
         case .mainNet:
-            return ""
+            return "GCKG5WGBIJP74UDNRIRDFGENNIH5Y3KBI5IHREFAJKV4MQXLELT7EX6V"
         case .testNet:
             return "GCKG5WGBIJP74UDNRIRDFGENNIH5Y3KBI5IHREFAJKV4MQXLELT7EX6V"
         case .custom (let issuer, _):
@@ -44,9 +44,9 @@ extension NetworkId {
     public var stellarNetworkId: StellarKit.NetworkId {
         switch self {
         case .mainNet:
-            return .main
+            return StellarKit.NetworkId("private testnet")
         case .testNet:
-            return .test
+            return StellarKit.NetworkId("private testnet")
         case .custom(_, let stellarNetworkId):
             return stellarNetworkId
         }
