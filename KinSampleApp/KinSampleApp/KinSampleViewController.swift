@@ -147,17 +147,8 @@ extension KinSampleViewController: KinClientCellDelegate {
     private func createAccount(user_id: String) -> Promise<Bool> {
         let p = Promise<Bool>()
 
-        let content = [
-            "user_id": user_id,
-            "public_address": kinAccount.publicAddress,
-            ]
-        let body = try! JSONSerialization.data(withJSONObject: content, options: [])
-
-        let url = URL(string: "http://188.166.34.7:8000/create_account")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = body
+        let url = URL(string: "http://friendbot-kik.kininfrastructure.com?addr=\(kinAccount.publicAddress)")!
+        let request = URLRequest(url: url)
 
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             guard
@@ -170,12 +161,6 @@ extension KinSampleViewController: KinClientCellDelegate {
                     p.signal(OnBoardingError.invalidResponse)
 
                     return
-            }
-
-            guard let status = json["status"] as? String, status == "ok" else {
-                p.signal(OnBoardingError.errorResponse)
-
-                return
             }
 
             p.signal(true)
@@ -205,17 +190,8 @@ extension KinSampleViewController: KinClientCellDelegate {
     private func fund(user_id: String) -> Promise<Bool> {
         let p = Promise<Bool>()
 
-        let content = [
-            "user_id": user_id,
-            "public_address": kinAccount.publicAddress,
-            ]
-        let body = try! JSONSerialization.data(withJSONObject: content, options: [])
-
-        let url = URL(string: "http://188.166.34.7:8000/fund")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = body
+        let url = URL(string: "http://159.65.84.173:5000/fund?account=\(kinAccount.publicAddress)&amount=6000")!
+        let request = URLRequest(url: url)
 
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             guard
@@ -230,7 +206,7 @@ extension KinSampleViewController: KinClientCellDelegate {
                     return
             }
 
-            guard let status = json["status"] as? String, status == "ok" else {
+            guard let status = json["success"] as? Int, status != 0 else {
                 p.signal(OnBoardingError.errorResponse)
 
                 return
