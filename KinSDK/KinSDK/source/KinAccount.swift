@@ -52,7 +52,7 @@ public protocol KinAccount: class {
      
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
-     - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
+     - parameter memo: An optional string, up-to 28 bytes in length, included on the transaction record.
      */
     func sendTransaction(to recipient: String,
                          kin: Decimal,
@@ -65,7 +65,7 @@ public protocol KinAccount: class {
 
      - parameter recipient: The recipient's public address
      - parameter kin: The amount of Kin to be sent
-     - parameter memo: An optional data buffer, up-to 32 bytes, included on the transaction record.
+     - parameter memo: An optional string, up-to 28 bytes in length, included on the transaction record.
 
      - returns: A promise which is signalled with the `TransactionId`.
      */

@@ -31,7 +31,6 @@
 		82BA1FBE204D22C500396AE2 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F42204D22C400396AE2 /* Auth.swift */; };
 		82BA1FBF204D22C500396AE2 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F43204D22C400396AE2 /* Box.swift */; };
 		82BA1FC0204D22C500396AE2 /* GenericHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F44204D22C400396AE2 /* GenericHash.swift */; };
-		82BA1FC1204D22C500396AE2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82BA1F45204D22C400396AE2 /* Info.plist */; };
 		82BA1FC2204D22C500396AE2 /* KeyDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F46204D22C400396AE2 /* KeyDerivation.swift */; };
 		82BA1FC3204D22C500396AE2 /* KeyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA1F47204D22C400396AE2 /* KeyExchange.swift */; };
 		82BA1FC4204D22C500396AE2 /* core.h in Headers */ = {isa = PBXBuildFile; fileRef = 82BA1F49204D22C400396AE2 /* core.h */; };
@@ -1018,7 +1017,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82BA1FC1204D22C500396AE2 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1076,7 +1074,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "exit 0\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed. Checkout install options at at https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "exit 0\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed. Checkout install options at at https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
