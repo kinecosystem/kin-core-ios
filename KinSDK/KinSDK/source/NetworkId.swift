@@ -19,9 +19,14 @@ public enum NetworkId {
     case mainNet
 
     /**
-    Kik's private Stellar test network.
+     Kik's private Stellar test network.
      */
     case testNet
+
+    /**
+     Kik's private Stellar playground network.
+     */
+    case playground
 
     /**
      A network with a custom issuer and Stellar sidentifier.
@@ -36,6 +41,8 @@ extension NetworkId {
             return "GBQ3DQOA7NF52FVV7ES3CR3ZMHUEY4LTHDAQKDTO6S546JCLFPEQGCPK"
         case .testNet:
             return "GBQ3DQOA7NF52FVV7ES3CR3ZMHUEY4LTHDAQKDTO6S546JCLFPEQGCPK"
+        case .playground:
+            return "GBC3SG6NGTSZ2OMH3FFGB7UVRQWILW367U4GSOOF4TFSZONV42UJXUH7"
         case .custom (let issuer, _):
             return issuer
         }
@@ -47,6 +54,8 @@ extension NetworkId {
             return StellarKit.NetworkId("private testnet")
         case .testNet:
             return StellarKit.NetworkId("private testnet")
+        case .playground:
+            return StellarKit.NetworkId("Kin Playground Network ; June 2018")
         case .custom(_, let stellarNetworkId):
             return stellarNetworkId
         }
@@ -61,6 +70,8 @@ extension NetworkId: CustomStringConvertible {
             return "main"
         case .testNet:
             return "test"
+        case .playground:
+            return "playground"
         default:
             return "custom network"
         }
@@ -80,6 +91,13 @@ extension NetworkId: Equatable {
         case .testNet:
             switch rhs {
             case .testNet:
+                return true
+            default:
+                return false
+            }
+        case .playground:
+            switch rhs {
+            case .playground:
                 return true
             default:
                 return false
