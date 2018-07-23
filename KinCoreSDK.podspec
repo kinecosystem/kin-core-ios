@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name             = 'KinSDK'
-  s.version          = '0.7.5'
-  s.summary          = 'Pod for the KIN SDK.'
+  s.name             = 'KinCoreSDK'
+  s.version          = '0.7.6'
+  s.summary          = 'Pod for the KIN Core SDK.'
 
   s.description      = <<-DESC
   Initial pod for the KIN SDK.
