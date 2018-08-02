@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KinSDK
+import KinCoreSDK
 
 class GetKinTableViewCell: KinClientCell {
     @IBOutlet weak var getKinButton: UIButton!

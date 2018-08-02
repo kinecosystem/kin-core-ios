@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import KinSDK
+@testable import KinCoreSDK
 @testable import StellarKit
 
 class KinClientTests: XCTestCase {

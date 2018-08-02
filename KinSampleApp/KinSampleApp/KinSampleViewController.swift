@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KinSDK
+import KinCoreSDK
 
 class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!

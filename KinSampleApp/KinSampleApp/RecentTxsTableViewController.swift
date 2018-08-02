@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KinSDK
+import KinCoreSDK
 
 class RecentTxsTableViewController: UITableViewController {
     private var txs = [PaymentInfo]()

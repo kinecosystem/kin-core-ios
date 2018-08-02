@@ -1,6 +1,6 @@
 //
 //  KinError.swift
-//  KinSDK
+//  KinCoreSDK
 //
 //  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Operations performed by the KinSDK that throw errors might throw a `KinError`; alternatively,
+ Operations performed by the KinCoreSDK that throw errors might throw a `KinError`; alternatively,
  errors in completion blocks might be of this type.
  */
 public enum KinError: Error {
@@ -60,7 +60,7 @@ public enum KinError: Error {
     case signingFailed
 
     /**
-     An internal error happened in the KinSDK.
+     An internal error happened in the KinCoreSDK.
      */
     case internalInconsistency
 

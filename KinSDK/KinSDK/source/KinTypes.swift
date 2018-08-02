@@ -1,6 +1,6 @@
 //
 //  KinMisc.swift
-//  KinSDK
+//  KinCoreSDK
 //
 //  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.

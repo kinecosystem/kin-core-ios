@@ -11,7 +11,7 @@
 		82140EC41FA88EAF00FAF19B /* KinTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC31FA88EAF00FAF19B /* KinTypes.swift */; };
 		822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822107A31FD66DC80007D63F /* KinAccounts.swift */; };
 		824063CB20148B290055D70A /* StellarKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824063BF201488460055D70A /* StellarKit.framework */; };
-		824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
+		824539411FAACFC6009117B4 /* KinCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */; };
 		824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824539421FAB0102009117B4 /* KinAccountTests.swift */; };
 		8261EF27204333A1001848CB /* KinUtil.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8261EF28204333A1001848CB /* KinUtil.framework */; };
 		8261EF332043F390001848CB /* Watchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8261EF322043F390001848CB /* Watchers.swift */; };
@@ -200,12 +200,12 @@
 		82BA210C204D867200396AE2 /* KinSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 82140EAC1FA88E5B00FAF19B /* KinSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82BA210D204D867200396AE2 /* crypto_onetimeauth_poly1305.h in Headers */ = {isa = PBXBuildFile; fileRef = 82BA1F64204D22C400396AE2 /* crypto_onetimeauth_poly1305.h */; };
 		82BA210F204D867200396AE2 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82BA1F45204D22C400396AE2 /* Info.plist */; };
-		82F6D8051FB2112B00AEE17D /* KinSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		82F6D8051FB2112B00AEE17D /* KinCoreSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9148CE4F1FCACF9C0005D603 /* NetworkId.swift */; };
 		91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395B1FC410630006FEB5 /* KinClient.swift */; };
 		91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395D1FC410860006FEB5 /* KinAccount.swift */; };
 		91DDFDFC1FC6ED99004B0903 /* KinError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDFDFB1FC6ED99004B0903 /* KinError.swift */; };
-		E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
+		E970C26B1FAB4ADB0091181B /* KinCoreSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -295,7 +295,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				82F6D8051FB2112B00AEE17D /* KinSDK.framework in Embed Frameworks */,
+				82F6D8051FB2112B00AEE17D /* KinCoreSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,7 +303,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		82140EA91FA88E5B00FAF19B /* KinSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KinSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KinCoreSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82140EAC1FA88E5B00FAF19B /* KinSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KinSDK.h; sourceTree = "<group>"; };
 		82140EAD1FA88E5B00FAF19B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82140EC31FA88EAF00FAF19B /* KinTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinTypes.swift; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 		827835371FA9B5F20006C3DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8278353A1FA9B5F20006C3DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8278353C1FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		827835411FA9B5F20006C3DF /* KinSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		827835411FA9B5F20006C3DF /* KinSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KinSDKTests.xctest; path = KinCoreSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		827835451FA9B5F20006C3DF /* KinClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientTests.swift; sourceTree = "<group>"; };
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82BA1EBC204D211300396AE2 /* KeyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyUtils.swift; sourceTree = "<group>"; };
@@ -409,8 +409,8 @@
 		82BA1F93204D22C400396AE2 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		82BA2013204D231600396AE2 /* libsodium-osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-osx.a"; path = "KinSDK/source/third-party/swift-sodium/Sodium/libsodium/libsodium-osx.a"; sourceTree = "<group>"; };
 		82BA2014204D231600396AE2 /* libsodium-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsodium-ios.a"; path = "KinSDK/source/third-party/swift-sodium/Sodium/libsodium/libsodium-ios.a"; sourceTree = "<group>"; };
-		82BA2113204D867200396AE2 /* KinSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KinSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82BA2114204D867200396AE2 /* KinSDK-macos-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KinSDK-macos-Info.plist"; path = "/Users/avi/Projects/kin-core-ios/KinSDK/KinSDK-macos-Info.plist"; sourceTree = "<absolute>"; };
+		82BA2113204D867200396AE2 /* KinCoreSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KinCoreSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82BA2114204D867200396AE2 /* KinCoreSDK-macos-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KinCoreSDK-macos-Info.plist"; sourceTree = "<group>"; };
 		9148CE4F1FCACF9C0005D603 /* NetworkId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkId.swift; sourceTree = "<group>"; };
 		91D4395B1FC410630006FEB5 /* KinClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClient.swift; sourceTree = "<group>"; };
 		91D4395D1FC410860006FEB5 /* KinAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccount.swift; sourceTree = "<group>"; };
@@ -433,7 +433,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */,
+				E970C26B1FAB4ADB0091181B /* KinCoreSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,7 +441,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */,
+				824539411FAACFC6009117B4 /* KinCoreSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,17 +467,17 @@
 				827835441FA9B5F20006C3DF /* KinSDKTests */,
 				82140EAA1FA88E5B00FAF19B /* Products */,
 				82140EC51FA89A6A00FAF19B /* Frameworks */,
-				82BA2114204D867200396AE2 /* KinSDK-macos-Info.plist */,
+				82BA2114204D867200396AE2 /* KinCoreSDK-macos-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
 		82140EAA1FA88E5B00FAF19B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				82140EA91FA88E5B00FAF19B /* KinSDK.framework */,
+				82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */,
 				8278352E1FA9B5F20006C3DF /* KinTestHost.app */,
 				827835411FA9B5F20006C3DF /* KinSDKTests.xctest */,
-				82BA2113204D867200396AE2 /* KinSDK.framework */,
+				82BA2113204D867200396AE2 /* KinCoreSDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -833,9 +833,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		82140EA81FA88E5B00FAF19B /* KinSDK */ = {
+		82140EA81FA88E5B00FAF19B /* KinCoreSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 82140EBD1FA88E5B00FAF19B /* Build configuration list for PBXNativeTarget "KinSDK" */;
+			buildConfigurationList = 82140EBD1FA88E5B00FAF19B /* Build configuration list for PBXNativeTarget "KinCoreSDK" */;
 			buildPhases = (
 				91EB959B1FC5D2E4000AE5B1 /* Lint with SwiftLint */,
 				82140EA41FA88E5B00FAF19B /* Sources */,
@@ -849,9 +849,9 @@
 				828CB54F205E26EE007C679C /* PBXTargetDependency */,
 				824063C720148B210055D70A /* PBXTargetDependency */,
 			);
-			name = KinSDK;
+			name = KinCoreSDK;
 			productName = KinSDK;
-			productReference = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */;
+			productReference = 82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8278352D1FA9B5F20006C3DF /* KinTestHost */ = {
@@ -873,9 +873,9 @@
 			productReference = 8278352E1FA9B5F20006C3DF /* KinTestHost.app */;
 			productType = "com.apple.product-type.application";
 		};
-		827835401FA9B5F20006C3DF /* KinSDKTests */ = {
+		827835401FA9B5F20006C3DF /* KinCoreSDKTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8278354B1FA9B5F20006C3DF /* Build configuration list for PBXNativeTarget "KinSDKTests" */;
+			buildConfigurationList = 8278354B1FA9B5F20006C3DF /* Build configuration list for PBXNativeTarget "KinCoreSDKTests" */;
 			buildPhases = (
 				8278353D1FA9B5F20006C3DF /* Sources */,
 				8278353E1FA9B5F20006C3DF /* Frameworks */,
@@ -886,14 +886,14 @@
 			dependencies = (
 				827835431FA9B5F20006C3DF /* PBXTargetDependency */,
 			);
-			name = KinSDKTests;
+			name = KinCoreSDKTests;
 			productName = KinTestHostTests;
 			productReference = 827835411FA9B5F20006C3DF /* KinSDKTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		82BA20A8204D867200396AE2 /* KinSDK-macos */ = {
+		82BA20A8204D867200396AE2 /* KinCoreSDK-macos */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 82BA2110204D867200396AE2 /* Build configuration list for PBXNativeTarget "KinSDK-macos" */;
+			buildConfigurationList = 82BA2110204D867200396AE2 /* Build configuration list for PBXNativeTarget "KinCoreSDK-macos" */;
 			buildPhases = (
 				82BA20AB204D867200396AE2 /* Lint with SwiftLint */,
 				82BA20AC204D867200396AE2 /* Sources */,
@@ -906,9 +906,9 @@
 			dependencies = (
 				82BA211B204D86FA00396AE2 /* PBXTargetDependency */,
 			);
-			name = "KinSDK-macos";
+			name = "KinCoreSDK-macos";
 			productName = KinSDK;
-			productReference = 82BA2113204D867200396AE2 /* KinSDK.framework */;
+			productReference = 82BA2113204D867200396AE2 /* KinCoreSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -940,7 +940,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 82140EA31FA88E5B00FAF19B /* Build configuration list for PBXProject "KinSDK" */;
+			buildConfigurationList = 82140EA31FA88E5B00FAF19B /* Build configuration list for PBXProject "KinCoreSDK" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -959,10 +959,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				82140EA81FA88E5B00FAF19B /* KinSDK */,
+				82140EA81FA88E5B00FAF19B /* KinCoreSDK */,
 				8278352D1FA9B5F20006C3DF /* KinTestHost */,
-				827835401FA9B5F20006C3DF /* KinSDKTests */,
-				82BA20A8204D867200396AE2 /* KinSDK-macos */,
+				827835401FA9B5F20006C3DF /* KinCoreSDKTests */,
+				82BA20A8204D867200396AE2 /* KinCoreSDK-macos */,
 			);
 		};
 /* End PBXProject section */
@@ -1179,7 +1179,7 @@
 		};
 		827835501FA9B6290006C3DF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 82140EA81FA88E5B00FAF19B /* KinSDK */;
+			target = 82140EA81FA88E5B00FAF19B /* KinCoreSDK */;
 			targetProxy = 8278354F1FA9B6290006C3DF /* PBXContainerItemProxy */;
 		};
 		828CB54F205E26EE007C679C /* PBXTargetDependency */ = {
@@ -1501,7 +1501,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "KinSDK-macos-Info.plist";
+				INFOPLIST_FILE = "KinCoreSDK-macos-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1514,7 +1514,7 @@
 					suppress,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
-				PRODUCT_NAME = KinSDK;
+				PRODUCT_NAME = KinCoreSDK;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -1538,7 +1538,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "KinSDK-macos-Info.plist";
+				INFOPLIST_FILE = "KinCoreSDK-macos-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1551,7 +1551,7 @@
 					suppress,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
-				PRODUCT_NAME = KinSDK;
+				PRODUCT_NAME = KinCoreSDK;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -1562,7 +1562,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		82140EA31FA88E5B00FAF19B /* Build configuration list for PBXProject "KinSDK" */ = {
+		82140EA31FA88E5B00FAF19B /* Build configuration list for PBXProject "KinCoreSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82140EBB1FA88E5B00FAF19B /* Debug */,
@@ -1571,7 +1571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		82140EBD1FA88E5B00FAF19B /* Build configuration list for PBXNativeTarget "KinSDK" */ = {
+		82140EBD1FA88E5B00FAF19B /* Build configuration list for PBXNativeTarget "KinCoreSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82140EBE1FA88E5B00FAF19B /* Debug */,
@@ -1589,7 +1589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8278354B1FA9B5F20006C3DF /* Build configuration list for PBXNativeTarget "KinSDKTests" */ = {
+		8278354B1FA9B5F20006C3DF /* Build configuration list for PBXNativeTarget "KinCoreSDKTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8278354C1FA9B5F20006C3DF /* Debug */,
@@ -1598,7 +1598,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		82BA2110204D867200396AE2 /* Build configuration list for PBXNativeTarget "KinSDK-macos" */ = {
+		82BA2110204D867200396AE2 /* Build configuration list for PBXNativeTarget "KinCoreSDK-macos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82BA2111204D867200396AE2 /* Debug */,

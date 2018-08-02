@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KinSDK
+import KinCoreSDK
 
 class KinAccountTableViewCell: KinClientCell {
     @IBOutlet weak var addressLabel: UILabel!

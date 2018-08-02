@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KinSDK
+import KinCoreSDK
 
 class BalanceTableViewCell: KinClientCell {
     @IBOutlet weak var refreshButton: UIButton!

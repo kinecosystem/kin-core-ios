@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KinSDK
+import KinCoreSDK
 
 protocol KinClientCellDelegate: class {
     func revealKeyStore()

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import KinSDK
+@testable import KinCoreSDK
 @testable import StellarKit
 import KinUtil
 
@@ -24,8 +24,8 @@ class KinAccountTests: XCTestCase {
     let sNetworkId: StellarKit.NetworkId = .custom("private testnet")
     lazy var node = Stellar.Node(baseURL: URL(string: endpoint)!, networkId: sNetworkId)
 
-    lazy var kNetworkId = KinSDK.NetworkId.custom(issuer: "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7",
-                                                  stellarNetworkId: sNetworkId)
+    lazy var kNetworkId = KinCoreSDK.NetworkId.custom(issuer: "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7",
+                                                      stellarNetworkId: sNetworkId)
 
     override func setUp() {
         super.setUp()

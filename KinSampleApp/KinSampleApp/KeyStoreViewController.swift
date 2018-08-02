@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import KinSDK
+import KinCoreSDK
 
 class KeyStoreViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView?
