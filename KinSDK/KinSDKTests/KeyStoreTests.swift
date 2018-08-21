@@ -113,7 +113,37 @@ class KeyStoreTests: XCTestCase {
         XCTAssert(KeyStore.count() == count + 1)
     }
 
-    func test_account_import() {
+    func test_import_with_different_wrong_passphrase() {
+        let store = KeyStore.exportAccount(account: account!,
+                                           passphrase: passphrase,
+                                           newPassphrase: "new phrase")
+
+        do {
+            try KeyStore.importAccount(store!,
+                                       passphrase: "wrong phrase",
+                                       newPassphrase: passphrase)
+
+            XCTFail("Expected exception.")
+        }
+        catch {}
+    }
+
+    func test_import_with_same_wrong_passphrase() {
+        let store = KeyStore.exportAccount(account: account!,
+                                           passphrase: passphrase,
+                                           newPassphrase: "new phrase")
+
+        do {
+            try KeyStore.importAccount(store!,
+                                       passphrase: "wrong phrase",
+                                       newPassphrase: "wrong phrase")
+
+            XCTFail("Expected exception.")
+        }
+        catch {}
+    }
+
+    func test_seed_import() {
         let count = KeyStore.count()
 
         let account = try? KeyStore.importSecretSeed("SCML43HASLG5IIN34KCJLDQ6LPWYQ3HIROP5CRBHVC46YRMJ6QLOYQJS",

@@ -23,7 +23,16 @@ public protocol KinAccount: class {
     var publicAddress: String { get }
 
     var extra: Data? { get set }
-    
+
+    /**
+     Export the account data as a JSON string.  The seed is encrypted.
+
+     - parameter passphrase: The passphrase with which to encrypt the seed
+
+     - return: A JSON representation of the data as a string
+     **/
+    func export(passphrase: String) throws -> String
+
     /**
      Allow an account to receive KIN.
 
@@ -139,7 +148,19 @@ final class KinStellarAccount: KinAccount {
         self.asset = asset
         self.node = node
     }
-    
+
+    public func export(passphrase: String) throws -> String {
+        let ad = KeyStore.exportAccount(account: stellarAccount,
+                                        passphrase: "",
+                                        newPassphrase: passphrase)
+
+        guard let jsonString = try String(data: JSONEncoder().encode(ad), encoding: .utf8) else {
+            throw KinError.internalInconsistency
+        }
+
+        return jsonString
+    }
+
     public func activate(completion: @escaping (String?, Error?) -> Void) {
         stellarAccount.sign = { message in
             return try self.stellarAccount.sign(message: message, passphrase: "")

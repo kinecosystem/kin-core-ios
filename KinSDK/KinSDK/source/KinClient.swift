@@ -89,6 +89,32 @@ public final class KinClient {
     }
 
     /**
+     Import an account from a JSON-formatted string.
+
+     - parameter passphrase: The passphrase to decrypt the secret key.
+
+     - return: The imported account
+     **/
+    public func importAccount(_ jsonString: String,
+                              passphrase: String) throws -> KinAccount {
+        guard let data = jsonString.data(using: .utf8) else {
+            throw KinError.internalInconsistency
+        }
+
+        let accountData = try JSONDecoder().decode(AccountData.self, from: data)
+
+        try KeyStore.importAccount(accountData,
+                                   passphrase: passphrase,
+                                   newPassphrase: "")
+
+        guard let account = accounts.last else {
+            throw KinError.internalInconsistency
+        }
+
+        return account
+    }
+
+    /**
      Deletes the keystore.
      */
     public func deleteKeystore() {

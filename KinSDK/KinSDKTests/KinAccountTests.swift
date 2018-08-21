@@ -474,15 +474,15 @@ class KinAccountTests: XCTestCase {
         }
     }
 
-    func test_keystore_export() {
-//        do {
-//            let account = try kinClient.addAccount(with: passphrase)
-//            let keyStore = try account.exportKeyStore(passphrase: passphrase, exportPassphrase: "exportPass")
-//
-//            XCTAssertNotNil(keyStore, "Unable to retrieve keyStore account: \(String(describing: account))")
-//        }
-//        catch {
-//            XCTAssertTrue(false, "Something went wrong: \(error)")
-//        }
+    func test_export() {
+        do {
+            let account = try kinClient.addAccount()
+            let data = try account.export(passphrase: passphrase)
+
+            XCTAssertNotNil(data, "Unable to retrieve keyStore account: \(String(describing: account))")
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
     }
 }

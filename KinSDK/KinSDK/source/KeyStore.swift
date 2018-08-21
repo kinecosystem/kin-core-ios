@@ -18,6 +18,7 @@ enum KeyStoreErrors: Error {
     case noSecretKey
     case keypairGenerationFailed
     case encryptionFailed
+    case incorrectPassphrase
 }
 
 protocol AccountStorage {
@@ -76,14 +77,6 @@ public class StellarAccount: Account {
         return keypair.secretKey
     }
 
-    func secretSeed(passphrase: String) -> String? {
-        guard let seed = seed(passphrase: passphrase) else {
-            return nil
-        }
-
-        return StellarKit.KeyUtils.base32(seed: seed)
-    }
-
     init(storageKey: String) {
         self.storageKey = storageKey
     }
@@ -97,12 +90,18 @@ public class StellarAccount: Account {
     }
 
     private func seed(passphrase: String) -> Data? {
-        guard
-            let accountData = try? accountData(),
-            let seed = try? KeyUtils.seed(from: passphrase,
-                                          encryptedSeed: accountData.seed,
-                                          salt: accountData.salt) else {
-                                            return nil
+        guard let accountData = try? accountData() else {
+            return nil
+        }
+
+        return StellarAccount.seed(accountData: accountData, passphrase: passphrase)
+    }
+
+    fileprivate static func seed(accountData: AccountData, passphrase: String) -> Data? {
+        guard let seed = try? KeyUtils.seed(from: passphrase,
+                                            encryptedSeed: accountData.seed,
+                                            salt: accountData.salt) else {
+                                                return nil
         }
 
         return seed
@@ -158,39 +157,33 @@ public struct KeyStore {
     }
 
     public static func importAccount(_ accountData: AccountData,
-                              passphrase: String,
-                              newPassphrase: String) throws {
-        let reencryptedAD: AccountData?
-        if passphrase != newPassphrase {
-            reencryptedAD = reencrypt(accountData,
-                                      passphrase: passphrase,
-                                      newPassphrase: newPassphrase)
-        } else {
-            reencryptedAD = accountData
-        }
+                                     passphrase: String,
+                                     newPassphrase: String) throws {
+        // Re-encrypting will test that the passphrase is correct.
+        let accountData = try reencrypt(accountData,
+                                        passphrase: passphrase,
+                                        newPassphrase: newPassphrase)
 
-        if let accountData = reencryptedAD {
-            try save(accountData: accountData, key: StorageClass.nextStorageKey())
-        }
+        try save(accountData: accountData, key: StorageClass.nextStorageKey())
     }
 
     public static func exportAccount(account: StellarAccount,
                                      passphrase: String,
                                      newPassphrase: String) -> AccountData? {
-            if let accountData = try? account.accountData() {
-                let reencryptedAD: AccountData?
-                if passphrase != newPassphrase {
-                    reencryptedAD = reencrypt(accountData,
-                                                passphrase: passphrase,
-                                                newPassphrase: newPassphrase)
-                } else {
-                    reencryptedAD = accountData
-                }
-
-                if let ad = reencryptedAD {
-                    return ad
-                }
+        if let accountData = try? account.accountData() {
+            let reencryptedAD: AccountData?
+            if passphrase != newPassphrase {
+                reencryptedAD = try? reencrypt(accountData,
+                                               passphrase: passphrase,
+                                               newPassphrase: newPassphrase)
+            } else {
+                reencryptedAD = accountData
             }
+
+            if let ad = reencryptedAD {
+                return ad
+            }
+        }
 
         return nil
     }
@@ -223,17 +216,19 @@ public struct KeyStore {
 
     private static func reencrypt(_ accountData: AccountData,
                                   passphrase: String,
-                                  newPassphrase: String) -> AccountData? {
+                                  newPassphrase: String) throws -> AccountData {
         let eseed = accountData.seed
         let salt = accountData.salt
 
-        guard
-            let newSalt = KeyUtils.salt(),
-            let skey = try? KeyUtils.keyHash(passphrase: newPassphrase, salt: newSalt),
-            let seed = try? KeyUtils.seed(from: passphrase, encryptedSeed: eseed, salt: salt),
-            let encryptedSeed = KeyUtils.encryptSeed(seed, secretKey: skey)
-            else {
-                return nil
+        guard let newSalt = KeyUtils.salt() else {
+            throw KeyStoreErrors.noSalt
+        }
+
+        let skey = try KeyUtils.keyHash(passphrase: newPassphrase, salt: newSalt)
+        let seed = try KeyUtils.seed(from: passphrase, encryptedSeed: eseed, salt: salt)
+
+        guard let encryptedSeed = KeyUtils.encryptSeed(seed, secretKey: skey) else {
+            throw KeyStoreErrors.encryptionFailed
         }
 
         return AccountData(pkey: accountData.pkey,
@@ -253,11 +248,11 @@ public struct KeyStore {
 
 extension KeyStore {
     /**
-    **WARNING!  WARNING!  WARNING!  WARNING!  WARNING!  WARNING!**
-    This is for internal use, only.  It will delete _ALL_ keychain entries for the app, not just
-    those used by this SDK.
+     **WARNING!  WARNING!  WARNING!  WARNING!  WARNING!  WARNING!**
+     This is for internal use, only.  It will delete _ALL_ keychain entries for the app, not just
+     those used by this SDK.
 
-    *It is intended for use by unit tests.*
+     *It is intended for use by unit tests.*
      */
     static func removeAll() {
         StorageClass.clear()
