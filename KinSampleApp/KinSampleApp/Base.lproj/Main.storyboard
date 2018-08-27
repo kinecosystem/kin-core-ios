@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="27D-Pp-7YL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="27D-Pp-7YL">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="CourierNew.ttf">
-            <string>CourierNewPSMT</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Kin Sample App-->
         <scene sceneID="tne-QT-ifu">
@@ -64,19 +59,19 @@
                                         <rect key="frame" x="11.5" y="519" width="320.5" height="44"/>
                                         <subviews>
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="GitHubIcon" translatesAutoresizingMaskIntoConstraints="NO" id="oB0-N8-CCo">
-                                                <rect key="frame" x="0.0" y="0.0" width="30" height="44"/>
+                                                <rect key="frame" x="0.5" y="0.0" width="30" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="jxG-U6-FBq"/>
                                                 </constraints>
                                             </imageView>
                                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="KinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YqI-i8-RFY">
-                                                <rect key="frame" x="30" y="0.0" width="40" height="44"/>
+                                                <rect key="frame" x="30.5" y="0.0" width="40" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="h6p-Gj-bcB"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://github.com/kinfoundation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MaS-gI-4Bb">
-                                                <rect key="frame" x="70" y="12" width="250.5" height="20.5"/>
+                                                <rect key="frame" x="70.5" y="12" width="250.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -180,13 +175,13 @@
                                                             <rect key="frame" x="0.0" y="82" width="350" height="27.5"/>
                                                             <subviews>
                                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Backup your wallet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-2K-4zh">
-                                                                    <rect key="frame" x="-15" y="-92" width="0.0" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="27.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="1" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7YB-3P-dyE">
-                                                                    <rect key="frame" x="-15" y="-92" width="0.0" height="30"/>
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="1" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7YB-3P-dyE">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="350" height="27.5"/>
                                                                     <state key="normal" title="Export"/>
                                                                     <connections>
                                                                         <action selector="revealKeyStore:" destination="Cvs-du-e5J" eventType="touchUpInside" id="uru-ee-S8E"/>
@@ -704,13 +699,13 @@
                                 <rect key="frame" x="16" y="30" width="343" height="621"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passphrase" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVg-Gb-PxS">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="10.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xg3-T9-jBu">
-                                        <rect key="frame" x="0.0" y="20.5" width="343" height="31"/>
+                                        <rect key="frame" x="0.0" y="30.5" width="343" height="31"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="31" id="jzj-9p-xvi"/>
                                         </constraints>
@@ -722,7 +717,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="STc-L0-T36">
-                                        <rect key="frame" x="0.0" y="61.5" width="343" height="44"/>
+                                        <rect key="frame" x="0.0" y="71.5" width="343" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="J1Y-pD-tAq"/>
                                         </constraints>
@@ -732,7 +727,7 @@
                                         </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Add a passphrase to encrypt the account" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kY-6e-c9c">
-                                        <rect key="frame" x="0.0" y="115.5" width="343" height="505.5"/>
+                                        <rect key="frame" x="0.0" y="125.5" width="343" height="495.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

@@ -89,7 +89,7 @@ extension KinSampleViewController: KinClientCellDelegate {
     }
 
     func deleteAccountTapped() {
-        let alertController = UIAlertController(title: "Delete Wallet?",
+        let alertController = UIAlertController(title: " Wallet?",
                                                 message: "Deleting a wallet will cause funds to be lost",
                                                 preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "OK", style: .destructive) { _ in
@@ -154,7 +154,7 @@ extension KinSampleViewController: KinClientCellDelegate {
             guard
                 let data = data,
                 let jsonOpt = try? JSONSerialization.jsonObject(with: data, options: []),
-                let json = jsonOpt as? [String: Any]
+                let _ = jsonOpt as? [String: Any]
                 else {
                     print("Unable to parse json.")
 
