@@ -18,7 +18,6 @@ enum KeyStoreErrors: Error {
     case noSecretKey
     case keypairGenerationFailed
     case encryptionFailed
-    case incorrectPassphrase
 }
 
 protocol AccountStorage {
