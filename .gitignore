@@ -10,3 +10,4 @@ KinSDK/build
 # Documentation
 
 Docs/Output
+*.xcuserdatad
