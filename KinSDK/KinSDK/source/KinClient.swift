@@ -18,8 +18,8 @@ public final class KinClient {
 
      - parameter provider: The `ServiceProvider` instance that provides the `URL` and `NetworkId`.
      */
-    public convenience init(provider: ServiceProvider) throws {
-        try self.init(with: provider.url, networkId: provider.networkId)
+    public convenience init(provider: ServiceProvider) {
+        self.init(with: provider.url, networkId: provider.networkId)
     }
 
     /**
@@ -28,7 +28,7 @@ public final class KinClient {
      - parameter nodeProviderUrl: The `URL` of the node this client will communicate to.
      - parameter networkId: The `NetworkId` to be used.
      */
-    public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
+    public init(with nodeProviderUrl: URL, networkId: NetworkId) {
         self.node = Stellar.Node(baseURL: nodeProviderUrl,
                                  networkId: networkId.stellarNetworkId)
 
