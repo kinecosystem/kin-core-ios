@@ -50,10 +50,7 @@ class HomeViewController: UIViewController {
             provider = Provider(url: URL(string: "https://horizon-kik.kininfrastructure.com")!, networkId: .testNet)
         }
         
-        guard let kinClient = try? KinClient(provider: provider) else {
-            print("Kin Client could not be created")
-            return
-        }
+        let kinClient = KinClient(provider: provider)
 
         if let kinAccount = kinClient.accounts.first {
             //if we already have the account, pass it on to KinSampleViewController
@@ -80,11 +77,77 @@ class HomeViewController: UIViewController {
                 print("KinAccount couldn't be created: \(error)")
             }
         }
+        let importWalletAction = UIAlertAction(title: "Import a Wallet", style: .default) { _ in
+            self.importKinAccount(with: kinClient, production: production)
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
         alertController.addAction(createWalletAction)
+        alertController.addAction(importWalletAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func importKinAccount(with kinClient: KinClient, production: Bool) {
+        var removeObserver: (()->())?
+        let passphraseTag = 1
+        let importTag = 2
+        
+        let alertController = UIAlertController(title: "Import a Wallet", message: nil, preferredStyle: .alert)
+        let importWalletAction = UIAlertAction(title: "Import", style: .default) { _ in
+            if let removeObserver = removeObserver {
+                removeObserver()
+            }
+            
+            guard let importTextField = alertController.textFields?.first(where: { $0.tag == importTag }),
+                let jsonString = importTextField.text,
+                let passphraseTextField = alertController.textFields?.first(where: { $0.tag == passphraseTag })
+                else {
+                    print("Invalid import string")
+                    return
+            }
+            
+            let passphrase = passphraseTextField.text ?? ""
+            
+            do {
+                let kinAccount = try kinClient.importAccount(jsonString, passphrase: passphrase)
+                self.showSampleViewController(with: kinClient, kinAccount: kinAccount, production: production)
+            }
+            catch {
+                print("KinAccount couldn't be imported: \(error)")
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            if let removeObserver = removeObserver {
+                removeObserver()
+            }
+        }
+        
+        importWalletAction.isEnabled = false
+        
+        alertController.addTextField { passphraseTextField in
+            passphraseTextField.tag = passphraseTag
+            passphraseTextField.placeholder = "Passphrase"
+        }
+        alertController.addTextField { importTextField in
+            let observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: importTextField, queue: nil, using: { _ in
+                guard let importString = importTextField.text?.trimmingCharacters(in: .whitespaces) else {
+                    return
+                }
+                
+                importWalletAction.isEnabled = !importString.isEmpty
+            })
+            
+            removeObserver = {
+                NotificationCenter.default.removeObserver(observer)
+            }
+            
+            importTextField.tag = importTag
+            importTextField.placeholder = "JSON String"
+        }
+        alertController.addAction(importWalletAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
     }
 
     func showSampleViewController(with kinClient: KinClient, kinAccount: KinAccount, production: Bool) {
@@ -93,4 +156,3 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(sampleViewController, animated: true)
     }
 }
-
