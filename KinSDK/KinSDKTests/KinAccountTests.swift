@@ -30,8 +30,7 @@ class KinAccountTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(with: URL(string: endpoint)!,
-                                   networkId: kNetworkId)
+        kinClient = KinClient(with: URL(string: endpoint)!, networkId: kNetworkId)
 
         KeyStore.removeAll()
 
