@@ -19,7 +19,9 @@ class AppIdTests: XCTestCase {
         XCTAssertThrowsError(try AppId("aaa "))
         XCTAssertThrowsError(try AppId("aaa_"))
         XCTAssertThrowsError(try AppId("aaaaa"))
-        
+    }
+    
+    func test_app_id_valid() {
         XCTAssertNoThrow(try AppId("aaaa"))
         XCTAssertNoThrow(try AppId("aaaA"))
         XCTAssertNoThrow(try AppId("aaa1"))
