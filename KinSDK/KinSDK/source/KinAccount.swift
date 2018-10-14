@@ -122,7 +122,7 @@ final class KinStellarAccount: KinAccount {
     internal let stellarAccount: StellarAccount
     fileprivate let node: Stellar.Node
     fileprivate let asset: Asset
-    fileprivate let appId: String
+    fileprivate let appId: AppId
 
     var deleted = false
     
@@ -144,7 +144,7 @@ final class KinStellarAccount: KinAccount {
         }
     }
     
-    init(stellarAccount: StellarAccount, asset: Asset, node: Stellar.Node, appId: String) {
+    init(stellarAccount: StellarAccount, asset: Asset, node: Stellar.Node, appId: AppId) {
         self.stellarAccount = stellarAccount
         self.asset = asset
         self.node = node
@@ -241,7 +241,7 @@ final class KinStellarAccount: KinAccount {
         }
 
         do {
-            let prefixedMemo = appId + (memo ?? "")
+            let prefixedMemo = appId.id + (memo ?? "")
             
             guard prefixedMemo.utf8.count <= StellarKit.Transaction.MaxMemoLength else {
                 completion(nil, StellarError.memoTooLong(prefixedMemo))

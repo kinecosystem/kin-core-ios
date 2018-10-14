@@ -20,7 +20,6 @@ struct Provider: ServiceProvider {
     }
 }
 
-
 class HomeViewController: UIViewController {
     @IBOutlet weak var testNetButton: UIButton!
     @IBOutlet weak var mainNetButton: UIButton!
@@ -50,7 +49,8 @@ class HomeViewController: UIViewController {
             provider = Provider(url: URL(string: "https://horizon-kik.kininfrastructure.com")!, networkId: .testNet)
         }
         
-        let kinClient = KinClient(provider: provider)
+        let appId = AppId("test")
+        let kinClient = KinClient(provider: provider, appId: appId)
 
         if let kinAccount = kinClient.accounts.first {
             //if we already have the account, pass it on to KinSampleViewController

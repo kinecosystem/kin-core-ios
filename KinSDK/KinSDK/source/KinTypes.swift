@@ -1,5 +1,5 @@
 //
-//  KinMisc.swift
+//  KinTypes.swift
 //  KinCoreSDK
 //
 //  Created by Kin Foundation
@@ -97,3 +97,18 @@ public struct PaymentInfo {
 public typealias LinkBag = KinUtil.LinkBag
 public typealias Promise = KinUtil.Promise
 public typealias Observable<T> = KinUtil.Observable<T>
+
+public struct AppId {
+    let id: String
+    
+    init(_ id: String) throws {
+        // Uppercase and lowercase letters + numbers
+        let charSet = CharacterSet.alphanumerics.subtracting(CharacterSet.nonBaseCharacters)
+        
+        guard id.rangeOfCharacter(from: charSet) != nil, id.utf8.count == 4 else {
+            throw KinError.invalidAppId
+        }
+        
+        self.id = id
+    }
+}

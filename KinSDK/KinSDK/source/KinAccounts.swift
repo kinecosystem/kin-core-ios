@@ -15,7 +15,7 @@ public final class KinAccounts {
     
     private let node: Stellar.Node
     private let asset: Asset
-    private let appId: String
+    private let appId: AppId
 
     public var count: Int {
         return KeyStore.count()
@@ -36,8 +36,7 @@ public final class KinAccounts {
             self.cacheLock.unlock()
         }
         
-        let stellarAccount = try KeyStore.newAccount(passphrase: "")
-        let account = KinStellarAccount(stellarAccount: stellarAccount, asset: asset, node: node, appId: appId)
+        let account = createKinAccount(stellarAccount: try KeyStore.newAccount(passphrase: ""))
 
         cache[count - 1] = account
 
@@ -83,7 +82,7 @@ public final class KinAccounts {
     private func account(at index: Int) -> KinAccount? {
         return cache[index] ?? {
             if index < self.count, let stellarAccount = KeyStore.account(at: index) {
-                let kinAccount = KinStellarAccount(stellarAccount: stellarAccount, asset: asset, node: node, appId: appId)
+                let kinAccount = createKinAccount(stellarAccount: stellarAccount)
                 
                 cache[index] = kinAccount
                 
@@ -94,10 +93,14 @@ public final class KinAccounts {
         }()
     }
     
-    init(node: Stellar.Node, asset: Asset, appId: String) {
+    init(node: Stellar.Node, asset: Asset, appId: AppId) {
         self.node = node
         self.asset = asset
         self.appId = appId
+    }
+    
+    private func createKinAccount(stellarAccount: StellarAccount) -> KinStellarAccount {
+        return KinStellarAccount(stellarAccount: stellarAccount, asset: asset, node: node, appId: appId)
     }
     
     func flushCache() {
