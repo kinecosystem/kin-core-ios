@@ -94,10 +94,6 @@ public struct PaymentInfo {
     }
 }
 
-public typealias LinkBag = KinUtil.LinkBag
-public typealias Promise = KinUtil.Promise
-public typealias Observable<T> = KinUtil.Observable<T>
-
 public struct AppId {
     let id: String
     
@@ -109,9 +105,13 @@ public struct AppId {
             id.rangeOfCharacter(from: charSet) != nil,
             id.utf8.count == 4
             else {
-            throw KinError.invalidAppId
+                throw KinError.invalidAppId
         }
         
         self.id = id
     }
 }
+
+public typealias LinkBag = KinUtil.LinkBag
+public typealias Promise = KinUtil.Promise
+public typealias Observable<T> = KinUtil.Observable<T>
