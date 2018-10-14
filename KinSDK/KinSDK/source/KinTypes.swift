@@ -105,9 +105,10 @@ public struct AppId {
         // Lowercase and uppercase letters + numbers
         let charSet = CharacterSet.lowercaseLetters.union(.uppercaseLetters).union(.decimalDigits)
         
-        let trimmedId = id.trimmingCharacters(in: .whitespaces)
-        
-        guard trimmedId.rangeOfCharacter(from: charSet) != nil, trimmedId.utf8.count == 4 else {
+        guard id == id.trimmingCharacters(in: .whitespaces),
+            id.rangeOfCharacter(from: charSet) != nil,
+            id.utf8.count == 4
+            else {
             throw KinError.invalidAppId
         }
         
