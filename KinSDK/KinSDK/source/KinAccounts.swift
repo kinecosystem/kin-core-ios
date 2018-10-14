@@ -15,6 +15,7 @@ public final class KinAccounts {
     
     private let node: Stellar.Node
     private let asset: Asset
+    private let appId: String
 
     public var count: Int {
         return KeyStore.count()
@@ -35,9 +36,8 @@ public final class KinAccounts {
             self.cacheLock.unlock()
         }
         
-        let account = try KinStellarAccount(stellarAccount: KeyStore.newAccount(passphrase: ""),
-                                            asset: asset,
-                                            node: node)
+        let stellarAccount = try KeyStore.newAccount(passphrase: "")
+        let account = KinStellarAccount(stellarAccount: stellarAccount, asset: asset, node: node, appId: appId)
 
         cache[count - 1] = account
 
@@ -81,26 +81,23 @@ public final class KinAccounts {
     }
     
     private func account(at index: Int) -> KinAccount? {
-        return cache[index] ??
-            {
-                if index < self.count,
-                    let stellarAccount = KeyStore.account(at: index) {
-                    let kinAccount = KinStellarAccount(stellarAccount: stellarAccount,
-                                                       asset: asset,
-                                                       node: node)
-                    
-                    cache[index] = kinAccount
-                    
-                    return kinAccount
-                }
+        return cache[index] ?? {
+            if index < self.count, let stellarAccount = KeyStore.account(at: index) {
+                let kinAccount = KinStellarAccount(stellarAccount: stellarAccount, asset: asset, node: node, appId: appId)
                 
-                return nil
-            }()
+                cache[index] = kinAccount
+                
+                return kinAccount
+            }
+            
+            return nil
+        }()
     }
     
-    init(node: Stellar.Node, asset: Asset) {
+    init(node: Stellar.Node, asset: Asset, appId: String) {
         self.node = node
         self.asset = asset
+        self.appId = appId
     }
     
     func flushCache() {

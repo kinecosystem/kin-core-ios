@@ -144,18 +144,11 @@ final class KinStellarAccount: KinAccount {
         }
     }
     
-    init(stellarAccount: StellarAccount, kinClient: KinClient) {
-        self.stellarAccount = stellarAccount
-        self.asset = kinClient.asset
-        self.node = kinClient.node
-        self.appId = ""
-    }
-    
-    init(stellarAccount: StellarAccount, asset: Asset, node: Stellar.Node) {
+    init(stellarAccount: StellarAccount, asset: Asset, node: Stellar.Node, appId: String) {
         self.stellarAccount = stellarAccount
         self.asset = asset
         self.node = node
-        self.appId = ""
+        self.appId = appId
     }
 
     public func export(passphrase: String) throws -> String {
