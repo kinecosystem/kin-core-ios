@@ -101,7 +101,7 @@ public typealias Observable<T> = KinUtil.Observable<T>
 public struct AppId {
     let id: String
     
-    init(_ id: String) throws {
+    public init(_ id: String) throws {
         // Uppercase and lowercase letters + numbers
         let charSet = CharacterSet.alphanumerics.subtracting(CharacterSet.nonBaseCharacters)
         

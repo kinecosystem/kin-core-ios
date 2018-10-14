@@ -89,6 +89,8 @@ extension KinError: LocalizedError {
             return "Payment failed"
         case .balanceQueryFailed:
             return "Balance query failed"
+        case .invalidAppId:
+            return "Invalid app id"
         case .invalidAmount:
             return "Invalid Amount"
         case .insufficientFunds:
