@@ -101,7 +101,7 @@ public struct AppId {
         // Lowercase and uppercase letters + numbers
         let charSet = CharacterSet.lowercaseLetters.union(.uppercaseLetters).union(.decimalDigits)
         
-        guard id == id.trimmingCharacters(in: .whitespaces),
+        guard id == id.trimmingCharacters(in: charSet.inverted),
             id.rangeOfCharacter(from: charSet) != nil,
             id.utf8.count == 4
             else {
