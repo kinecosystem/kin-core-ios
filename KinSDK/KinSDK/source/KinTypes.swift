@@ -102,10 +102,12 @@ public struct AppId {
     let id: String
     
     public init(_ id: String) throws {
-        // Uppercase and lowercase letters + numbers
-        let charSet = CharacterSet.alphanumerics.subtracting(CharacterSet.nonBaseCharacters)
+        // Lowercase and uppercase letters + numbers
+        let charSet = CharacterSet.lowercaseLetters.union(.uppercaseLetters).union(.decimalDigits)
         
-        guard id.rangeOfCharacter(from: charSet) != nil, id.utf8.count == 4 else {
+        let trimmedId = id.trimmingCharacters(in: .whitespaces)
+        
+        guard trimmedId.rangeOfCharacter(from: charSet) != nil, trimmedId.utf8.count == 4 else {
             throw KinError.invalidAppId
         }
         
