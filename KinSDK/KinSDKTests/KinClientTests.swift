@@ -15,7 +15,12 @@ class KinClientTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        kinClient = KinClient(with: URL(string: "http://localhost:8000")!, networkId: .custom(issuer: "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7", stellarNetworkId: .custom("private testnet")))
+        guard let appId = try? AppId("test") else {
+            XCTAssertTrue(false, "Unable to create app id")
+            return
+        }
+        
+        kinClient = KinClient(with: URL(string: "http://localhost:8000")!, networkId: .custom(issuer: "GBSJ7KFU2NXACVHVN2VWQIXIV5FWH6A7OIDDTEUYTCJYGY3FJMYIDTU7", stellarNetworkId: .custom("private testnet")), appId: appId)
         
     }
 
