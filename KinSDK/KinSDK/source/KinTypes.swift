@@ -1,5 +1,5 @@
 //
-//  KinMisc.swift
+//  KinTypes.swift
 //  KinCoreSDK
 //
 //  Created by Kin Foundation
@@ -91,6 +91,24 @@ public struct PaymentInfo {
         self.txEvent = txEvent
         self.account = account
         self.asset = asset
+    }
+}
+
+public struct AppId {
+    let id: String
+    
+    public init(_ id: String) throws {
+        // Lowercase and uppercase letters + numbers
+        let charSet = CharacterSet.lowercaseLetters.union(.uppercaseLetters).union(.decimalDigits)
+        
+        guard id == id.trimmingCharacters(in: charSet.inverted),
+            id.rangeOfCharacter(from: charSet) != nil,
+            id.utf8.count == 4
+            else {
+                throw KinError.invalidAppId
+        }
+        
+        self.id = id
     }
 }
 

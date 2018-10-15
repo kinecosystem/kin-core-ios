@@ -20,7 +20,6 @@ struct Provider: ServiceProvider {
     }
 }
 
-
 class HomeViewController: UIViewController {
     @IBOutlet weak var testNetButton: UIButton!
     @IBOutlet weak var mainNetButton: UIButton!
@@ -50,14 +49,19 @@ class HomeViewController: UIViewController {
             provider = Provider(url: URL(string: "https://horizon-kik.kininfrastructure.com")!, networkId: .testNet)
         }
         
-        let kinClient = KinClient(provider: provider)
-
-        if let kinAccount = kinClient.accounts.first {
-            //if we already have the account, pass it on to KinSampleViewController
-            showSampleViewController(with: kinClient, kinAccount: kinAccount, production: production)
-        } else {
-            //if we don't have an account yet on the device, let's create one
-            createKinAccount(with: kinClient, production: production)
+        do {
+            let kinClient = KinClient(provider: provider, appId: try AppId("test"))
+            
+            if let kinAccount = kinClient.accounts.first {
+                //if we already have the account, pass it on to KinSampleViewController
+                showSampleViewController(with: kinClient, kinAccount: kinAccount, production: production)
+            } else {
+                //if we don't have an account yet on the device, let's create one
+                createKinAccount(with: kinClient, production: production)
+            }
+        }
+        catch {
+            print("AppId doesn't match the valid pattern: \(error)")
         }
     }
 

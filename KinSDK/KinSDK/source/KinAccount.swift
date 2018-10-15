@@ -122,6 +122,7 @@ final class KinStellarAccount: KinAccount {
     internal let stellarAccount: StellarAccount
     fileprivate let node: Stellar.Node
     fileprivate let asset: Asset
+    fileprivate let appId: AppId
 
     var deleted = false
     
@@ -142,11 +143,12 @@ final class KinStellarAccount: KinAccount {
             try? KeyStore.set(extra: newValue, for: stellarAccount)
         }
     }
-
-    init(stellarAccount: StellarAccount, asset: Asset, node: Stellar.Node) {
+    
+    init(stellarAccount: StellarAccount, asset: Asset, node: Stellar.Node, appId: AppId) {
         self.stellarAccount = stellarAccount
         self.asset = asset
         self.node = node
+        self.appId = appId
     }
 
     public func export(passphrase: String) throws -> String {
@@ -239,16 +241,18 @@ final class KinStellarAccount: KinAccount {
         }
 
         do {
-            var m = Memo.MEMO_NONE
-            if let memo = memo, !memo.isEmpty {
-                m = try Memo(memo)
+            let prefixedMemo = appId.id + (memo ?? "")
+            
+            guard prefixedMemo.utf8.count <= StellarKit.Transaction.MaxMemoLength else {
+                completion(nil, StellarError.memoTooLong(prefixedMemo))
+                return
             }
 
             Stellar.payment(source: stellarAccount,
                             destination: recipient,
                             amount: intKin,
                             asset: asset,
-                            memo: m,
+                            memo: try Memo(prefixedMemo),
                             node: node)
                 .then { txHash -> Void in
                     self.stellarAccount.sign = nil

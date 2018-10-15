@@ -39,6 +39,11 @@ public enum KinError: Error {
     case balanceQueryFailed (Error)
 
     /**
+     The app id must be 4 characters and only numbers and/or letters.
+     */
+    case invalidAppId
+    
+    /**
      Amounts must be greater than zero when trying to transfer Kin. When sending 0 Kin, this error
      is thrown.
      */
@@ -84,6 +89,8 @@ extension KinError: LocalizedError {
             return "Payment failed"
         case .balanceQueryFailed:
             return "Balance query failed"
+        case .invalidAppId:
+            return "Invalid app id"
         case .invalidAmount:
             return "Invalid Amount"
         case .insufficientFunds:

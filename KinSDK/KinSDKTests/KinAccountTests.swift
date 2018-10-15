@@ -29,8 +29,13 @@ class KinAccountTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-
-        kinClient = KinClient(with: URL(string: endpoint)!, networkId: kNetworkId)
+        
+        guard let appId = try? AppId("test") else {
+            XCTAssertTrue(false, "Unable to create app id")
+            return
+        }
+            
+        kinClient = KinClient(with: URL(string: endpoint)!, networkId: kNetworkId, appId: appId)
 
         KeyStore.removeAll()
 
