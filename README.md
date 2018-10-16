@@ -34,7 +34,7 @@ The SDK exposes two classes, `KinClient`, and `KinAccount`.
 `KinClient` stores the configuration for the network, and is responsible for managing accounts.
 
 ```swift
-let kinClient = KinClient(with: URL, networkId: NetworkId)
+let kinClient = KinClient(with: URL, networkId: NetworkId, appId: AppId)
 ```
 
 ##### Account Management
