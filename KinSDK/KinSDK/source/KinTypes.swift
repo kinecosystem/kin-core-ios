@@ -98,7 +98,7 @@ public struct PaymentInfo {
  Ensures the validity of the app id from the host application.
  
  The host application should pass a four character string. The string can only contain any combination
- of lowercase letters, uppcase letters and digits.
+ of lowercase letters, uppercase letters and digits.
  */
 public struct AppId {
     let id: String
