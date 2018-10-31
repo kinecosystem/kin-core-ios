@@ -101,20 +101,40 @@ public struct PaymentInfo {
  of lowercase letters, uppercase letters and digits.
  */
 public struct AppId {
-    let id: String
+    let value: String
     
-    public init(_ id: String) throws {
+    public init(_ value: String) throws {
         // Lowercase and uppercase letters + numbers
         let charSet = CharacterSet.lowercaseLetters.union(.uppercaseLetters).union(.decimalDigits)
         
-        guard id == id.trimmingCharacters(in: charSet.inverted),
-            id.rangeOfCharacter(from: charSet) != nil,
-            id.utf8.count == 4
+        guard value == value.trimmingCharacters(in: charSet.inverted),
+            value.rangeOfCharacter(from: charSet) != nil,
+            value.utf8.count == 4
             else {
                 throw KinError.invalidAppId
         }
         
-        self.id = id
+        self.value = value
+    }
+}
+
+extension AppId {
+    public var memoPrefix: String {
+        return "1-\(value)-"
+    }
+}
+
+extension Memo {
+    public static func prependAppIdIfNeeded(_ appId: AppId, to memo: String) -> String {
+        if let regex = try? NSRegularExpression(pattern: "^1-[A-z0-9]{3,4}-.*") {
+            let range = NSRange(location: 0, length: memo.count)
+            
+            if regex.firstMatch(in: memo, options: [], range: range) != nil {
+                return memo
+            }
+        }
+        
+        return appId.memoPrefix + memo
     }
 }
 
