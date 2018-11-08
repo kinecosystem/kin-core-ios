@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68D04A5F21944AF400F27492 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A5421944AF400F27492 /* Bytes.swift */; };
+		68D04A6021944AF400F27492 /* ExitCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A5821944AF400F27492 /* ExitCode.swift */; };
+		68D04A6121944AF400F27492 /* KeyPairGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A5A21944AF400F27492 /* KeyPairGenerator.swift */; };
+		68D04A6221944AF400F27492 /* NonceGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A5B21944AF400F27492 /* NonceGenerator.swift */; };
+		68D04A6321944AF400F27492 /* SecretKeyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A5C21944AF400F27492 /* SecretKeyGenerator.swift */; };
+		68D04A6421944AF400F27492 /* KeyPairProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A5D21944AF400F27492 /* KeyPairProtocol.swift */; };
+		68D04A6521944AF400F27492 /* Aead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A5E21944AF400F27492 /* Aead.swift */; };
+		68D04A682194506D00F27492 /* Data+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D04A672194506D00F27492 /* Data+extensions.swift */; };
 		82140EBA1FA88E5B00FAF19B /* KinSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 82140EAC1FA88E5B00FAF19B /* KinSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82140EC41FA88EAF00FAF19B /* KinTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC31FA88EAF00FAF19B /* KinTypes.swift */; };
 		822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822107A31FD66DC80007D63F /* KinAccounts.swift */; };
@@ -303,6 +311,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		68D04A5421944AF400F27492 /* Bytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bytes.swift; sourceTree = "<group>"; };
+		68D04A5821944AF400F27492 /* ExitCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitCode.swift; sourceTree = "<group>"; };
+		68D04A5A21944AF400F27492 /* KeyPairGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPairGenerator.swift; sourceTree = "<group>"; };
+		68D04A5B21944AF400F27492 /* NonceGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonceGenerator.swift; sourceTree = "<group>"; };
+		68D04A5C21944AF400F27492 /* SecretKeyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretKeyGenerator.swift; sourceTree = "<group>"; };
+		68D04A5D21944AF400F27492 /* KeyPairProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPairProtocol.swift; sourceTree = "<group>"; };
+		68D04A5E21944AF400F27492 /* Aead.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aead.swift; sourceTree = "<group>"; };
+		68D04A672194506D00F27492 /* Data+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+extensions.swift"; sourceTree = "<group>"; };
 		82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KinCoreSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82140EAC1FA88E5B00FAF19B /* KinSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KinSDK.h; sourceTree = "<group>"; };
 		82140EAD1FA88E5B00FAF19B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -458,6 +474,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		68D04A5921944AF400F27492 /* Generators */ = {
+			isa = PBXGroup;
+			children = (
+				68D04A5A21944AF400F27492 /* KeyPairGenerator.swift */,
+				68D04A5B21944AF400F27492 /* NonceGenerator.swift */,
+				68D04A5C21944AF400F27492 /* SecretKeyGenerator.swift */,
+				68D04A5D21944AF400F27492 /* KeyPairProtocol.swift */,
+			);
+			path = Generators;
+			sourceTree = "<group>";
+		};
 		82140E9F1FA88E5B00FAF19B = {
 			isa = PBXGroup;
 			children = (
@@ -528,6 +555,7 @@
 				82140EC31FA88EAF00FAF19B /* KinTypes.swift */,
 				9148CE4F1FCACF9C0005D603 /* NetworkId.swift */,
 				8261EF322043F390001848CB /* Watchers.swift */,
+				68D04A672194506D00F27492 /* Data+extensions.swift */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -594,6 +622,10 @@
 		82BA1F41204D22C400396AE2 /* Sodium */ = {
 			isa = PBXGroup;
 			children = (
+				68D04A5E21944AF400F27492 /* Aead.swift */,
+				68D04A5421944AF400F27492 /* Bytes.swift */,
+				68D04A5821944AF400F27492 /* ExitCode.swift */,
+				68D04A5921944AF400F27492 /* Generators */,
 				82BA1F42204D22C400396AE2 /* Auth.swift */,
 				82BA1F43204D22C400396AE2 /* Box.swift */,
 				82BA1F44204D22C400396AE2 /* GenericHash.swift */,
@@ -1085,26 +1117,34 @@
 			files = (
 				82BA1F15204D22AB00396AE2 /* TegKeychainConstants.swift in Sources */,
 				82BA1FC3204D22C500396AE2 /* KeyExchange.swift in Sources */,
+				68D04A6321944AF400F27492 /* SecretKeyGenerator.swift in Sources */,
 				9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */,
 				91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */,
 				82BA2008204D22C500396AE2 /* ShortHash.swift in Sources */,
 				82BA2006204D22C500396AE2 /* SecretBox.swift in Sources */,
+				68D04A6021944AF400F27492 /* ExitCode.swift in Sources */,
 				82BA1FBE204D22C500396AE2 /* Auth.swift in Sources */,
+				68D04A5F21944AF400F27492 /* Bytes.swift in Sources */,
 				82BA2007204D22C500396AE2 /* SecretStream.swift in Sources */,
 				82BA1F14204D22AB00396AE2 /* KeychainSwiftAccessOptions.swift in Sources */,
 				82BA200C204D22C500396AE2 /* Stream.swift in Sources */,
 				91DDFDFC1FC6ED99004B0903 /* KinError.swift in Sources */,
+				68D04A6121944AF400F27492 /* KeyPairGenerator.swift in Sources */,
 				82BA1F13204D22AB00396AE2 /* KeychainSwift.swift in Sources */,
+				68D04A6221944AF400F27492 /* NonceGenerator.swift in Sources */,
+				68D04A682194506D00F27492 /* Data+extensions.swift in Sources */,
 				82BA1FC0204D22C500396AE2 /* GenericHash.swift in Sources */,
 				82BA1FBF204D22C500396AE2 /* Box.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* KinTypes.swift in Sources */,
 				82BA2009204D22C500396AE2 /* Sign.swift in Sources */,
 				82BA200B204D22C500396AE2 /* Sodium.swift in Sources */,
 				82BA1FC2204D22C500396AE2 /* KeyDerivation.swift in Sources */,
+				68D04A6421944AF400F27492 /* KeyPairProtocol.swift in Sources */,
 				82BA200D204D22C500396AE2 /* Utils.swift in Sources */,
 				91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */,
 				82BA2005204D22C500396AE2 /* RandomBytes.swift in Sources */,
 				82BA1EBD204D211300396AE2 /* KeyUtils.swift in Sources */,
+				68D04A6521944AF400F27492 /* Aead.swift in Sources */,
 				8261EF332043F390001848CB /* Watchers.swift in Sources */,
 				822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */,
 				82BA2004204D22C500396AE2 /* PWHash.swift in Sources */,
@@ -1273,7 +1313,6 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1330,7 +1369,6 @@
 				SDKROOT = iphoneos;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1365,6 +1403,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1396,6 +1435,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
