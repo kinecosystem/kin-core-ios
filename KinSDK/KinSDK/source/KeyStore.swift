@@ -73,7 +73,7 @@ public class StellarAccount: Account {
             return nil
         }
 
-        return keypair.secretKey
+        return Data(keypair.secretKey)
     }
 
     init(storageKey: String) {
@@ -207,7 +207,7 @@ public struct KeyStore {
             throw KeyStoreErrors.keypairGenerationFailed
         }
 
-        return AccountData(pkey: StellarKit.KeyUtils.base32(publicKey: keypair.publicKey),
+        return AccountData(pkey: StellarKit.KeyUtils.base32(publicKey: Data(keypair.publicKey)),
                            seed: encryptedSeed.hexString,
                            salt: salt,
                            extra: nil)

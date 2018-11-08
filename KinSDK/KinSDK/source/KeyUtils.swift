@@ -20,11 +20,11 @@ enum KeyUtilsError: Error {
 
 public struct KeyUtils {
     public static func keyPair(from seed: Data) -> Sign.KeyPair? {
-        return Sodium().sign.keyPair(seed: seed)
+        return Sodium().sign.keyPair(seed: seed.array)
     }
 
     public static func keyPair(from seed: String) -> Sign.KeyPair? {
-        return Sodium().sign.keyPair(seed: StellarKit.KeyUtils.key(base32: seed))
+        return Sodium().sign.keyPair(seed: StellarKit.KeyUtils.key(base32: seed).array)
     }
 
     public static func seed(from passphrase: String,
@@ -38,12 +38,12 @@ public struct KeyUtils {
 
         let skey = try KeyUtils.keyHash(passphrase: passphrase, salt: salt)
 
-        guard let seed = sodium.secretBox.open(nonceAndAuthenticatedCipherText: encryptedSeedData,
-                                               secretKey: skey) else {
+        guard let seed = sodium.secretBox.open(nonceAndAuthenticatedCipherText: encryptedSeedData.array,
+                                               secretKey: skey.array) else {
                                                 throw KeyUtilsError.passphraseIncorrect
         }
 
-        return seed
+        return Data(seed)
     }
 
     public static func keyHash(passphrase: String, salt: String) throws -> Data {
@@ -58,34 +58,46 @@ public struct KeyUtils {
         let sodium = Sodium()
 
         guard let hash = sodium.pwHash.hash(outputLength: 32,
-                                            passwd: passphraseData,
-                                            salt: saltData,
+                                            passwd: passphraseData.array,
+                                            salt: saltData.array,
                                             opsLimit: sodium.pwHash.OpsLimitInteractive,
                                             memLimit: sodium.pwHash.MemLimitInteractive) else {
                                                 throw KeyUtilsError.hashingFailed
         }
 
-        return hash
+        return Data(hash)
     }
 
     public static func encryptSeed(_ seed: Data, secretKey: Data) -> Data? {
-        return Sodium().secretBox.seal(message: seed, secretKey: secretKey)
+        guard let bytes: Bytes = Sodium().secretBox.seal(message: seed.array, secretKey: secretKey.array) else {
+            return nil
+        }
+
+        return Data(bytes)
     }
 
     public static func seed() -> Data? {
-        return Sodium().randomBytes.buf(length: 32)
+        if let bytes = Sodium().randomBytes.buf(length: 32) {
+            return Data(bytes: bytes)
+        }
+
+        return nil
     }
 
     public static func salt() -> String? {
-        return Sodium().randomBytes.buf(length: 16)?.hexString
+        if let bytes = Sodium().randomBytes.buf(length: 16) {
+            return Data(bytes).hexString
+        }
+
+        return nil
     }
 
     public static func sign(message: Data, signingKey: Data) throws -> Data {
-        guard let signature = Sodium().sign.signature(message: message, secretKey: signingKey) else {
+        guard let signature = Sodium().sign.signature(message: message.array, secretKey: signingKey.array) else {
             throw KeyUtilsError.signingFailed
         }
 
-        return signature
+        return Data(signature)
     }
 }
 
