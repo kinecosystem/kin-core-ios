@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
                        'KinSDK/KinSDK/source/third-party/keychain-swift/KeychainSwift/*.swift'
 
   s.dependency 'StellarKit', '0.3.7'
+  s.dependency 'Sodium'
 
   s.ios.deployment_target = '8.0'
   s.swift_version = "3.2"
