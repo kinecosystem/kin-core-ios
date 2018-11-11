@@ -8,6 +8,7 @@
 
 import Foundation
 import StellarKit
+import Sodium
 
 enum KeyUtilsError: Error {
     case encodingFailed (String)
