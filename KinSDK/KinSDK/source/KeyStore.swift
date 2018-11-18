@@ -284,7 +284,7 @@ private struct KeychainStorage: AccountStorage {
     }
 
     static func save(_ accountData: Data, forKey key: String) -> Bool {
-        return keychain.set(accountData, forKey: key)
+        return keychain.set(accountData, forKey: key, withAccess: .accessibleAfterFirstUnlock)
     }
 
     static func retrieve(_ key: String) -> Data? {
