@@ -268,18 +268,15 @@ private struct KeychainStorage: AccountStorage {
         if keys.count == 0 {
             return String(format: "%06d", 0)
         }
+        else if let key = keys.last,
+            let indexStr = key.split(separator: "_").last,
+            let last = Int(indexStr)
+        {
+            let index = last + 1
+            return String(format: "%06d", index)
+        }
         else {
-            if
-                let key = keys.last,
-                let indexStr = key.split(separator: "_").last,
-                let last = Int(indexStr) {
-                let index = last + 1
-
-                return String(format: "%06d", index)
-            }
-            else {
-                return ""
-            }
+            return ""
         }
     }
 
