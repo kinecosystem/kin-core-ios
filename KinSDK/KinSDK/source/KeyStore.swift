@@ -361,6 +361,7 @@ extension KeychainStorage {
 
         for key in keys {
             if let data = retrieve(key) {
+                _ = delete(key)
                 _ = save(data, forKey: key)
             }
         }
