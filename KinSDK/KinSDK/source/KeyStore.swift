@@ -268,23 +268,20 @@ private struct KeychainStorage: AccountStorage {
         if keys.count == 0 {
             return String(format: "%06d", 0)
         }
+        else if let key = keys.last,
+            let indexStr = key.split(separator: "_").last,
+            let last = Int(indexStr)
+        {
+            let index = last + 1
+            return String(format: "%06d", index)
+        }
         else {
-            if
-                let key = keys.last,
-                let indexStr = key.split(separator: "_").last,
-                let last = Int(indexStr) {
-                let index = last + 1
-
-                return String(format: "%06d", index)
-            }
-            else {
-                return ""
-            }
+            return ""
         }
     }
 
     static func save(_ accountData: Data, forKey key: String) -> Bool {
-        return keychain.set(accountData, forKey: key)
+        return keychain.set(accountData, forKey: key, withAccess: .accessibleAfterFirstUnlock)
     }
 
     static func retrieve(_ key: String) -> Data? {
@@ -326,7 +323,7 @@ private struct KeychainStorage: AccountStorage {
         return keys().count
     }
 
-    private static func keys() -> [String] {
+    static func keys() -> [String] {
         return (keychain.getAllKeys() ?? [])
             .filter { $0.starts(with: keychainPrefix) }
             .sorted()
@@ -334,5 +331,39 @@ private struct KeychainStorage: AccountStorage {
 
     fileprivate static func clear() {
         keychain.clear()
+    }
+
+    static func removePrefix(_ key: String) -> String? {
+        if let string = key.split(separator: "_").last {
+            return String(string)
+        }
+        return nil
+    }
+}
+
+// MARK: Migration
+
+extension KeyStore {
+    public static func migrateIfNeeded() {
+        KeychainStorage.migrate()
+    }
+}
+
+extension KeychainStorage {
+    /**
+     Migrate the keychain entries access type.
+
+     Previous versions of the keychain storage were saving data with the default access type.
+     In order to update the access type, the existing keys need to simply be resaved.
+     */
+    fileprivate static func migrate() {
+        let keys = self.keys().compactMap { removePrefix($0) }
+
+        for key in keys {
+            if let data = retrieve(key) {
+                _ = delete(key)
+                _ = save(data, forKey: key)
+            }
+        }
     }
 }
