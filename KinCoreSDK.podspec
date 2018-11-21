@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinCoreSDK'
-  s.version          = '0.7.11'
+  s.version          = '0.7.12'
   s.summary          = 'Pod for the KIN Core SDK.'
 
   s.description      = <<-DESC
