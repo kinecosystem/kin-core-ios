@@ -29,6 +29,8 @@ public final class KinClient {
      - parameter networkId: The `NetworkId` to be used.
      */
     public init(with nodeProviderUrl: URL, networkId: NetworkId) {
+        KeyStore.migrateIfNeeded()
+        
         self.node = Stellar.Node(baseURL: nodeProviderUrl,
                                  networkId: networkId.stellarNetworkId)
 

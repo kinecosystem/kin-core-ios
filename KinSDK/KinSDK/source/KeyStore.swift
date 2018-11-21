@@ -344,8 +344,15 @@ private struct KeychainStorage: AccountStorage {
 // MARK: Migration
 
 extension KeyStore {
-    public static func migrateIfNeeded() {
+    internal static func migrateIfNeeded() {
+        let key = "__KinCoreDidMigrateKeychainAccess"
+
+        guard !UserDefaults.standard.bool(forKey: key) else {
+            return
+        }
+
         KeychainStorage.migrate()
+        UserDefaults.standard.set(true, forKey: key)
     }
 }
 
