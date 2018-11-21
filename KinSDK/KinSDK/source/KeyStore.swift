@@ -344,7 +344,7 @@ private struct KeychainStorage: AccountStorage {
 // MARK: Migration
 
 extension KeyStore {
-    public static func migrateIfNeeded() {
+    internal static func migrateIfNeeded() {
         KeychainStorage.migrate()
     }
 }
