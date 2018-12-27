@@ -113,10 +113,15 @@ extension KinSampleViewController: KinClientCellDelegate {
 
         kinAccount.burn()
             .then { transactionHash in
-                print("||| goood!")
+                if let transactionHash = transactionHash {
+                    print("Burn successful with hash \(transactionHash)")
+                }
+                else {
+                    print("Already burned")
+                }
             }
             .error { error in
-                print("||| error: \(error)")
+                print("Failed to burn")
             }
             .finally {
                 DispatchQueue.main.async {
