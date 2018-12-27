@@ -8,6 +8,7 @@
 
 import Foundation
 import StellarKit
+import Sodium
 
 enum KeyUtilsError: Error {
     case encodingFailed (String)
@@ -19,7 +20,7 @@ enum KeyUtilsError: Error {
 }
 
 public struct KeyUtils {
-    public static func keyPair(from seed: Data) -> Sign.KeyPair? {
+    public static func keyPair(from seed: Bytes) -> Sign.KeyPair? {
         return Sodium().sign.keyPair(seed: seed)
     }
 
@@ -29,7 +30,7 @@ public struct KeyUtils {
 
     public static func seed(from passphrase: String,
                             encryptedSeed: String,
-                            salt: String) throws -> Data {
+                            salt: String) throws -> Bytes {
         guard let encryptedSeedData = Data(hexString: encryptedSeed) else {
             throw KeyUtilsError.decodingFailed(encryptedSeed)
         }
@@ -38,7 +39,7 @@ public struct KeyUtils {
 
         let skey = try KeyUtils.keyHash(passphrase: passphrase, salt: salt)
 
-        guard let seed = sodium.secretBox.open(nonceAndAuthenticatedCipherText: encryptedSeedData,
+        guard let seed = sodium.secretBox.open(nonceAndAuthenticatedCipherText: Array(encryptedSeedData),
                                                secretKey: skey) else {
                                                 throw KeyUtilsError.passphraseIncorrect
         }
@@ -46,7 +47,7 @@ public struct KeyUtils {
         return seed
     }
 
-    public static func keyHash(passphrase: String, salt: String) throws -> Data {
+    public static func keyHash(passphrase: String, salt: String) throws -> Bytes {
         guard let passphraseData = passphrase.data(using: .utf8) else {
             throw KeyUtilsError.encodingFailed(passphrase)
         }
@@ -58,8 +59,8 @@ public struct KeyUtils {
         let sodium = Sodium()
 
         guard let hash = sodium.pwHash.hash(outputLength: 32,
-                                            passwd: passphraseData,
-                                            salt: saltData,
+                                            passwd: Array(passphraseData),
+                                            salt: Array(saltData),
                                             opsLimit: sodium.pwHash.OpsLimitInteractive,
                                             memLimit: sodium.pwHash.MemLimitInteractive) else {
                                                 throw KeyUtilsError.hashingFailed
@@ -68,11 +69,11 @@ public struct KeyUtils {
         return hash
     }
 
-    public static func encryptSeed(_ seed: Data, secretKey: Data) -> Data? {
+    public static func encryptSeed(_ seed: Bytes, secretKey: SecretBox.Key) -> Bytes? {
         return Sodium().secretBox.seal(message: seed, secretKey: secretKey)
     }
 
-    public static func seed() -> Data? {
+    public static func seed() -> Bytes? {
         return Sodium().randomBytes.buf(length: 32)
     }
 
@@ -80,7 +81,7 @@ public struct KeyUtils {
         return Sodium().randomBytes.buf(length: 16)?.hexString
     }
 
-    public static func sign(message: Data, signingKey: Data) throws -> Data {
+    public static func sign(message: Bytes, signingKey: Sign.SecretKey) throws -> Bytes {
         guard let signature = Sodium().sign.signature(message: message, secretKey: signingKey) else {
             throw KeyUtilsError.signingFailed
         }
