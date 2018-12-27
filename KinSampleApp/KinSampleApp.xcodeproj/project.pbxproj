@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68963ED521D4B5B00092C68D /* BurnAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68963ED421D4B5B00092C68D /* BurnAccountCell.swift */; };
 		820AAABA2035D2E90077D873 /* RecentTxsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAAB72035D2E90077D873 /* RecentTxsCell.swift */; };
 		820AAABC2035D6BF0077D873 /* TxCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAABB2035D6BF0077D873 /* TxCells.swift */; };
 		820AAABE2035D79B0077D873 /* RecentTxsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820AAABD2035D79B0077D873 /* RecentTxsTableViewController.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		68963ED421D4B5B00092C68D /* BurnAccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurnAccountCell.swift; sourceTree = "<group>"; };
 		820AAAB72035D2E90077D873 /* RecentTxsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTxsCell.swift; sourceTree = "<group>"; };
 		820AAABB2035D6BF0077D873 /* TxCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxCells.swift; sourceTree = "<group>"; };
 		820AAABD2035D79B0077D873 /* RecentTxsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTxsTableViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				91DDFE001FCABED7004B0903 /* DeleteAccountCell.swift */,
 				91FFFF5A1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift */,
 				820AAABB2035D6BF0077D873 /* TxCells.swift */,
+				68963ED421D4B5B00092C68D /* BurnAccountCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				820AAABC2035D6BF0077D873 /* TxCells.swift in Sources */,
 				91FFFF5B1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift in Sources */,
 				910EEA001FB8A3D000610D06 /* SendTransactionViewController.swift in Sources */,
+				68963ED521D4B5B00092C68D /* BurnAccountCell.swift in Sources */,
 				919238861FB0A16100390BE5 /* UIKitExtensions.swift in Sources */,
 				910EEA061FB8A8DC00610D06 /* SendTransactionTableViewCell.swift in Sources */,
 				910EEA041FB8A60C00610D06 /* HelperExtensions.swift in Sources */,

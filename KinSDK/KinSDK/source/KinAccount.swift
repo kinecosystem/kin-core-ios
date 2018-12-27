@@ -52,6 +52,13 @@ public protocol KinAccount: class {
     func status() -> Promise<AccountStatus>
 
     /**
+     Burn the account.
+
+     - Returns: A transaction hash if burned. If the burn already took place, `nil` will be returned.
+     */
+    func burn() -> Promise<String?>
+
+    /**
      Posts a Kin transfer to a specific address.
      
      The completion block is called after the transaction is posted on the network, which is prior
@@ -214,6 +221,39 @@ final class KinStellarAccount: KinAccount {
 
     func status() -> Promise<AccountStatus> {
         return promise(status)
+    }
+
+    func burn() -> Promise<String?> {
+        let promise = Promise<String?>()
+
+        balance()
+            .then { balance -> Promise<String> in
+                self.stellarAccount.sign = { message in
+                    return try self.stellarAccount.sign(message: message, passphrase: "")
+                }
+
+                let intKin = ((balance * Decimal(KinMultiplier)) as NSDecimalNumber).int64Value
+
+                return Stellar.burn(balance: intKin, asset: self.asset, account: self.stellarAccount, node: self.node)
+            }
+            .then { transactionHash in
+                self.stellarAccount.sign = nil
+
+                promise.signal(transactionHash)
+            }
+            .error { error in
+                self.stellarAccount.sign = nil
+
+                // Bad auth means the burn already happened.
+                if case TransactionError.txBAD_AUTH = error {
+                    promise.signal(nil)
+                }
+                else {
+                    promise.signal(error)
+                }
+        }
+
+        return promise
     }
 
     func sendTransaction(to recipient: String,

@@ -14,6 +14,7 @@ protocol KinClientCellDelegate: class {
     func startSendTransaction()
     func deleteAccountTapped()
     func recentTransactionsTapped()
+    func burnAccountTapped(cell: KinClientCell)
     func getTestKin(cell: KinClientCell)
 }
 

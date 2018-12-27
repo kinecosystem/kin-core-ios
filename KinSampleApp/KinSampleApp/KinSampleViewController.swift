@@ -104,6 +104,27 @@ extension KinSampleViewController: KinClientCellDelegate {
         present(alertController, animated: true, completion: nil)
     }
 
+    func burnAccountTapped(cell: KinClientCell) {
+        guard let cell = cell as? BurnAccountCell else {
+            return
+        }
+
+        cell.burnAccountButton.isEnabled = false
+
+        kinAccount.burn()
+            .then { transactionHash in
+                print("||| goood!")
+            }
+            .error { error in
+                print("||| error: \(error)")
+            }
+            .finally {
+                DispatchQueue.main.async {
+                    cell.burnAccountButton.isEnabled = true
+                }
+        }
+    }
+
     func getTestKin(cell: KinClientCell) {
         guard let getKinCell = cell as? GetKinTableViewCell else {
             return
