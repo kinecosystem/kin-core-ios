@@ -40,7 +40,7 @@ extension NetworkId {
         case .mainNet:
             return "GBQ3DQOA7NF52FVV7ES3CR3ZMHUEY4LTHDAQKDTO6S546JCLFPEQGCPK"
         case .testNet:
-            return "GBQ3DQOA7NF52FVV7ES3CR3ZMHUEY4LTHDAQKDTO6S546JCLFPEQGCPK"
+            return "GBC3SG6NGTSZ2OMH3FFGB7UVRQWILW367U4GSOOF4TFSZONV42UJXUH7"
         case .playground:
             return "GBC3SG6NGTSZ2OMH3FFGB7UVRQWILW367U4GSOOF4TFSZONV42UJXUH7"
         case .custom (let issuer, _):
@@ -53,7 +53,7 @@ extension NetworkId {
         case .mainNet:
             return StellarKit.NetworkId("private testnet")
         case .testNet:
-            return StellarKit.NetworkId("private testnet")
+            return StellarKit.NetworkId("Kin Playground Network ; June 2018")
         case .playground:
             return StellarKit.NetworkId("Kin Playground Network ; June 2018")
         case .custom(_, let stellarNetworkId):

@@ -11,7 +11,7 @@ import StellarKit
 import KinUtil
 
 public class PaymentWatch {
-    private let txWatch: TxWatch
+    private let txWatch: EventWatcher<TxEvent>
     private let linkBag = LinkBag()
 
     public let emitter: Observable<PaymentInfo>
@@ -35,7 +35,7 @@ public class PaymentWatch {
 }
 
 public class BalanceWatch {
-    private let txWatch: StellarKit.TxWatch
+    private let txWatch: EventWatcher<TxEvent>
     private let linkBag = LinkBag()
 
     public let emitter: StatefulObserver<Decimal>
@@ -79,7 +79,7 @@ public class BalanceWatch {
 }
 
 public class CreationWatch {
-    private let paymentWatch: StellarKit.PaymentWatch
+    private let paymentWatch: EventWatcher<PaymentEvent>
     private let linkBag = LinkBag()
 
     public let emitter: Observable<Bool>

@@ -54,9 +54,9 @@ public class StellarAccount: Account {
         return try accountData().extra
     }
 
-    public var sign: ((Data) throws -> Data)?
+    public var sign: (([UInt8]) throws -> [UInt8])?
 
-    public func sign(message: Data, passphrase: String) throws -> Data {
+    public func sign(message: [UInt8], passphrase: String) throws -> [UInt8] {
         guard let signingKey = secretKey(passphrase: passphrase) else {
             throw KeyStoreErrors.noSecretKey
         }
@@ -64,7 +64,7 @@ public class StellarAccount: Account {
         return try KeyUtils.sign(message: message, signingKey: signingKey)
     }
 
-    fileprivate func secretKey(passphrase: String) -> Data? {
+    fileprivate func secretKey(passphrase: String) -> [UInt8]? {
         guard let seed = seed(passphrase: passphrase) else {
             return nil
         }
@@ -88,7 +88,7 @@ public class StellarAccount: Account {
         return try JSONDecoder().decode(AccountData.self, from: data)
     }
 
-    private func seed(passphrase: String) -> Data? {
+    private func seed(passphrase: String) -> [UInt8]? {
         guard let accountData = try? accountData() else {
             return nil
         }
@@ -96,7 +96,7 @@ public class StellarAccount: Account {
         return StellarAccount.seed(accountData: accountData, passphrase: passphrase)
     }
 
-    fileprivate static func seed(accountData: AccountData, passphrase: String) -> Data? {
+    fileprivate static func seed(accountData: AccountData, passphrase: String) -> [UInt8]? {
         guard let seed = try? KeyUtils.seed(from: passphrase,
                                             encryptedSeed: accountData.seed,
                                             salt: accountData.salt) else {
@@ -188,7 +188,7 @@ public struct KeyStore {
     }
 
     private static func accountData(passphrase: String,
-                                    seed: Data? = nil) throws -> AccountData {
+                                    seed: [UInt8]? = nil) throws -> AccountData {
         guard let salt = KeyUtils.salt() else {
             throw KeyStoreErrors.noSalt
         }
@@ -199,7 +199,7 @@ public struct KeyStore {
 
         let skey = try KeyUtils.keyHash(passphrase: passphrase, salt: salt)
 
-        guard let encryptedSeed: Data = KeyUtils.encryptSeed(seed, secretKey: skey) else {
+        guard let encryptedSeed = KeyUtils.encryptSeed(seed, secretKey: skey) else {
             throw KeyStoreErrors.encryptionFailed
         }
 
