@@ -19,6 +19,6 @@ Pod::Spec.new do |s|
   s.dependency 'Sodium', '0.7.0'
 
   s.ios.deployment_target = '8.0'
-  s.swift_version = "3.2"
+  s.swift_version = "4.2"
   s.platform = :ios, '8.0'
 end
