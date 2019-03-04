@@ -38,7 +38,7 @@ extension NetworkId {
     public var issuer: String {
         switch self {
         case .mainNet:
-            return "GBQ3DQOA7NF52FVV7ES3CR3ZMHUEY4LTHDAQKDTO6S546JCLFPEQGCPK"
+            return "GDF42M3IPERQCBLWFEZKQRK77JQ65SCKTU3CW36HZVCX7XX5A5QXZIVK"
         case .testNet:
             return "GBC3SG6NGTSZ2OMH3FFGB7UVRQWILW367U4GSOOF4TFSZONV42UJXUH7"
         case .playground:
@@ -51,7 +51,7 @@ extension NetworkId {
     public var stellarNetworkId: StellarKit.NetworkId {
         switch self {
         case .mainNet:
-            return StellarKit.NetworkId("private testnet")
+            return StellarKit.NetworkId("Public Global Kin Ecosystem Network ; June 2018")
         case .testNet:
             return StellarKit.NetworkId("Kin Playground Network ; June 2018")
         case .playground:
