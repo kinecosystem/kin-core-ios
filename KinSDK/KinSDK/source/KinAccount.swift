@@ -121,6 +121,8 @@ public protocol KinAccount: class {
      - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
      */
 //    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
+
+    func linkingTransaction(publicKey publicKeyString: String) -> Promise<TransactionEnvelope>
 }
 
 let KinMultiplier: UInt64 = 10000000
@@ -399,5 +401,13 @@ final class KinStellarAccount: KinAccount {
         }
         
         return String(data: jsonData, encoding: .utf8)
+    }
+
+    public func linkingTransaction(publicKey publicKeyString: String) -> Promise<TransactionEnvelope> {
+        stellarAccount.sign = { message in
+            return try self.stellarAccount.sign(message: message, passphrase: "")
+        }
+
+        return Stellar.linkingTransaction(publicKey: publicKeyString, localSigner: stellarAccount, node: node)
     }
 }
