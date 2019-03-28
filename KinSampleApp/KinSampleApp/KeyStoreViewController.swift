@@ -20,7 +20,7 @@ class KeyStoreViewController: UIViewController {
         super.viewDidLoad()
 
         showKeyStore()
-        NotificationCenter.default.addObserver(self, selector: #selector(showKeyStore), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showKeyStore), name: UITextField.textDidChangeNotification, object: nil)
 
         textField.becomeFirstResponder()
         saveButton.fill(with: view.tintColor)
