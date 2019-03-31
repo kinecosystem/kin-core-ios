@@ -1,21 +1,21 @@
 Pod::Spec.new do |s|
   s.name             = 'KinCoreSDK'
-  s.version          = '0.7.18'
+  s.version          = '0.7.19'
   s.summary          = 'Pod for the KIN Core SDK.'
 
   s.description      = <<-DESC
   Initial pod for the KIN SDK.
                        DESC
 
-  s.homepage         = 'https://github.com/kinfoundation/kin-core-ios'
+  s.homepage         = 'https://github.com/kinecosystem/kin-core-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE.md' }
-  s.author           = { 'Kin Foundation' => 'kin@kik.com' }
-  s.source           = { :git => 'https://github.com/kinfoundation/kin-core-ios.git', :tag => "#{s.version}", :submodules => true }
+  s.author           = { 'Kin Foundation' => 'info@kin.org' }
+  s.source           = { :git => 'https://github.com/kinecosystem/kin-core-ios.git', :tag => "#{s.version}", :submodules => true }
 
   s.source_files     = 'KinSDK/KinSDK/source/*.swift',
                        'KinSDK/KinSDK/source/third-party/keychain-swift/KeychainSwift/*.swift'
 
-  s.dependency 'StellarKit', '0.3.14'
+  s.dependency 'StellarKit', '0.3.17'
   s.dependency 'Sodium', '0.7.0'
 
   s.ios.deployment_target = '8.0'
