@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
                        DESC
 
   s.homepage         = 'https://github.com/kinecosystem/kin-core-ios'
-  s.license          = { :type => 'MIT', :file => 'LICENSE.md' }
+  s.license          = { :type => 'Kin Ecosystem SDK License', :file => 'LICENSE.pdf' }
   s.author           = { 'Kin Foundation' => 'info@kin.org' }
   s.source           = { :git => 'https://github.com/kinecosystem/kin-core-ios.git', :tag => "#{s.version}", :submodules => true }
 
