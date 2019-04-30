@@ -127,4 +127,4 @@ Both `KinClient` and `KinAccount` have other methods which should prove useful. 
 Please review our [CONTRIBUTING.md](CONTRIBUTING.md) guide before opening issues and pull requests.
 
 ## License
-This repository is licensed under the [MIT license](LICENSE.md).
+This repository is licensed under the [Kin Ecosystem SDK License](LICENSE.pdf).
