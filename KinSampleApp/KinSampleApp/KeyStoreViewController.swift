@@ -20,7 +20,7 @@ class KeyStoreViewController: UIViewController {
         super.viewDidLoad()
 
         showKeyStore()
-        NotificationCenter.default.addObserver(self, selector: #selector(showKeyStore), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showKeyStore), name: UITextField.textDidChangeNotification, object: nil)
 
         textField.becomeFirstResponder()
         saveButton.fill(with: view.tintColor)
@@ -41,8 +41,7 @@ class KeyStoreViewController: UIViewController {
         }
 
         guard let keyStore = try? kinClient.accounts[0]?.export(passphrase: exportPassphrase),
-            let unwrapped = keyStore,
-            let prettified = unwrapped.prettified() else {
+            let prettified = keyStore.prettified() else {
                 return
         }
 
