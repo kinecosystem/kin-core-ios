@@ -130,7 +130,7 @@ class HomeViewController: UIViewController {
             passphraseTextField.placeholder = "Passphrase"
         }
         alertController.addTextField { importTextField in
-            let observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: importTextField, queue: nil, using: { _ in
+            let observer = NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: importTextField, queue: nil, using: { _ in
                 guard let importString = importTextField.text?.trimmingCharacters(in: .whitespaces) else {
                     return
                 }

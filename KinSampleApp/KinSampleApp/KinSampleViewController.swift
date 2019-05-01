@@ -37,7 +37,7 @@ class KinSampleViewController: UITableViewController {
 
         self.watch = try? self.kinAccount.watchBalance(nil)
         self.watch?.emitter.on(queue: .main, next: { [weak self] balance in
-            if let balanceCell = self?.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+            if let balanceCell = self?.tableView.visibleCells.compactMap({ $0 as? BalanceTableViewCell }).first {
                 balanceCell.balance = balance
             }
         })
