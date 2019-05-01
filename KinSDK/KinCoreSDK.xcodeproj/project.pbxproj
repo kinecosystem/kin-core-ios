@@ -167,7 +167,7 @@
 		827835371FA9B5F20006C3DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8278353A1FA9B5F20006C3DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8278353C1FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		827835411FA9B5F20006C3DF /* KinSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = KinSDKTests.xctest; path = KinCoreSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		827835411FA9B5F20006C3DF /* KinCoreSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinCoreSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		827835451FA9B5F20006C3DF /* KinClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientTests.swift; sourceTree = "<group>"; };
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82BA1EBC204D211300396AE2 /* KeyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyUtils.swift; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 			children = (
 				82140EA91FA88E5B00FAF19B /* KinCoreSDK.framework */,
 				8278352E1FA9B5F20006C3DF /* KinTestHost.app */,
-				827835411FA9B5F20006C3DF /* KinSDKTests.xctest */,
+				827835411FA9B5F20006C3DF /* KinCoreSDKTests.xctest */,
 				82BA2113204D867200396AE2 /* KinCoreSDK.framework */,
 			);
 			name = Products;
@@ -427,7 +427,7 @@
 			);
 			name = KinCoreSDKTests;
 			productName = KinTestHostTests;
-			productReference = 827835411FA9B5F20006C3DF /* KinSDKTests.xctest */;
+			productReference = 827835411FA9B5F20006C3DF /* KinCoreSDKTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		82BA20A8204D867200396AE2 /* KinCoreSDK-macos */ = {
@@ -783,7 +783,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -840,7 +840,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/KinSDK/source/third-party/swift-sodium/Sodium/libsodium";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -926,7 +926,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinTestHost;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -947,7 +946,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinTestHost;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -968,7 +966,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinTestHostTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KinTestHost.app/KinTestHost";
 			};
@@ -990,7 +987,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinTestHostTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KinTestHost.app/KinTestHost";
 			};
