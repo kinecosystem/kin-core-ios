@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinCoreSDK'
-  s.version          = '0.8.0'
+  s.version          = '0.8.1'
   s.summary          = 'Pod for the KIN Core SDK.'
 
   s.description      = <<-DESC
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source_files     = 'KinSDK/KinSDK/source/*.swift',
                        'KinSDK/KinSDK/source/third-party/keychain-swift/KeychainSwift/*.swift'
 
-  s.dependency 'StellarKit', '0.4.0'
+  s.dependency 'StellarKit', '0.4.1'
   s.dependency 'Sodium', '0.8.0'
 
   s.ios.deployment_target = '8.0'
